@@ -107,6 +107,7 @@
                     android:padding="12dp"
                     android:inputType="textPassword"
                     android:textColorHint="@color/grey" />
+
                 <TextView
                     android:id="@+id/signInBtn"
                     android:layout_width="match_parent"
@@ -120,9 +121,9 @@
                     android:elevation="10dp"
                     android:gravity="center"
                     android:padding="10dp"
+                    android:text="Login"
                     android:textAllCaps="true"
                     android:textColor="@color/white"
-                    android:text="Login"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
