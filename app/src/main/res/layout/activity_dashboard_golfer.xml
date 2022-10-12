@@ -71,11 +71,12 @@
                 android:id="@+id/recyclerView_golfer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:listitem="@layout/row_golfer"
-                android:orientation="vertical"
                 android:nestedScrollingEnabled="false"
+                android:orientation="vertical"
+                android:scrollbars="vertical"
+                android:layout_marginTop="15dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                android:scrollbars="vertical" />
+                tools:listitem="@layout/row_golfer" />
 
         </LinearLayout>
 
