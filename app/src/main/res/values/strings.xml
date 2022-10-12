@@ -4,4 +4,18 @@
     <string name="termsC">I agree to <font color="#21C17C">Terms of Service</font> and <font color="#21C17C">Privacy Policy</font>.</string>
     <string name="termsG">I agree to <font color="#FFD93F">Terms of Service</font> and <font color="#FFD93F">Privacy Policy</font>.</string>
     <string name="long_lorem">Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</string>
+
+    <string-array name="booking_dates">
+        <item>Select Date (5 Oct - 15 Oct)</item>
+        <item>(16 Oct - 26 Oct)</item>
+        <item>(26 Oct - 6 Nov)</item>
+        <item>(6 Nov - 16 Nov)</item>
+    </string-array>
+
+    <string-array name="golf_courses">
+        <item>Select State (New York)</item>
+        <item>California</item>
+        <item>Los Angles</item>
+    </string-array>
+
 </resources>

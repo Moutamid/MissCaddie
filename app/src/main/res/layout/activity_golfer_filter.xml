@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GolferFilterActivity">
+
+    <View
+        android:id="@+id/rectangle_4"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="-40dp"
+        android:layout_marginTop="-31dp"
+        android:background="@drawable/circle_green1" />
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:src="@drawable/ic_charm_cross1" />
+
+    <View
+        android:id="@+id/rectangle_3"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="-40dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="-31dp"
+        android:background="@drawable/circle_green1"
+        />
+
+    <ImageView
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/ic_charm_tick" />
+
+    <TextView
+        android:id="@+id/text_heading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:gravity="center"
+        android:letterSpacing="0.08"
+        android:text="You Caddies"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Caddies Willing to Travel"
+        android:textColor="@color/black"
+        android:fontFamily="@font/roboto"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_below="@id/text_heading"
+        android:layout_marginTop="35dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"/>
+    
+    <LinearLayout
+        android:id="@+id/options_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="20dp"
+        android:orientation="horizontal"
+        android:layout_marginLeft="20dp">
+
+        <LinearLayout
+            android:id="@+id/notWilling_layout"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:padding="12dp"
+            android:layout_weight="1"
+            android:layout_marginRight="6dp"
+            android:background="@drawable/unselected_box"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/notWilling_icon"
+                android:layout_width="62dp"
+                android:layout_height="62dp"
+                android:src="@drawable/ic_charm_cross2"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Not Willing"
+                android:gravity="center"
+                android:fontFamily="@font/roboto"
+                android:textSize="16sp"
+                android:layout_marginTop="5dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/Willing_layout"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:padding="12dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="6dp"
+            android:background="@drawable/selected_box"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/Willing_icon"
+                android:layout_width="62dp"
+                android:layout_height="62dp"
+                android:src="@drawable/ic_charm_tick1"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Not Willing"
+                android:gravity="center"
+                android:fontFamily="@font/roboto"
+                android:textSize="16sp"
+                android:layout_marginTop="5dp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/bookingDatesTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/options_layout"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/roboto"
+        android:textColor="@color/black"
+        android:layout_marginTop="25dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:text="Booking Dates" />
+
+    <Spinner
+        android:id="@+id/spinner_booking"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bookingDatesTV"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginRight="20dp"
+        android:entries="@array/booking_dates"
+        android:gravity="start" />
+
+    <TextView
+        android:id="@+id/golfCourse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/spinner_booking"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/roboto"
+        android:textColor="@color/black"
+        android:layout_marginTop="25dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:text="Golf Course State" />
+
+    <Spinner
+        android:id="@+id/spinner_golfCourse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/golfCourse"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginRight="20dp"
+        android:gravity="start"
+        android:entries="@array/golf_courses" />
+
+    <TextView
+        android:id="@+id/reset_filters"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/green"
+        android:text="Reset Filters"
+        android:textAllCaps="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:textStyle="bold"
+        android:letterSpacing="0.08"
+        android:layout_margin="25dp" />
+
+</RelativeLayout>
