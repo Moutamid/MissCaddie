@@ -7,10 +7,27 @@
     android:background="@color/white"
     tools:context=".SignUp_Caddie">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/top_yellow"/>
+
+    <View
+        android:id="@+id/rectangle_4"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="-54dp"
+        android:background="@drawable/circle_yellow1"
+        />
+
+    <View
+        android:id="@+id/rectangle_3"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="-50dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="-14dp"
+        android:background="@drawable/circle_yellow1"
+        />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -39,10 +56,8 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/logo"
                     android:layout_marginTop="10dp"
-                    android:fontFamily="@font/montserrat_bold"
                     android:gravity="center"
                     android:text="Miss Caddie"
-                    android:letterSpacing="0.08"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -53,214 +68,104 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/text_head"
                     android:layout_marginStart="20dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginEnd="20dp"
                     android:layout_marginBottom="10dp"
-                    android:fontFamily="@font/roboto"
                     android:gravity="center"
-                    android:letterSpacing="0.02"
                     android:text="Sign up"
                     android:textColor="@color/black"
-                    android:textSize="22sp" />
+                    android:textSize="18sp" />
 
-                <TextView
-                    android:id="@+id/t1"
+                <EditText
+                    android:id="@+id/Fname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/text_simple"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="20dp"
-                    android:text="First Name"
-                    android:textColor="@color/yellow" />
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/et_bg"
+                    android:fontFamily="@font/roboto"
+                    android:hint="First Name"
+                    android:inputType="textPersonName"
+                    android:padding="20dp"
+                    android:textColorHint="@color/grey" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/name1_layout"
+                <EditText
+                    android:id="@+id/Lname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/t1">
+                    android:layout_below="@id/Fname"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/et_bg"
+                    android:fontFamily="@font/roboto"
+                    android:hint="Last Name"
+                    android:inputType="textPersonName"
+                    android:padding="20dp"
+                    android:textColorHint="@color/grey" />
 
-                    <EditText
-                        android:id="@+id/name1_et"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/shape_white"
-                        android:hint="Enter First Name"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginLeft="20dp"
-                        android:inputType="textPersonName"
-                        android:textColor="@color/black"
-                        android:textColorHint="#808080" />
 
-                </com.google.android.material.textfield.TextInputLayout>
+                <EditText
+                    android:id="@+id/email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/Lname"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/et_bg"
+                    android:fontFamily="@font/roboto"
+                    android:hint="Enter Email"
+                    android:inputType="textEmailAddress"
+                    android:padding="20dp"
+                    android:textColorHint="@color/grey" />
+
+                <EditText
+                    android:id="@+id/password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/email"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/et_bg"
+                    android:fontFamily="@font/roboto"
+                    android:hint="Enter Password"
+                    android:inputType="textPassword"
+                    android:padding="20dp"
+                    android:textColorHint="@color/grey" />
+
+                <EditText
+                    android:id="@+id/cnfrm_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/password"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/et_bg"
+                    android:fontFamily="@font/roboto"
+                    android:hint="Confirm Password"
+                    android:inputType="textPassword"
+                    android:padding="20dp"
+                    android:textColorHint="@color/grey" />
+
 
                 <TextView
-                    android:id="@+id/t2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/name1_layout"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="20dp"
-                    android:text="Second Name"
-                    android:textColor="@color/yellow" />
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/name2_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/t2">
-
-                    <EditText
-                        android:id="@+id/name2_et"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/shape_white"
-                        android:hint="Enter Second Name"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginLeft="20dp"
-                        android:inputType="textPersonName"
-                        android:textColor="@color/black"
-                        android:textColorHint="#808080" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <TextView
-                    android:id="@+id/t3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/name2_layout"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="20dp"
-                    android:text="Email"
-                    android:textColor="@color/yellow" />
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/name3_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/t3">
-
-                    <EditText
-                        android:id="@+id/name3_et"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/shape_white"
-                        android:hint="Name Email"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginLeft="20dp"
-                        android:inputType="textEmailAddress"
-                        android:textColor="@color/black"
-                        android:textColorHint="#808080" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <TextView
-                    android:id="@+id/t4"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/name3_layout"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="20dp"
-                    android:text="Password"
-                    android:textColor="@color/yellow" />
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/name4_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:passwordToggleEnabled="true"
-                    app:passwordToggleTint="@color/yellow"
-                    android:layout_below="@id/t4">
-
-                    <EditText
-                        android:id="@+id/name4_et"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/shape_white"
-                        android:hint="Enter Password"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginLeft="20dp"
-                        android:inputType="textPassword"
-                        android:textColor="@color/black"
-                        android:textColorHint="#808080" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <TextView
-                    android:id="@+id/t5"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/name4_layout"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="20dp"
-                    android:text="Confirm Password"
-                    android:textColor="@color/yellow" />
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/name5_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:passwordToggleEnabled="true"
-                    app:passwordToggleTint="@color/yellow"
-                    android:layout_below="@id/t5">
-
-                    <EditText
-                        android:id="@+id/name5_et"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/shape_white"
-                        android:hint="Enter Confirm Password"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginLeft="20dp"
-                        android:inputType="textPassword"
-                        android:textColor="@color/black"
-                        android:textColorHint="#808080" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <LinearLayout
                     android:id="@+id/layout_texts"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/name5_layout"
-                    android:layout_centerHorizontal="true"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="I agree to "
-                        android:textColor="@color/black"
-                        android:layout_marginTop="10dp"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Terms of Services "
-                        android:textColor="@color/yellow"
-                        android:layout_marginTop="10dp"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="and "
-                        android:textColor="@color/black"
-                        android:layout_marginTop="10dp"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Privacy Policy "
-                        android:textColor="@color/yellow"
-                        android:layout_marginTop="10dp"/>
-                </LinearLayout>
+                    android:layout_below="@id/cnfrm_password"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:text="@string/termsG"
+                    android:textColor="@color/grey" />
 
                 <TextView
-                    android:id="@+id/signUpBtn2"
+                    android:id="@+id/signUpBtn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/layout_texts"
@@ -273,10 +178,12 @@
                     android:gravity="center"
                     android:padding="10dp"
                     android:text="SIGN UP"
+                    android:textColor="@color/white"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>
+
 </RelativeLayout>
