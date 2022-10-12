@@ -16,10 +16,21 @@
         android:background="@drawable/circle_green1" />
 
     <ImageView
+        android:id="@+id/filters"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/ic_profile_circled" />
+
+    <ImageView
         android:id="@+id/back_btn"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
