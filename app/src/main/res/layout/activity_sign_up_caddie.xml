@@ -30,14 +30,10 @@
         />
 
     <ScrollView
+        android:id="@+id/scrollContent"
         android:layout_width="match_parent"
+        android:layout_above="@id/layout_texts"
         android:layout_height="match_parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -152,38 +148,36 @@
                     android:padding="20dp"
                     android:textColorHint="@color/grey" />
 
-
-                <TextView
-                    android:id="@+id/layout_texts"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/cnfrm_password"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="20dp"
-                    android:text="@string/termsG"
-                    android:textColor="@color/grey" />
-
-                <TextView
-                    android:id="@+id/signUpBtn2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/layout_texts"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:background="@drawable/shape_yellow"
-                    android:elevation="10dp"
-                    android:gravity="center"
-                    android:padding="10dp"
-                    android:text="SIGN UP"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
             </RelativeLayout>
-        </LinearLayout>
     </ScrollView>
+
+    <TextView
+        android:id="@+id/layout_texts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/signUpBtn2"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:text="@string/termsG"
+        android:textColor="@color/grey" />
+
+    <TextView
+        android:id="@+id/signUpBtn2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/shape_yellow"
+        android:elevation="10dp"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="SIGN UP"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
 </RelativeLayout>

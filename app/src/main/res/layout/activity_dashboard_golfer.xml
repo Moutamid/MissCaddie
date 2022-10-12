@@ -12,59 +12,65 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="-45dp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="-51dp"
-        android:background="@drawable/circle_green1"
-        />
+        android:layout_marginLeft="-40dp"
+        android:layout_marginTop="-31dp"
+        android:background="@drawable/circle_green1" />
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:src="@drawable/ic_message_square"/>
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:src="@drawable/ic_message_square" />
 
     <View
         android:id="@+id/rectangle_3"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="-45dp"
+        android:layout_marginRight="-40dp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="-51dp"
+        android:layout_marginTop="-31dp"
         android:background="@drawable/circle_green1"
         />
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
         android:layout_alignParentRight="true"
-        android:src="@drawable/ic_filter"/>
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:src="@drawable/ic_filter" />
 
     <TextView
         android:id="@+id/text_heading"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="10dp"
-        android:gravity="center"
-        android:text="You Caddies"
         android:fontFamily="@font/montserrat_bold"
+        android:gravity="center"
         android:letterSpacing="0.08"
+        android:text="You Caddies"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginTop="15dp"
         android:layout_below="@+id/text_heading">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <androidx.recyclerview.widget.RecyclerView

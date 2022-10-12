@@ -10,4 +10,5 @@
     <color name="green">#21C17C</color>
     <color name="yellow">#FFD93F</color>
     <color name="grey">#61000000</color>
+    <color name="statusbar">#8021C17C</color>
 </resources>
