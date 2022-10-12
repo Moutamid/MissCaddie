@@ -90,7 +90,7 @@
         android:src="@drawable/cg1" />
 
     <TextView
-        android:id="@+id/text_skip4"
+        android:id="@+id/text_skip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"

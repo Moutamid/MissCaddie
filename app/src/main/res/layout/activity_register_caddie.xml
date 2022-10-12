@@ -79,7 +79,7 @@
         android:textColorHint="@color/grey" />
 
     <TextView
-        android:id="@+id/cont_btn"
+        android:id="@+id/cont_btn2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/email"
@@ -91,8 +91,8 @@
         android:elevation="10dp"
         android:gravity="center"
         android:padding="10dp"
-        android:textColor="@color/white"
         android:text="CONTINUE"
+        android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold" />
 
@@ -100,7 +100,7 @@
         android:id="@+id/view_main"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@+id/cont_btn"
+        android:layout_below="@+id/cont_btn2"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="15dp"
         android:layout_marginRight="20dp"
@@ -110,7 +110,7 @@
         android:id="@+id/text_2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/cont_btn"
+        android:layout_below="@+id/cont_btn2"
         android:layout_centerHorizontal="true"
         android:background="@color/white"
         android:paddingBottom="5dp"

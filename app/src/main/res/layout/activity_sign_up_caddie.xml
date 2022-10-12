@@ -165,7 +165,7 @@
                     android:textColor="@color/grey" />
 
                 <TextView
-                    android:id="@+id/signUpBtn"
+                    android:id="@+id/signUpBtn2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/layout_texts"

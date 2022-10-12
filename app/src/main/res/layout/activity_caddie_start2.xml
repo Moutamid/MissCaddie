@@ -91,7 +91,7 @@
         android:src="@drawable/cy2" />
 
     <TextView
-        android:id="@+id/text_skip4"
+        android:id="@+id/text_skip5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
