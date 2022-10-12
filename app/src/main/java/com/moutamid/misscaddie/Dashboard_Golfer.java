@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 
@@ -21,7 +22,7 @@ public class Dashboard_Golfer extends AppCompatActivity {
     private String[] golfer_reviews = {"10 reviews", "167 reviews", "700 reviews",};
     private String[] gokfer_status = {"Willing to travel", "Willing to travel", "Willing to travel",};
     private int[] images1_golfer = {R.drawable.img1, R.drawable.img2, R.drawable.img3,};
-    View filters_btn, requestes_btn;
+    ImageView filters_btn, requestes_btn;
 
     private RecyclerView golfer_recycler;
     private ArrayList<Model_Golfer> modelGolferArrayList;

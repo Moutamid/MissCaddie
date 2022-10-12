@@ -7,7 +7,6 @@
     tools:context=".CaddiesRequestsActivity">
 
     <View
-        android:id="@+id/back_btn"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_alignParentLeft="true"
@@ -17,6 +16,7 @@
         android:background="@drawable/circle_green1" />
 
     <ImageView
+        android:id="@+id/back_btn"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_marginTop="15dp"

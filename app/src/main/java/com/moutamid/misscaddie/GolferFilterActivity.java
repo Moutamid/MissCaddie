@@ -29,7 +29,7 @@ public class GolferFilterActivity extends AppCompatActivity {
             Animatoo.animateZoom(GolferFilterActivity.this);
         });
 
-        notWillingLayout.setOnClickListener(v ->{
+        /*notWillingLayout.setOnClickListener(v ->{
             if (willingState){
                 notWillingLayout.setBackground(getDrawable(R.drawable.unselected_box));
                 willingState = false;
@@ -37,8 +37,8 @@ public class GolferFilterActivity extends AppCompatActivity {
                 notWillingLayout.setBackground(getDrawable(R.drawable.selected_box));
                 willingState = true;
             }
-        });
-        WillingLayout.setOnClickListener(v ->{
+        });*/
+        /*WillingLayout.setOnClickListener(v ->{
             if (willingState){
                 WillingLayout.setBackground(getDrawable(R.drawable.unselected_box));
                 willingState = false;
@@ -46,6 +46,6 @@ public class GolferFilterActivity extends AppCompatActivity {
                 WillingLayout.setBackground(getDrawable(R.drawable.selected_box));
                 willingState = true;
             }
-        });
+        });*/
     }
 }
