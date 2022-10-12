@@ -3,7 +3,11 @@ package com.moutamid.misscaddie;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 
 import java.util.ArrayList;
 
@@ -17,6 +21,7 @@ public class Dashboard_Golfer extends AppCompatActivity {
     private String[] golfer_reviews = {"10 reviews", "167 reviews", "700 reviews",};
     private String[] gokfer_status = {"Willing to travel", "Willing to travel", "Willing to travel",};
     private int[] images1_golfer = {R.drawable.img1, R.drawable.img2, R.drawable.img3,};
+    View filters_btn, requestes_btn;
 
     private RecyclerView golfer_recycler;
     private ArrayList<Model_Golfer> modelGolferArrayList;
@@ -26,6 +31,21 @@ public class Dashboard_Golfer extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard_golfer);
+
+        filters_btn = findViewById(R.id.filters);
+        requestes_btn = findViewById(R.id.requestes);
+
+        filters_btn.setOnClickListener(v -> {
+            Intent intent = new Intent(Dashboard_Golfer.this , GolferFilterActivity.class);
+            startActivity(intent);
+            Animatoo.animateZoom(Dashboard_Golfer.this);
+        });
+
+        requestes_btn.setOnClickListener(v -> {
+            Intent intent = new Intent(Dashboard_Golfer.this , CaddiesRequestsActivity.class);
+            startActivity(intent);
+            Animatoo.animateZoom(Dashboard_Golfer.this);
+        });
 
         golfer_recycler = findViewById(R.id.recyclerView_golfer);
         load_detail();

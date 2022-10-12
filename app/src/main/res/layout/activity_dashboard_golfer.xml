@@ -8,7 +8,7 @@
     tools:context=".Dashboard_Golfer">
 
     <View
-        android:id="@+id/rectangle_4"
+        android:id="@+id/requestes"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_alignParentLeft="true"
@@ -27,7 +27,7 @@
         android:src="@drawable/ic_message_square" />
 
     <View
-        android:id="@+id/rectangle_3"
+        android:id="@+id/filters"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_alignParentRight="true"

@@ -7,7 +7,7 @@
     tools:context=".GolferFilterActivity">
 
     <View
-        android:id="@+id/rectangle_4"
+        android:id="@+id/close"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_alignParentLeft="true"
