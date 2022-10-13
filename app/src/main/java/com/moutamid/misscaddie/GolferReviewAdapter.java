@@ -37,7 +37,8 @@ public class GolferReviewAdapter extends RecyclerView.Adapter<GolferReviewAdapte
         holder.name.setText(model.getName());
         holder.date.setText(model.getDate());
         holder.message.setText(model.getMessage());
-        Glide.with(context).load(model.getImage()).into(holder.circleImageView);
+        //Glide.with(context).load(model.getImage()).into(holder.circleImageView);
+        holder.circleImageView.setImageResource(model.getImage2());
     }
 
     @Override

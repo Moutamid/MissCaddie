@@ -25,8 +25,7 @@ public class CaddieProfileActivity extends AppCompatActivity {
     TabLayout tabLayout;
     ViewPager viewPager;
     ArrayList<SliderItem> SlideimageList;
-    //ImageSlider imageSlider;
-    TextView imageListCounter, contactCaddie;
+    TextView contactCaddie;
     TabItem info, services, reviews;
     ImageView backBtn;
     SliderView sliderView;
@@ -35,26 +34,20 @@ public class CaddieProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_caddie_profile);
-
         tabLayout = findViewById(R.id.tabsLayout);
         viewPager = findViewById(R.id.ProfileViewpager);
-        //imageSlider = findViewById(R.id.image_slider);
-        //imageListCounter = findViewById(R.id.counter);
         info = findViewById(R.id.infoTab);
         services = findViewById(R.id.servicesTab);
         reviews = findViewById(R.id.ReviewsTab);
         contactCaddie = findViewById(R.id.contact_caddie);
         backBtn = findViewById(R.id.back_btn);
-
-        tabLayout.setupWithViewPager(viewPager);
+        sliderView = findViewById(R.id.image_slider);
 
         SlideimageList = new ArrayList<>();
 
         String img1 = "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg";
         String img2 = "https://media.istockphoto.com/photos/mountain-landscape-picture-id517188688?k=20&m=517188688&s=612x612&w=0&h=i38qBm2P-6V4vZVEaMy_TaTEaoCMkYhvLCysE7yJQ5Q=";
         String img3 = "https://media.istockphoto.com/photos/wild-grass-in-the-mountains-at-sunset-picture-id1322277517?b=1&k=20&m=1322277517&s=170667a&w=0&h=BSN_5NMGYJY2qPwI3_vOcEXVSX_hmGBOmXebMBxTLX0=";
-
-        sliderView = findViewById(R.id.image_slider);
 
         SlideimageList.add(new SliderItem(img1));
         SlideimageList.add(new SliderItem(img2));
@@ -68,6 +61,9 @@ public class CaddieProfileActivity extends AppCompatActivity {
         caddieProfileVPadapter.addFragment(new CaddieInfoFragment(), "Info");
         caddieProfileVPadapter.addFragment(new CaddieServicesFragment(), "Services");
         caddieProfileVPadapter.addFragment(new CaddieReviewsFragment(), "Reviews");
+
+        viewPager.setAdapter(caddieProfileVPadapter);
+        tabLayout.setupWithViewPager(viewPager);
 
         contactCaddie.setOnClickListener(v -> {
             startActivity(new Intent(CaddieProfileActivity.this, CaddieContactActivity.class));
