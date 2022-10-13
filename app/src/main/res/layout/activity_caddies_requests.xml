@@ -16,7 +16,7 @@
         android:background="@drawable/circle_green1" />
 
     <ImageView
-        android:id="@+id/filters"
+        android:id="@+id/profiles"
         android:layout_width="28dp"
         android:layout_height="28dp"
         android:layout_alignParentRight="true"

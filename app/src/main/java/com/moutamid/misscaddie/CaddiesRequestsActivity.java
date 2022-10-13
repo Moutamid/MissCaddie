@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 
 public class CaddiesRequestsActivity extends AppCompatActivity {
-    ImageView back_btn;
+    ImageView back_btn, profile_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,11 +18,18 @@ public class CaddiesRequestsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_caddies_requests);
 
         back_btn = findViewById(R.id.back_btn);
+        profile_btn = findViewById(R.id.profiles);
 
         back_btn.setOnClickListener(v -> {
             Intent intent = new Intent(CaddiesRequestsActivity.this , Dashboard_Golfer.class);
             startActivity(intent);
             Animatoo.animateZoom(CaddiesRequestsActivity.this);
+        });
+
+        profile_btn.setOnClickListener(v -> {
+            Intent intent = new Intent(CaddiesRequestsActivity.this , GolferProfileEditActivity.class);
+            startActivity(intent);
+            Animatoo.animateSlideLeft(CaddiesRequestsActivity.this);
         });
     }
 }
