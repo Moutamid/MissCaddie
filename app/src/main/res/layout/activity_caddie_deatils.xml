@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CaddieDeatilsActivity">
+
+    <View
+        android:id="@+id/rectangle_4"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="-54dp"
+        android:background="@drawable/circle_yellow1"
+        />
+
+    <View
+        android:id="@+id/rectangle_3"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="-50dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="-14dp"
+        android:background="@drawable/circle_yellow1"
+        />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/almostFinished"
+        android:layout_below="@id/rectangle_3">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tell us about your place"
+                android:gravity="center"
+                android:textSize="22sp"
+                android:fontFamily="@font/roboto"
+                android:textColor="@color/black" />
+
+            <EditText
+                android:id="@+id/et_city"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/et_bg"
+                android:fontFamily="@font/roboto"
+                android:hint="City"
+                android:inputType="textPersonName"
+                android:padding="15dp"
+                android:textColorHint="@color/grey" />
+
+            <EditText
+                android:id="@+id/et_state"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/et_bg"
+                android:fontFamily="@font/roboto"
+                android:hint="State"
+                android:inputType="textPersonName"
+                android:padding="15dp"
+                android:textColorHint="@color/grey" />
+
+            <EditText
+                android:id="@+id/et_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/et_bg"
+                android:fontFamily="@font/roboto"
+                android:hint="Complete Location"
+                android:inputType="textPersonName"
+                android:padding="15dp"
+                android:textColorHint="@color/grey" />
+
+            <TextView
+                android:id="@+id/label2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tell us your Service's Prices"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
+                android:textSize="22sp"
+                android:fontFamily="@font/roboto"
+                android:textColor="@color/black" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/et_service"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="3dp"
+                    android:layout_marginBottom="12dp"
+                    android:background="@drawable/et_bg"
+                    android:fontFamily="@font/roboto"
+                    android:layout_weight="1"
+                    android:hint="Add new service"
+                    android:inputType="textPersonName"
+                    android:padding="15dp"
+                    android:textColorHint="@color/grey" />
+
+                <EditText
+                    android:id="@+id/et_price"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/label"
+                    android:layout_marginStart="3dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="12dp"
+                    android:background="@drawable/et_bg"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/roboto"
+                    android:hint="$"
+                    android:inputType="textPersonName"
+                    android:padding="15dp"
+                    android:textColorHint="@color/grey" />
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/addServiceRV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/addNewService"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/shape_yellow"
+                android:elevation="10dp"
+                android:gravity="center"
+                android:textAllCaps="true"
+                android:drawableLeft="@drawable/ic_add"
+                android:drawableTint="@color/white"
+                android:padding="10dp"
+                android:text="Add New Service"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/label3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Do you provide Add Ons?"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
+                android:textSize="22sp"
+                android:fontFamily="@font/roboto"
+                android:textColor="@color/black" />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:text="Range Finder"
+                android:fontFamily="@font/roboto"
+                android:textSize="18sp"
+                android:buttonTint="@color/yellow"
+                android:button="@drawable/checkbox_style"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp" />
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:text="Short Video of Round"
+                android:buttonTint="@color/yellow"
+                android:button="@drawable/checkbox_style"
+                android:fontFamily="@font/roboto"
+                android:textSize="18sp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp" />
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:button="@drawable/checkbox_style"
+                android:layout_gravity="start"
+                android:buttonTint="@color/yellow"
+                android:text="Are you willing to Travel ?"
+                android:textSize="18sp"
+                android:fontFamily="@font/roboto"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp" />
+
+        </LinearLayout>
+        
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/almostFinished"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/shape_yellow"
+        android:elevation="10dp"
+        android:gravity="center"
+        android:textAllCaps="true"
+        android:padding="10dp"
+        android:text="Almost Finished"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+</RelativeLayout>

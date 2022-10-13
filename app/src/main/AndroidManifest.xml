@@ -16,6 +16,12 @@
         android:theme="@style/Theme.MissCaddie"
         tools:targetApi="31">
         <activity
+            android:name=".CaddieAvailabiltyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CaddieDeatilsActivity"
+            android:exported="false" />
+        <activity
             android:name=".CaddieProfileActivity"
             android:exported="false" />
         <activity

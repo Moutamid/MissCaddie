@@ -6,6 +6,7 @@
         <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1195" />
         <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/drawable-v24/unselected_box.xml" value="0.216" />
         <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/drawable/bottomborder.xml" value="0.216" />
+        <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/drawable/checkbox_style.xml" value="0.216" />
         <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/drawable/circle_green1.xml" value="0.2165" />
         <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/drawable/circle_yellow1.xml" value="0.1195" />
         <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/drawable/counter_bg.xml" value="0.216" />
@@ -19,6 +20,7 @@
         <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/drawable/shape_white.xml" value="0.1785" />
         <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/drawable/shape_yellow.xml" value="0.1195" />
         <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/layout/activity_caddie_contact.xml" value="0.22" />
+        <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/layout/activity_caddie_deatils.xml" value="0.33" />
         <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/layout/activity_caddie_profile.xml" value="0.1718683197947841" />
         <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/layout/activity_caddie_start1.xml" value="0.25" />
         <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/layout/activity_caddie_start2.xml" value="0.209375" />
@@ -40,6 +42,7 @@
         <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/layout/activity_sign_up_caddie.xml" value="0.25" />
         <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/layout/activity_sign_up_golfer.xml" value="0.33" />
         <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/layout/activity_splash.xml" value="0.209375" />
+        <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/layout/add_service.xml" value="0.25" />
         <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/layout/fragment_caddie_info.xml" value="0.44816053511705684" />
         <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/layout/fragment_caddie_reviews.xml" value="0.33" />
         <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/layout/fragment_caddie_services.xml" value="0.33" />
