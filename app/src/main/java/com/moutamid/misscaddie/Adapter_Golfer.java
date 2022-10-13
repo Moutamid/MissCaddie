@@ -55,6 +55,10 @@ public class Adapter_Golfer extends RecyclerView.Adapter<Adapter_Golfer.HolderAn
         holder.status.setText(status_tv);
 
         holder.image.setImageResource(image_1);
+
+        holder.itemView.setOnClickListener(v -> {
+            context.startActivity(new Intent(context.getApplicationContext(), CaddieProfileActivity.class));
+        });
     }
 
     @Override

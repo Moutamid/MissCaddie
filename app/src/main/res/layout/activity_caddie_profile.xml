@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".CaddieProfileActivity">
 
+    <com.denzcoskun.imageslider.ImageSlider
+        android:id="@+id/image_slider"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_alignParentTop="true"
+        app:iss_auto_cycle="true"
+        app:iss_delay="0"
+        app:iss_period="1000"
+        app:iss_selected_dot="@drawable/dots"
+        app:iss_unselected_dot="@drawable/dots" />
+
     <View
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -55,8 +66,8 @@
         app:civ_border_width="2dp"
         android:layout_marginLeft="25dp"
         android:layout_alignParentLeft="true"
-        android:layout_below="@id/back_btn"
-        android:layout_marginTop="20dp" />
+        android:layout_below="@id/image_slider"
+        android:layout_marginTop="-40dp" />
 
     <TextView
         android:id="@+id/caddie_name"
@@ -152,11 +163,11 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_below="@id/starsLayout"
-        app:tabSelectedTextColor="@color/black"
-        app:tabTextColor="@color/grey"
-        app:tabIndicatorColor="@color/black"
+        android:layout_marginTop="8dp"
         android:background="@drawable/bottomborder"
-        android:layout_marginTop="8dp">
+        app:tabIndicatorColor="@color/black"
+        app:tabSelectedTextColor="@color/black"
+        app:tabTextColor="@color/grey">
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/infoTab"
@@ -178,7 +189,7 @@
 
     </com.google.android.material.tabs.TabLayout>
 
-    <androidx.viewpager2.widget.ViewPager2
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/ProfileViewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

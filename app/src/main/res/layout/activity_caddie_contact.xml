@@ -100,6 +100,7 @@
         android:layout_marginRight="20dp"
         android:background="@drawable/et_bg"
         android:gravity="top"
+        android:inputType="textMultiLine"
         android:hint="Type Complete Location"
         android:padding="12dp" />
 
@@ -125,6 +126,7 @@
         android:layout_marginRight="20dp"
         android:background="@drawable/et_bg"
         android:gravity="top"
+        android:inputType="textMultiLine"
         android:hint="Hello, $Caddie Name$. I have a question for you..."
         android:padding="12dp" />
 

@@ -69,15 +69,31 @@
                 android:textColor="@color/grey"
                 android:text="177cm" />
 
+            <View
+                android:layout_width="6dp"
+                android:layout_height="6dp"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/circle_yellow1"
+                android:layout_marginLeft="6dp"
+                android:backgroundTint="@color/grey"
+                android:layout_marginRight="6dp" />
+
             <TextView
                 android:id="@+id/catagory_golfer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto"
                 android:textColor="@color/grey"
-                android:layout_marginLeft="6dp"
-                android:layout_marginRight="6dp"
                 android:text="Beginner" />
+
+            <View
+                android:layout_width="6dp"
+                android:layout_height="6dp"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/circle_yellow1"
+                android:backgroundTint="@color/grey"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp" />
 
             <TextView
                 android:id="@+id/place_golfer"
