@@ -20,8 +20,8 @@ public class Splash extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run()
-            {
-                Intent homeIntent = new Intent(Splash.this, MainActivity.class);
+            { //MainActivity
+                Intent homeIntent = new Intent(Splash.this, CaddieManageImagesActivity.class);
                 startActivity(homeIntent);
                 Animatoo.animateZoom(Splash.this);
                 finish();
