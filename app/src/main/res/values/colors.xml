@@ -11,6 +11,7 @@
     <color name="green">#21C17C</color>
     <color name="yellow">#FFD93F</color>
     <color name="grey">#61000000</color>
+    <color name="greyDark">#AAAAAA</color>
     <color name="red">#F24E1E</color>
     <color name="redD">#F14336</color>
     <color name="statusbar">#8021C17C</color>
