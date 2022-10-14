@@ -21,12 +21,14 @@ public class CalenderAdapter extends RecyclerView.Adapter<CalenderAdapter.Calend
     Context context;
     LocalDate selectedDate;
     ArrayList<String> month;
+    RecyclerView.RecycledViewPool viewPool;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public CalenderAdapter(Context context, ArrayList<String> month) {
         this.context = context;
         this.month = month;
         selectedDate = LocalDate.now();
+        viewPool = new RecyclerView.RecycledViewPool();
     }
 
     @NonNull
@@ -40,11 +42,13 @@ public class CalenderAdapter extends RecyclerView.Adapter<CalenderAdapter.Calend
     @Override
     public void onBindViewHolder(@NonNull CalenderViewHolder holder, int position) {
         holder.MonthYear.setText(month.get(position) + " " + selectedDate.getYear());
-        ArrayList<String> daysInMonth = daysInMonthArray(selectedDate);
 
-        CalenderItemAdapter adapter = new CalenderItemAdapter(context, daysInMonth);
-        holder.rc.setLayoutManager(new GridLayoutManager(context, 7));
+        ArrayList<String> daysInMonth = daysInMonthArray(selectedDate);
+        CalenderItemAdapter adapter = new CalenderItemAdapter(daysInMonth);
+
+        holder.rc.setLayoutManager(new GridLayoutManager(holder.rc.getContext(), 7));
         holder.rc.setHasFixedSize(false);
+        holder.rc.setRecycledViewPool(viewPool);
         holder.rc.setAdapter(adapter);
     }
 

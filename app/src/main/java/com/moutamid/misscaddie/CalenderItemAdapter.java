@@ -28,10 +28,14 @@ public class CalenderItemAdapter extends RecyclerView.Adapter<CalenderItemAdapte
         this.daysOfMonth = daysOfMonth;
     }
 
+    public CalenderItemAdapter(ArrayList<String> daysOfMonth) {
+        this.daysOfMonth = daysOfMonth;
+    }
+
     @NonNull
     @Override
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.calendar_items, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.calendar_items, parent, false);
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
         layoutParams.height = (int) (parent.getHeight() * 0.166666);
         return new CalenderItemAdapter.ItemViewHolder(view);
@@ -41,10 +45,10 @@ public class CalenderItemAdapter extends RecyclerView.Adapter<CalenderItemAdapte
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
         holder.day.setText(daysOfMonth.get(position));
 
-        holder.itemView.setOnClickListener(v -> {
+        /*holder.itemView.setOnClickListener(v -> {
             holder.cardView.setCardBackgroundColor(context.getResources().getColor(R.color.yellow));
             holder.day.setTextColor(Color.WHITE);
-        });
+        });*/
     }
 
     @Override

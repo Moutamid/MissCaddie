@@ -18,6 +18,9 @@
         android:theme="@style/Theme.MissCaddie"
         tools:targetApi="31">
         <activity
+            android:name=".CaddieDashboardActivity"
+            android:exported="false" />
+        <activity
             android:name=".CaddieManageImagesActivity"
             android:exported="false" />
         <activity
