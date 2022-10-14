@@ -22,7 +22,7 @@ public class Login_Golfer extends AppCompatActivity {
         signInBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Login_Golfer.this , Dashboard_Golfer.class);
+                Intent intent = new Intent(Login_Golfer.this , CaddieDeatilsActivity.class);
                 startActivity(intent);
                 Animatoo.animateZoom(Login_Golfer.this);
             }

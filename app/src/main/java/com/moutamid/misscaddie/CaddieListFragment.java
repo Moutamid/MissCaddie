@@ -30,9 +30,9 @@ public class CaddieListFragment extends Fragment {
         viewPager = view.findViewById(R.id.ProfileViewpager);
 
         CaddieProfileVPadapter caddieProfileVPadapter = new CaddieProfileVPadapter(getActivity().getSupportFragmentManager());
-        caddieProfileVPadapter.addFragment(new CaddieInfoFragment(), "Pending");
-        caddieProfileVPadapter.addFragment(new CaddieServicesFragment(), "Accepted");
-        caddieProfileVPadapter.addFragment(new CaddieReviewsFragment(), "Declined");
+        caddieProfileVPadapter.addFragment(new PendingFragment(), "Pending");
+        caddieProfileVPadapter.addFragment(new AcceptedFragment(), "Accepted");
+        caddieProfileVPadapter.addFragment(new DeclinedFragment(), "Declined");
 
         viewPager.setAdapter(caddieProfileVPadapter);
         tabLayout.setupWithViewPager(viewPager);

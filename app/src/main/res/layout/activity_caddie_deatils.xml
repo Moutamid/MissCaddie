@@ -228,9 +228,9 @@
         android:background="@drawable/shape_yellow"
         android:elevation="10dp"
         android:gravity="center"
-        android:textAllCaps="true"
         android:padding="10dp"
         android:text="Almost Finished"
+        android:textAllCaps="true"
         android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold" />

@@ -1,9 +1,246 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".CaddieBookingDetailsActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <View
+        android:id="@+id/circle"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="-40dp"
+        android:layout_marginTop="-31dp"
+        android:layout_marginBottom="25dp"
+        android:background="@drawable/circle_yellow1" />
+
+    <ImageView
+        android:id="@+id/back_btn"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:src="@drawable/ic_back" />
+
+    <TextView
+        android:id="@+id/text_heading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:gravity="center"
+        android:letterSpacing="0.08"
+        android:text="Details"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:text="Booking By:"
+        android:layout_below="@id/circle"
+        android:textStyle="bold" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profile_img"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_below="@id/label"
+        android:layout_margin="15dp"
+        android:src="@drawable/img1" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="64dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:text="M. Moutamid"
+        android:layout_marginTop="15dp"
+        android:layout_below="@id/label"
+        android:layout_toEndOf="@id/profile_img"
+        android:textStyle="bold"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/totalPrice"
+        android:layout_below="@id/profile_img">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:text="Booked Dates:"
+                android:layout_below="@id/circle"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginBottom="20dp"
+                android:text="5th Oct - 15th Oct"
+                android:layout_below="@id/circle" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:text="Booked Services:"
+                android:layout_below="@id/circle"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginBottom="20dp"
+                android:text="Booking By:"
+                android:layout_below="@id/circle" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:text="Booked Services:"
+                android:layout_below="@id/circle"
+                android:textStyle="bold" />
+
+            <TableLayout
+                android:id="@+id/reviews_golfer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/length_golfer"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="20dp"
+                android:layout_toEndOf="@id/img_golfer">
+                <TableRow>
+                    <TextView
+                        android:layout_column="1"
+                        android:layout_marginRight="15dp"
+                        android:text="\u2022" />
+                    <TextView
+                        android:layout_column="2"
+                        android:layout_width="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:textSize="12sp"
+                        android:text="Ride Along ($80)"></TextView>
+                </TableRow>
+                <TableRow>
+                    <TextView
+                        android:layout_column="1"
+                        android:layout_marginRight="3dp"
+                        android:text="\u2022" />
+                    <TextView
+                        android:layout_column="2"
+                        android:layout_width="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:textSize="12sp"
+                        android:text="Caddie Party ($150)"></TextView>
+                </TableRow>
+                <TableRow>
+                    <TextView
+                        android:layout_column="1"
+                        android:layout_marginRight="3dp"
+                        android:text="\u2022"/>
+                    <TextView
+                        android:layout_column="2"
+                        android:layout_width="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:textSize="12sp"
+                        android:text="more"></TextView>
+                </TableRow>
+            </TableLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:text="Complete Location:"
+                android:layout_below="@id/circle"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginBottom="20dp"
+                android:text="Dean St, Brooklyn, NY, USA"
+                android:layout_below="@id/circle" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:text="Message:"
+                android:layout_below="@id/circle"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginBottom="20dp"
+                android:text="Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+                android:layout_below="@id/circle" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/totalPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/signUpBtn2"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:padding="10dp"
+        android:textAllCaps="true"
+        android:text="Total : US$265"
+        android:textColor="@color/yellow"
+        android:textSize="26sp"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/signUpBtn2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/shape_yellow"
+        android:elevation="10dp"
+        android:gravity="center"
+        android:textAllCaps="true"
+        android:padding="10dp"
+        android:text="Accept Booking"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+</RelativeLayout>
