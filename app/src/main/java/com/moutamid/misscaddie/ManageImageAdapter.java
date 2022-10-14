@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,10 +18,14 @@ import java.util.ArrayList;
 public class ManageImageAdapter extends RecyclerView.Adapter<ManageImageAdapter.ImageViewHolder> {
     Context context;
     ArrayList<ManageImageModel> imageModelArrayList;
+    ManageImageListner clickListner;
+    TextView heading;
 
-    public ManageImageAdapter(Context context, ArrayList<ManageImageModel> imageModelArrayList) {
+    public ManageImageAdapter(Context context, ArrayList<ManageImageModel> imageModelArrayList, ManageImageListner clickListner, TextView heading) {
         this.context = context;
         this.imageModelArrayList = imageModelArrayList;
+        this.clickListner = clickListner;
+        this.heading = heading;
     }
 
     @NonNull
@@ -41,21 +46,18 @@ public class ManageImageAdapter extends RecyclerView.Adapter<ManageImageAdapter.
 
         holder.itemView.setOnClickListener(v -> {
             if (model.isState()){
-                showDialog();
+                clickListner.onClick(imageModelArrayList.get(holder.getAdapterPosition()));
             } else {
                 imageModelArrayList.remove(position);
                 notifyItemRemoved(position);
                 notifyDataSetChanged();
+                if (imageModelArrayList.size() == 1){
+                    heading.setText("Manage" );
+                } else {
+                    heading.setText("Manage (" + (imageModelArrayList.size() - 1) + ")" );
+                }
             }
         });
-    }
-
-    private void showDialog() {
-        Toast.makeText(context, "Add", Toast.LENGTH_SHORT).show();
-        /*Intent intent = new Intent(Intent.ACTION_PICK,
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-        context.getApplicationContext().startActivityForResult(Intent.createChooser(intent, ""), 101);*/
     }
 
     @Override
