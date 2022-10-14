@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/month_year"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:gravity="center"
+        android:text="October 2022"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/inter"
+        android:textColor="@color/black" />
+
+    <LinearLayout
+        android:id="@+id/weekDay_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/month_year"
+        android:layout_marginTop="12dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sun"
+            android:textAllCaps="true"
+            android:layout_weight="1"
+            android:textColor="@color/grey"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:layout_margin="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MON"
+            android:textAllCaps="true"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/grey"
+            android:textSize="16sp"
+            android:layout_margin="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tue"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textAllCaps="true"
+            android:textColor="@color/grey"
+            android:textSize="16sp"
+            android:layout_margin="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Wed"
+            android:textAllCaps="true"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:textColor="@color/grey"
+            android:textSize="16sp"
+            android:layout_margin="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thu"
+            android:textAllCaps="true"
+            android:layout_weight="1"
+            android:textColor="@color/grey"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:layout_margin="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fri"
+            android:textAllCaps="true"
+            android:layout_weight="1"
+            android:textColor="@color/grey"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:layout_margin="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sat"
+            android:textAllCaps="true"
+            android:layout_weight="1"
+            android:textColor="@color/grey"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:layout_margin="5dp" />
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/calendersDaysRV"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/weekDay_layout"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp" />
+
+</RelativeLayout>
