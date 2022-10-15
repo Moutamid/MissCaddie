@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
@@ -17,7 +18,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class CaddieHomeFragment extends Fragment {
-    TextView welcomeText, datetext;
+    TextView welcomeText, datetext, viewCalender;
 
     public CaddieHomeFragment() {
         // Required empty public constructor
@@ -31,6 +32,11 @@ public class CaddieHomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_caddie_home, container, false);
         welcomeText = view.findViewById(R.id.text_heading);
         datetext = view.findViewById(R.id.date);
+        viewCalender = view.findViewById(R.id.view_cal);
+
+        viewCalender.setOnClickListener(v -> {
+            FragmentManager.findFragment(view).getParentFragmentManager().beginTransaction().replace(R.id.fragment_container, new CaddieCalenderFragment()).commit();
+        });
 
         greetingMessage();
         return view;

@@ -178,7 +178,7 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/spinner_booking"
+        android:id="@+id/booking_dates"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/bookingDatesTV"
@@ -194,7 +194,7 @@
         android:id="@+id/golfCourse"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/spinner_booking"
+        android:layout_below="@+id/booking_dates"
         android:textSize="14sp"
         android:textStyle="bold"
         android:fontFamily="@font/roboto"

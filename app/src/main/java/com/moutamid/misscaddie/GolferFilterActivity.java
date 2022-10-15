@@ -2,7 +2,9 @@ package com.moutamid.misscaddie;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.util.Pair;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
+import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 
 public class GolferFilterActivity extends AppCompatActivity {
     View close_btn;
@@ -19,6 +23,7 @@ public class GolferFilterActivity extends AppCompatActivity {
     ImageView iconsNot, iconWill;
     boolean willingState = true, notWillingState = false;
     CardView willingCard, notWillingCard;
+    TextView booking_dates;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +39,32 @@ public class GolferFilterActivity extends AppCompatActivity {
         notWillingCard = findViewById(R.id.notWilling_layoutCard);
         willingTv = findViewById(R.id.willing_tv);
         notWillingTv = findViewById(R.id.notwilling_tv);
+        booking_dates = findViewById(R.id.booking_dates);
 
         close_btn.setOnClickListener(v -> {
             Intent intent = new Intent(GolferFilterActivity.this , Dashboard_Golfer.class);
             startActivity(intent);
             Animatoo.animateZoom(GolferFilterActivity.this);
         });
+
+        MaterialDatePicker.Builder<Pair<Long, Long>> materialDateBuilder = MaterialDatePicker.Builder.dateRangePicker();
+        materialDateBuilder.setTitleText("SELECT A DATE");
+
+        final MaterialDatePicker materialDatePicker = materialDateBuilder.build();
+
+        booking_dates.setOnClickListener(v -> {
+            materialDatePicker.show(getSupportFragmentManager(), "MATERIAL_DATE_PICKER");
+        });
+
+        materialDatePicker.addOnPositiveButtonClickListener(
+                new MaterialPickerOnPositiveButtonClickListener() {
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onPositiveButtonClick(Object selection) {
+                        booking_dates.setText("Selected Date is (" + materialDatePicker.getHeaderText() + ")");
+                    }
+                });
+
 
         notWillingCard.setOnClickListener(v -> {
                     if (notWillingState) {

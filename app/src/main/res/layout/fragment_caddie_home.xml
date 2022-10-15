@@ -267,7 +267,7 @@
     </androidx.cardview.widget.CardView>
 
     <TextView
-        android:id="@+id/cont_btn2"
+        android:id="@+id/view_cal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/banner"
@@ -279,8 +279,8 @@
         android:elevation="10dp"
         android:gravity="center"
         android:padding="10dp"
-        android:textAllCaps="true"
         android:text="View Calendar"
+        android:textAllCaps="true"
         android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold" />
