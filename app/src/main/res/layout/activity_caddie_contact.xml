@@ -54,16 +54,18 @@
         android:textSize="14sp"
         android:textStyle="bold" />
 
-    <Spinner
+    <TextView
         android:id="@+id/spinner_booking"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/bookingDatesTV"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="2dp"
+        android:textColor="@color/black"
+        android:layout_marginTop="4dp"
         android:layout_marginRight="20dp"
-        android:entries="@array/booking_dates"
-        android:gravity="start" />
+        android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24"
+        android:gravity="start"
+        android:text="Select Date ( 5 Oct - 15 Oct )" />
 
     <TextView
         android:id="@+id/golfCourse"
@@ -87,8 +89,8 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="2dp"
         android:layout_marginRight="20dp"
-        android:gravity="start"
-        android:entries="@array/booking_dates" />
+        android:entries="@array/usa_states"
+        android:gravity="start" />
 
     <EditText
         android:id="@+id/location"

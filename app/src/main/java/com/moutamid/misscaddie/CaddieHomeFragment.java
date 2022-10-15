@@ -1,64 +1,58 @@
 package com.moutamid.misscaddie;
 
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CaddieHomeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
+
 public class CaddieHomeFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    TextView welcomeText, datetext;
 
     public CaddieHomeFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CaddieHomeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static CaddieHomeFragment newInstance(String param1, String param2) {
-        CaddieHomeFragment fragment = new CaddieHomeFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_caddie_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_caddie_home, container, false);
+        welcomeText = view.findViewById(R.id.text_heading);
+        datetext = view.findViewById(R.id.date);
+
+        greetingMessage();
+        return view;
+    }
+
+    private void greetingMessage() {
+        Calendar c = Calendar.getInstance();
+        int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
+
+        DateFormat df = new DateFormat();
+        String d = df.format("dd MMM, yyyy", new Date()).toString();
+
+        datetext.setText(d);
+
+        if(timeOfDay >= 0 && timeOfDay < 12){
+            welcomeText.setText("Good Morning");
+        }else if(timeOfDay >= 12 && timeOfDay < 16){
+            welcomeText.setText("Good Afternoon");
+        }else if(timeOfDay >= 16 && timeOfDay < 21){
+            welcomeText.setText("Good Evening");
+        }else if(timeOfDay >= 21 && timeOfDay < 24){
+            welcomeText.setText("Good Night");
+        }
     }
 }
