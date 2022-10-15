@@ -1,6 +1,7 @@
 package com.moutamid.misscaddie;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
@@ -16,7 +17,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class CaddieProfileFragment extends Fragment {
-    CardView profileBtn, serviceBtn;
+    CardView profileBtn, serviceBtn, privacybtn, termsbtn;
     TextView welcomeText, datetext;
 
     public CaddieProfileFragment() {
@@ -32,9 +33,31 @@ public class CaddieProfileFragment extends Fragment {
 
         profileBtn = view.findViewById(R.id.profilebtn);
         serviceBtn = view.findViewById(R.id.servicebtn);
+        termsbtn = view.findViewById(R.id.termsbtn);
+        privacybtn = view.findViewById(R.id.privacybtn);
         welcomeText = view.findViewById(R.id.text_heading);
         datetext = view.findViewById(R.id.date);
         greetingMessage();
+
+        termsbtn.setOnClickListener(v -> {
+            Uri webpage = Uri.parse("https://www.google.com");
+            Intent webIntent = new Intent(Intent.ACTION_VIEW, webpage);
+            try {
+                startActivity(webIntent);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        });
+
+        privacybtn.setOnClickListener(v -> {
+            Uri webpage = Uri.parse("https://www.google.com");
+            Intent webIntent = new Intent(Intent.ACTION_VIEW, webpage);
+            try {
+                startActivity(webIntent);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        });
 
         profileBtn.setOnClickListener(v -> {
             startActivity(new Intent(getActivity().getApplicationContext(), CaddieEditProfileActivity.class));
