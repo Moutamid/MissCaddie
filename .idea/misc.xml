@@ -5,6 +5,7 @@
       <map>
         <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1195" />
         <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/drawable-v24/unselected_box.xml" value="0.216" />
+        <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/drawable/arrow_right.xml" value="0.196" />
         <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/drawable/bottomborder.xml" value="0.216" />
         <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/drawable/calender_icon.xml" value="0.1125" />
         <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/drawable/checkbox_style.xml" value="0.216" />
@@ -67,6 +68,7 @@
         <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/layout/fragment_caddie_profile.xml" value="0.25" />
         <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/layout/fragment_caddie_reviews.xml" value="0.33" />
         <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/layout/fragment_caddie_services.xml" value="0.33" />
+        <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/layout/fragment_pending.xml" value="0.1718683197947841" />
         <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/layout/image_slider_layout.xml" value="0.1718683197947841" />
         <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/layout/image_slider_profile_layout.xml" value="0.25" />
         <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/layout/manage_image_card.xml" value="0.18" />

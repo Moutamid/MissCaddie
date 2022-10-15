@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +22,7 @@ public class CaddieManageImagesActivity extends AppCompatActivity {
     ManageImageAdapter adapter;
     ArrayList<ManageImageModel> list;
     ManageImageModel model;
+    ImageView backbtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +31,7 @@ public class CaddieManageImagesActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.manageImageRV);
         heading = findViewById(R.id.text_heading);
+        backbtn = findViewById(R.id.back_btn);
 
         list = new ArrayList<>();
 
@@ -43,6 +46,10 @@ public class CaddieManageImagesActivity extends AppCompatActivity {
 
         adapter = new ManageImageAdapter(CaddieManageImagesActivity.this, list, clickListner, heading);
         recyclerView.setAdapter(adapter);
+
+        backbtn.setOnClickListener(v -> {
+            onBackPressed();
+        });
 
     }
 

@@ -9,7 +9,6 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/service_listRC"
         android:layout_width="match_parent"
-        android:layout_weight="1"
         android:layout_height="wrap_content" />
 
     <TextView
