@@ -51,17 +51,6 @@
         android:textSize="20sp"
         android:textStyle="bold" />
 
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="15dp"
-        android:layout_below="@+id/text_heading">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView_golfer"
                 android:layout_width="match_parent"
@@ -69,13 +58,11 @@
                 android:nestedScrollingEnabled="false"
                 android:orientation="vertical"
                 android:scrollbars="vertical"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="30dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:layout_below="@+id/text_heading"
                 tools:listitem="@layout/requestes_card" />
 
-        </LinearLayout>
-
-    </androidx.core.widget.NestedScrollView>
 
 
 </RelativeLayout>

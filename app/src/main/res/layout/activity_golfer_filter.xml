@@ -84,62 +84,83 @@
         android:layout_marginRight="20dp"
         android:orientation="horizontal"
         android:layout_marginLeft="20dp">
-
-        <LinearLayout
-            android:id="@+id/notWilling_layout"
+        
+        <androidx.cardview.widget.CardView
+            android:id="@+id/notWilling_layoutCard"
             android:layout_width="match_parent"
-            android:gravity="center"
-            android:padding="12dp"
             android:layout_weight="1"
             android:layout_marginRight="6dp"
-            android:background="@drawable/unselected_box"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/notWilling_icon"
-                android:layout_width="62dp"
-                android:layout_height="62dp"
-                android:src="@drawable/ic_charm_cross2"/>
-
-            <TextView
+            <LinearLayout
+                android:id="@+id/notWilling"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Not Willing"
                 android:gravity="center"
-                android:fontFamily="@font/roboto"
-                android:textSize="16sp"
-                android:layout_marginTop="5dp" />
+                android:padding="12dp"
+                android:layout_weight="1"
+                android:background="@drawable/unselected_box"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-        </LinearLayout>
+                <ImageView
+                    android:id="@+id/notWilling_icon"
+                    android:layout_width="62dp"
+                    android:layout_height="62dp"
+                    android:src="@drawable/ic_charm_cross"/>
 
-        <LinearLayout
-            android:id="@+id/Willing_layout"
+                <TextView
+                    android:id="@+id/notwilling_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Not Willing"
+                    android:gravity="center"
+                    android:textColor="@color/black_light"
+                    android:fontFamily="@font/roboto"
+                    android:textSize="16sp"
+                    android:layout_marginTop="5dp" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/willing_layoutCard"
             android:layout_width="match_parent"
-            android:gravity="center"
-            android:padding="12dp"
             android:layout_weight="1"
             android:layout_marginLeft="6dp"
-            android:background="@drawable/selected_box"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/Willing_icon"
-                android:layout_width="62dp"
-                android:layout_height="62dp"
-                android:src="@drawable/ic_charm_tick1"/>
-
-            <TextView
+            <LinearLayout
+                android:id="@+id/willing"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Not Willing"
                 android:gravity="center"
-                android:fontFamily="@font/roboto"
-                android:textSize="16sp"
-                android:layout_marginTop="5dp" />
+                android:padding="12dp"
+                android:layout_weight="1"
+                android:background="@drawable/selected_box"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-        </LinearLayout>
+                <ImageView
+                    android:id="@+id/willing_icon"
+                    android:layout_width="62dp"
+                    android:layout_height="62dp"
+                    android:src="@drawable/ic_charm_tick1"/>
+
+                <TextView
+                    android:id="@+id/willing_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Willing"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/roboto"
+                    android:textSize="16sp"
+                    android:layout_marginTop="5dp" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
     </LinearLayout>
 
     <TextView

@@ -43,11 +43,11 @@
             android:id="@+id/price_golfer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
             android:layout_toEndOf="@id/name_golfer"
             android:fontFamily="@font/roboto"
             android:letterSpacing="0.05"
             android:text="(US$65)"
-            android:layout_marginLeft="3dp"
             android:textColor="@color/green"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -56,92 +56,55 @@
             android:id="@+id/status_golfer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
             android:layout_toEndOf="@id/price_golfer"
             android:fontFamily="@font/roboto"
             android:letterSpacing="0.05"
             android:text="(Declined)"
-            android:layout_marginLeft="3dp"
             android:textColor="@color/red"
             android:textSize="18sp"
             android:textStyle="bold" />
 
         <ImageView
+            android:id="@+id/checkBtn"
             android:layout_width="34dp"
             android:layout_height="34dp"
-            android:src="@drawable/ic_charm_tick1"
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true" />
 
-            <TextView
-                android:id="@+id/length_golfer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto"
-                android:layout_marginLeft="12dp"
-                android:text="5th Oct - 15 Oct"
-                android:layout_marginTop="5dp"
-                android:layout_below="@id/name_golfer"
-                android:layout_toEndOf="@id/img_golfer"
-                android:textColor="@color/grey" />
-
-        <TableLayout
-            android:id="@+id/reviews_golfer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/length_golfer"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="5dp"
-            android:layout_toEndOf="@id/img_golfer">
-            <TableRow>
-                <TextView
-                    android:layout_column="1"
-                    android:layout_marginRight="15dp"
-                    android:text="\u2022" />
-                <TextView
-                    android:layout_column="2"
-                    android:layout_width="wrap_content"
-                    android:fontFamily="@font/roboto"
-                    android:textSize="12sp"
-                    android:text="Ride Along ($80)"></TextView>
-            </TableRow>
-            <TableRow>
-                <TextView
-                    android:layout_column="1"
-                    android:layout_marginRight="3dp"
-                    android:text="\u2022" />
-                <TextView
-                    android:layout_column="2"
-                    android:layout_width="wrap_content"
-                    android:fontFamily="@font/roboto"
-                    android:textSize="12sp"
-                    android:text="Caddie Party ($150)"></TextView>
-            </TableRow>
-            <TableRow>
-                <TextView
-                    android:layout_column="1"
-                    android:layout_marginRight="3dp"
-                    android:text="\u2022"/>
-                <TextView
-                    android:layout_column="2"
-                    android:layout_width="wrap_content"
-                    android:fontFamily="@font/roboto"
-                    android:textSize="12sp"
-                    android:text="more"></TextView>
-            </TableRow>
-        </TableLayout>
-
         <TextView
-            android:id="@+id/reviews_golfer2"
+            android:id="@+id/date_golfer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/name_golfer"
             android:layout_marginLeft="12dp"
             android:layout_marginTop="5dp"
-            android:textSize="14sp"
-            android:layout_below="@+id/reviews_golfer"
             android:layout_toEndOf="@id/img_golfer"
             android:fontFamily="@font/roboto"
-            android:textStyle="bold"
-            android:text="Dean St, Brooklyn, NY, USA" />
+            android:text="5th Oct - 15 Oct"
+            android:textColor="@color/grey" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/tableRowRV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/date_golfer"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@id/img_golfer" />
+
+        <TextView
+            android:id="@+id/address_golfer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tableRowRV"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@id/img_golfer"
+            android:fontFamily="@font/roboto"
+            android:text="Dean St, Brooklyn, NY, USA"
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
 
     </RelativeLayout>

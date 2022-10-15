@@ -14,5 +14,6 @@
     <color name="greyDark">#AAAAAA</color>
     <color name="red">#F24E1E</color>
     <color name="redD">#F14336</color>
+    <color name="blue">#2196F3</color>
     <color name="statusbar">#8021C17C</color>
 </resources>
