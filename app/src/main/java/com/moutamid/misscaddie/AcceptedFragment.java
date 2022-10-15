@@ -3,62 +3,75 @@ package com.moutamid.misscaddie;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link AcceptedFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+import java.util.List;
+
 public class AcceptedFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    RecyclerView requestRC;
 
     public AcceptedFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AcceptedFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static AcceptedFragment newInstance(String param1, String param2) {
-        AcceptedFragment fragment = new AcceptedFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_accepted, container, false);
+
+        requestRC = view.findViewById(R.id.acceptedRC);
+
+        DAPAdapter adapter = new DAPAdapter(RequestItems(), view.getContext());
+
+        requestRC.setAdapter(adapter);
+        requestRC.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        requestRC.setHasFixedSize(false);
+
+        return view;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+    private List<RequestsModel> RequestItems()
+    {
+        List<RequestsModel> itemList = new ArrayList<>();
+
+        RequestsModel item = new RequestsModel(null, "Suleman Ijaz", "5", "Accepted", "5 Oct - 15 Nov", "Dean St, Brooklyn, NY, USA", tableMessage());
+        itemList.add(item);
+
+        RequestsModel item2 = new RequestsModel(null, "M. Moutamid", "65", "Accepted", "15 Oct - 27 Nov", "Dean St, Brooklyn, NY, USA", tableMessage2() );
+        itemList.add(item2);
+        RequestsModel item4 = new RequestsModel(null, "M. Mohamed", "85", "Accepted", "15 Oct - 27 Nov", "Dean St, Brooklyn, NY, USA", tableMessage2() );
+        itemList.add(item4);
+
+
+        return itemList;
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_accepted, container, false);
+    private List<ServiceListModel> tableMessage()
+    {
+        List<ServiceListModel> ChildItemList = new ArrayList<>();
+
+        ChildItemList.add(new ServiceListModel("Ride Along", "80"));
+        ChildItemList.add(new ServiceListModel("Caddie Party", "30"));
+        ChildItemList.add(new ServiceListModel("Service 3", "450"));
+        ChildItemList.add(new ServiceListModel("Service 5", "10"));
+
+        return ChildItemList;
     }
+
+    private List<ServiceListModel> tableMessage2()
+    {
+        List<ServiceListModel> ChildItemList = new ArrayList<>();
+
+        ChildItemList.add(new ServiceListModel("Ride Along", "80"));
+        ChildItemList.add(new ServiceListModel("Caddie Party", "30"));
+
+        return ChildItemList;
+    }
+
 }

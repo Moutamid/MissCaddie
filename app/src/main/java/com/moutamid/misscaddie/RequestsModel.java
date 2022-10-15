@@ -4,12 +4,12 @@ import java.util.List;
 
 public class RequestsModel {
     String image, name, price, status_title, date, address;
-    List<TableRowModel> tableRows;
+    List<ServiceListModel> tableRows;
 
     public RequestsModel() {
     }
 
-    public RequestsModel(String image, String name, String price, String status_title, String date, String address, List<TableRowModel> tableRows) {
+    public RequestsModel(String image, String name, String price, String status_title, String date, String address, List<ServiceListModel> tableRows) {
         this.image = image;
         this.name = name;
         this.price = price;
@@ -67,11 +67,11 @@ public class RequestsModel {
         this.address = address;
     }
 
-    public List<TableRowModel> getTableRows() {
+    public List<ServiceListModel> getTableRows() {
         return tableRows;
     }
 
-    public void setTableRows(List<TableRowModel> tableRows) {
+    public void setTableRows(List<ServiceListModel> tableRows) {
         this.tableRows = tableRows;
     }
 }

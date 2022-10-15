@@ -51,39 +51,36 @@ public class CaddiesRequestsActivity extends AppCompatActivity {
     {
         List<RequestsModel> itemList = new ArrayList<>();
 
-        RequestsModel item = new RequestsModel(null, "Suleman Ijaz", "US$45", "Accepted", "5 Oct - 15 Nov", "Dean St, Brooklyn, NY, USA", tableMessage());
+        RequestsModel item = new RequestsModel(null, "Suleman Ijaz", "5", "Accepted", "5 Oct - 15 Nov", "Dean St, Brooklyn, NY, USA", tableMessage());
         itemList.add(item);
 
-        RequestsModel item2 = new RequestsModel(null, "M. Moutamid", "US$65", "Declined", "15 Oct - 27 Nov", "Dean St, Brooklyn, NY, USA", tableMessage2() );
+        RequestsModel item2 = new RequestsModel(null, "M. Moutamid", "65", "Declined", "15 Oct - 27 Nov", "Dean St, Brooklyn, NY, USA", tableMessage2() );
         itemList.add(item2);
 
-        RequestsModel item3 = new RequestsModel(null, "Andrea Carl", "US$165", "Pending", "15 Oct - 27 Nov", "Dean St, Brooklyn, NY, USA", tableMessage() );
+        RequestsModel item3 = new RequestsModel(null, "Andrea Carl", "165", "Pending", "15 Oct - 27 Nov", "Dean St, Brooklyn, NY, USA", tableMessage() );
         itemList.add(item3);
 
         return itemList;
     }
 
-    // Method to pass the arguments
-    // for the elements
-    // of child RecyclerView
-    private List<TableRowModel> tableMessage()
+    private List<ServiceListModel> tableMessage()
     {
-        List<TableRowModel> ChildItemList = new ArrayList<>();
+        List<ServiceListModel> ChildItemList = new ArrayList<>();
 
-        ChildItemList.add(new TableRowModel("Card 1"));
-        ChildItemList.add(new TableRowModel("Card 2"));
-        ChildItemList.add(new TableRowModel("Card 3"));
-        ChildItemList.add(new TableRowModel("Card 4"));
+        ChildItemList.add(new ServiceListModel("Ride Along", "80"));
+        ChildItemList.add(new ServiceListModel("Caddie Party", "30"));
+        ChildItemList.add(new ServiceListModel("Service 3", "450"));
+        ChildItemList.add(new ServiceListModel("Service 5", "10"));
 
         return ChildItemList;
     }
 
-    private List<TableRowModel> tableMessage2()
+    private List<ServiceListModel> tableMessage2()
     {
-        List<TableRowModel> ChildItemList = new ArrayList<>();
+        List<ServiceListModel> ChildItemList = new ArrayList<>();
 
-        ChildItemList.add(new TableRowModel("Card 1"));
-        ChildItemList.add(new TableRowModel("Card 2"));
+        ChildItemList.add(new ServiceListModel("Ride Along", "80"));
+        ChildItemList.add(new ServiceListModel("Caddie Party", "30"));
 
         return ChildItemList;
     }

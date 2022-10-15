@@ -5,6 +5,8 @@
     <string name="termsG">I agree to <font color="#FFD93F">Terms of Service</font> and <font color="#FFD93F">Privacy Policy</font>.</string>
     <string name="long_lorem">Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</string>
 
+    <string name="bullet">\u2022</string>
+
     <string-array name="booking_dates">
         <item>Select Date (5 Oct - 15 Oct)</item>
         <item>(16 Oct - 26 Oct)</item>

@@ -1,24 +1,33 @@
 package com.moutamid.misscaddie;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CaddieEditProfileActivity extends AppCompatActivity {
     TextView manage;
     ArrayList<SliderItem> SlideimageList;
-    ImageView backBtn;
+    ImageView backBtn, addImg;
     SliderView sliderView;
+    View overlay;
+    CircleImageView profile;
 
 
     @Override
@@ -29,6 +38,12 @@ public class CaddieEditProfileActivity extends AppCompatActivity {
         manage = findViewById(R.id.manage);
         backBtn = findViewById(R.id.back_btn);
         sliderView = findViewById(R.id.image_slider);
+        overlay = findViewById(R.id.overlayProfile);
+        profile = findViewById(R.id.profile_img);
+        addImg = findViewById(R.id.addImg);
+        
+        profile.setOnClickListener(v -> uploadImage());
+        addImg.setOnClickListener(v -> uploadImage());
 
 
         SlideimageList = new ArrayList<>();
@@ -49,5 +64,32 @@ public class CaddieEditProfileActivity extends AppCompatActivity {
             startActivity(new Intent(this, CaddieManageImagesActivity.class));
         });
 
+    }
+
+    private void uploadImage() {
+        Intent intent = new Intent(Intent.ACTION_PICK,
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        startActivityForResult(Intent.createChooser(intent, ""), 202);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        try {
+            if (requestCode == 202) {
+                try{
+                    if (resultCode == RESULT_OK && data != null && data.getClipData() != null) {
+
+                    } else {
+                        Toast.makeText(this, "Please Select Images", Toast.LENGTH_SHORT).show();
+                    }
+                }  catch (Exception e){
+                    Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        } catch (Exception e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 }

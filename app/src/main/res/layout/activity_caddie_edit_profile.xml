@@ -14,6 +14,7 @@
         app:sliderAutoCycleDirection="back_and_forth"
         app:sliderAutoCycleEnabled="true"
         app:sliderIndicatorEnabled="false"
+        android:background="@color/grey"
         app:sliderScrollTimeInSec="1"
         app:sliderStartAutoCycle="true" />
 
@@ -57,15 +58,38 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_img"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
         android:layout_below="@id/image_slider"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="25dp"
         android:layout_marginTop="-40dp"
-        android:src="@drawable/img1"
+        android:src="@drawable/person_fill"
         app:civ_border_color="@color/white"
         app:civ_border_width="2dp" />
+
+    <View
+        android:id="@+id/overlayProfile"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:visibility="gone"
+        android:background="@drawable/circle_yellow1"
+        android:layout_below="@id/image_slider"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="-40dp"
+        android:backgroundTint="@color/black_light" />
+
+    <ImageView
+        android:id="@+id/addImg"
+        android:visibility="gone"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_add"
+        android:layout_below="@id/image_slider"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="45dp"
+        android:layout_marginTop="-20dp" />
 
     <TextView
         android:id="@+id/caddie_name"
