@@ -22,7 +22,7 @@ public class CaddieDeatilsActivity extends AppCompatActivity {
         almostFinished.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(CaddieDeatilsActivity.this , CaddieDeatilsActivity.class);
+                Intent intent = new Intent(CaddieDeatilsActivity.this , CaddieAvailabiltyActivity.class);
                 startActivity(intent);
                 Animatoo.animateZoom(CaddieDeatilsActivity.this);
             }
