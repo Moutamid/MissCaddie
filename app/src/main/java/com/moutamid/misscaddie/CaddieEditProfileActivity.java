@@ -2,7 +2,6 @@ package com.moutamid.misscaddie;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,12 +11,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.tabs.TabItem;
-import com.google.android.material.tabs.TabLayout;
+import com.moutamid.misscaddie.adapters.ImageSliderAdapter;
+import com.moutamid.misscaddie.models.SliderItem;
 import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 

@@ -3,6 +3,7 @@ package com.moutamid.misscaddie;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -19,6 +20,10 @@ public class Caddie_Start3 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_caddie_start3);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(getResources().getColor(R.color.statusbarYellow));
+        }
 
         gs1 = findViewById(R.id.cs3);
         gs1.setOnClickListener(new View.OnClickListener() {

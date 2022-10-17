@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CaddiesRequestsActivity">
+    tools:context=".fragments.CaddiesRequestsActivity">
 
     <View
         android:layout_width="100dp"
@@ -14,17 +14,6 @@
         android:layout_marginLeft="-40dp"
         android:layout_marginTop="-31dp"
         android:background="@drawable/circle_green1" />
-
-    <ImageView
-        android:id="@+id/profiles"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:src="@drawable/ic_profile_circled" />
 
     <ImageView
         android:id="@+id/back_btn"
@@ -51,7 +40,7 @@
         android:textSize="20sp"
         android:textStyle="bold" />
 
-            <androidx.recyclerview.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView_golfer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -62,7 +51,5 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:layout_below="@+id/text_heading"
                 tools:listitem="@layout/requestes_card" />
-
-
 
 </RelativeLayout>

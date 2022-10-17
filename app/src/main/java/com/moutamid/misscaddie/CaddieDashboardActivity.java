@@ -5,12 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.moutamid.misscaddie.fragments.CaddieCalenderFragment;
+import com.moutamid.misscaddie.fragments.CaddieHomeFragment;
+import com.moutamid.misscaddie.fragments.CaddieListFragment;
+import com.moutamid.misscaddie.fragments.CaddieProfileFragment;
 
 public class CaddieDashboardActivity extends AppCompatActivity {
 

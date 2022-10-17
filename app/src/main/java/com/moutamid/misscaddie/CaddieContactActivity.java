@@ -2,14 +2,17 @@ package com.moutamid.misscaddie;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.util.Pair;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -66,10 +69,15 @@ public class CaddieContactActivity extends AppCompatActivity implements Location
             Animatoo.animateSwipeLeft(CaddieContactActivity.this);
         });
 
+
         permissionAccess();
     }
 
+    @SuppressLint("MissingPermission")
     private void permissionAccess() {
+        LocationManager locationManager = (LocationManager) getApplicationContext().getSystemService(LOCATION_SERVICE);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 5, CaddieContactActivity.this);
+
         Dexter.withContext(getApplicationContext())
                 .withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
                 .withListener(new PermissionListener() {

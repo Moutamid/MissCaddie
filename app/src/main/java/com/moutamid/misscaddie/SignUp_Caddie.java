@@ -3,6 +3,7 @@ package com.moutamid.misscaddie;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -17,6 +18,10 @@ public class SignUp_Caddie extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up_caddie);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(getResources().getColor(R.color.statusbarYellow));
+        }
 
         signUpBtn = findViewById(R.id.signUpBtn2);
         signUpBtn.setOnClickListener(new View.OnClickListener() {

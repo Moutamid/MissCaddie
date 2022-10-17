@@ -1,15 +1,9 @@
 package com.moutamid.misscaddie;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
-import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,6 +11,12 @@ import android.widget.TextView;
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
+import com.moutamid.misscaddie.adapters.CaddieProfileVPadapter;
+import com.moutamid.misscaddie.adapters.ImageSliderAdapter;
+import com.moutamid.misscaddie.fragments.CaddieInfoFragment;
+import com.moutamid.misscaddie.fragments.CaddieReviewsFragment;
+import com.moutamid.misscaddie.fragments.CaddieServicesFragment;
+import com.moutamid.misscaddie.models.SliderItem;
 import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;

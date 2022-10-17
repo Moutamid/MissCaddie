@@ -2,8 +2,6 @@ package com.moutamid.misscaddie;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -13,9 +11,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
+import com.moutamid.misscaddie.adapters.CalenderAdapter;
 
-import java.time.LocalDate;
-import java.time.YearMonth;
 import java.util.ArrayList;
 
 public class CaddieAvailabiltyActivity extends AppCompatActivity{

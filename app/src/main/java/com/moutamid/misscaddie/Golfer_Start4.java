@@ -3,6 +3,7 @@ package com.moutamid.misscaddie;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -17,6 +18,10 @@ public class Golfer_Start4 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_golfer_start4);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(getResources().getColor(R.color.statusbarYellow));
+        }
 
         getStrarted = findViewById(R.id.getStrarted);
         getStrarted.setOnClickListener(new View.OnClickListener() {

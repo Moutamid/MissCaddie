@@ -12,8 +12,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.moutamid.misscaddie.adapters.ManageImageAdapter;
+import com.moutamid.misscaddie.listners.ManageImageListner;
+import com.moutamid.misscaddie.models.ManageImageModel;
+
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 
 public class CaddieManageImagesActivity extends AppCompatActivity {

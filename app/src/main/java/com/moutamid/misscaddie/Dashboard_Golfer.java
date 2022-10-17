@@ -5,10 +5,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
+import com.moutamid.misscaddie.adapters.Adapter_Golfer;
+import com.moutamid.misscaddie.fragments.CaddiesRequestsActivity;
+import com.moutamid.misscaddie.models.Model_Golfer;
 
 import java.util.ArrayList;
 
