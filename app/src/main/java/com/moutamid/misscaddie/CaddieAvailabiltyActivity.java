@@ -22,7 +22,6 @@ public class CaddieAvailabiltyActivity extends AppCompatActivity{
     CalenderAdapter adapter;
     ArrayList<String> months = new ArrayList<>();
     TextView almostFinished;
-    boolean state = false;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -64,6 +63,7 @@ public class CaddieAvailabiltyActivity extends AppCompatActivity{
     }
 
     public void OctoberDatesClick(View view) {
+        boolean state = false;
         TextView t = (TextView) view;
         Toast.makeText(this, "October " + t.getText() + ", 2022", Toast.LENGTH_SHORT).show();
         if (state){
@@ -78,6 +78,7 @@ public class CaddieAvailabiltyActivity extends AppCompatActivity{
     }
 
     public void NovemberDatesClick(View view) {
+        boolean state = false;
         TextView t = (TextView) view;
         Toast.makeText(this, "November " + t.getText() + ", 2022", Toast.LENGTH_SHORT).show();
         if (state){
@@ -92,6 +93,7 @@ public class CaddieAvailabiltyActivity extends AppCompatActivity{
     }
 
     public void DecemberDatesClick(View view) {
+        boolean state = false;
         TextView t = (TextView) view;
         Toast.makeText(this, "December " + t.getText() + ", 2022", Toast.LENGTH_SHORT).show();
         if (state){
