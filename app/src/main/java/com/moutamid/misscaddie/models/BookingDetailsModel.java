@@ -1,12 +1,27 @@
 package com.moutamid.misscaddie.models;
 
 public class BookingDetailsModel {
-    String personImage, personName, date, location, message;
+    String personImage, personName, date, location, message, services;
 
     public BookingDetailsModel() {
     }
 
+    public BookingDetailsModel(String personImage, String personName, String date, String location, String message, String services) {
+        this.personImage = personImage;
+        this.personName = personName;
+        this.date = date;
+        this.location = location;
+        this.message = message;
+        this.services = services;
+    }
 
+    public String getServices() {
+        return services;
+    }
+
+    public void setServices(String services) {
+        this.services = services;
+    }
 
     public String getPersonImage() {
         return personImage;

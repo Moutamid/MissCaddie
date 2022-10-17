@@ -73,9 +73,9 @@ public class RequestesAdapter extends RecyclerView.Adapter<RequestesAdapter.VH> 
         holder.service_list.setText(serviceList);
         //Glide.with(context).load(model.getImage()).into(holder.image);
 
-        holder.itemView.setOnClickListener(v -> {
+        /*holder.itemView.setOnClickListener(v -> {
             context.startActivity(new Intent(context.getApplicationContext(), CaddieBookingDetailsActivity.class));
-        });
+        });*/
 
     }
 
