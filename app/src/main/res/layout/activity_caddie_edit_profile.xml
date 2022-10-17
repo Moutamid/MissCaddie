@@ -192,34 +192,32 @@
                 android:textSize="22sp"
                 android:fontFamily="@font/roboto" />
 
-            <EditText
-                android:id="@+id/et_city"
+            <TextView
+                android:id="@+id/GolfCourseStateTV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="12dp"
-                android:background="@drawable/et_bg"
+                android:layout_below="@+id/text_heading"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="35dp"
+                android:layout_marginRight="20dp"
                 android:fontFamily="@font/roboto"
-                android:hint="City"
-                android:inputType="textPersonName"
-                android:padding="15dp"
-                android:textColorHint="@color/grey" />
+                android:text="Golf Course State"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/et_state"
+            <Spinner
+                android:id="@+id/spinner_states"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="12dp"
-                android:background="@drawable/et_bg"
-                android:fontFamily="@font/roboto"
-                android:hint="State"
-                android:inputType="textPersonName"
-                android:padding="15dp"
-                android:textColorHint="@color/grey" />
+                android:layout_below="@id/bookingDatesTV"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="20dp"
+                android:entries="@array/usa_states"
+                android:gravity="start" />
+
             <EditText
                 android:id="@+id/et_location"
                 android:layout_width="match_parent"
@@ -227,6 +225,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="12dp"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/et_bg"
                 android:fontFamily="@font/roboto"
                 android:hint="Complete location"

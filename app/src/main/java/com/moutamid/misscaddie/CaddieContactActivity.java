@@ -80,13 +80,7 @@ public class CaddieContactActivity extends AppCompatActivity implements Location
 
                     @Override
                     public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
-                        PermissionListener dialogPermissionListener =
-                                DialogOnDeniedPermissionListener.Builder
-                                        .withContext(getApplicationContext())
-                                        .withTitle("Location permission")
-                                        .withMessage("Location permission is needed to take your Accurate Location")
-                                        .withButtonText(android.R.string.ok)
-                                        .build();
+
                     }
 
                     @Override
