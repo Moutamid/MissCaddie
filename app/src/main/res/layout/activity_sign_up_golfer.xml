@@ -151,16 +151,47 @@
             </RelativeLayout>
     </ScrollView>
 
-    <TextView
+    <LinearLayout
         android:id="@+id/layout_texts"
+        android:layout_above="@id/signUpBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/signUpBtn"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
-        android:textColor="@color/grey"
-        android:text="@string/termsC"
-        android:layout_marginEnd="20dp" />
+        android:layout_marginEnd="20dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="I agree to"
+            android:textColor="@color/grey" />
+
+        <TextView
+            android:id="@+id/termsbtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Terms of Services"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:textColor="@color/green" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="and"
+            android:textColor="@color/grey" />
+
+        <TextView
+            android:id="@+id/privacyBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Privacy Policy"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:textColor="@color/green" />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/signUpBtn"

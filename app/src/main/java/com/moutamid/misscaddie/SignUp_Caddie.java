@@ -3,6 +3,7 @@ package com.moutamid.misscaddie;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -12,7 +13,7 @@ import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 
 public class SignUp_Caddie extends AppCompatActivity {
 
-    TextView signUpBtn;
+    TextView signUpBtn, privacybtn, termsbtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +25,9 @@ public class SignUp_Caddie extends AppCompatActivity {
         }
 
         signUpBtn = findViewById(R.id.signUpBtn2);
+        privacybtn = findViewById(R.id.privacyBtn);
+        termsbtn = findViewById(R.id.termsbtn);
+
         signUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -32,5 +36,26 @@ public class SignUp_Caddie extends AppCompatActivity {
                 Animatoo.animateZoom(SignUp_Caddie.this);
             }
         });
+
+        termsbtn.setOnClickListener(v -> {
+            Uri webpage = Uri.parse("https://www.google.com");
+            Intent webIntent = new Intent(Intent.ACTION_VIEW, webpage);
+            try {
+                startActivity(webIntent);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        });
+
+        privacybtn.setOnClickListener(v -> {
+            Uri webpage = Uri.parse("https://www.google.com");
+            Intent webIntent = new Intent(Intent.ACTION_VIEW, webpage);
+            try {
+                startActivity(webIntent);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        });
+
     }
 }

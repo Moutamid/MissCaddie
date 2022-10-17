@@ -15,19 +15,19 @@ import com.smarteist.autoimageslider.SliderViewAdapter;
 
 import java.util.List;
 
-public class ImageSliderAdapter extends SliderViewAdapter<ImageSliderAdapter.SliderAdapterVH> {
+public class ImageSliderGolferAdapter extends SliderViewAdapter<ImageSliderGolferAdapter.SliderAdapterVH> {
 
     private Context context;
     private List<SliderItem> mSliderItems;
 
-    public ImageSliderAdapter(Context context, List<SliderItem> mSliderItems) {
+    public ImageSliderGolferAdapter(Context context, List<SliderItem> mSliderItems) {
         this.context = context;
         this.mSliderItems = mSliderItems;
     }
 
     @Override
     public SliderAdapterVH onCreateViewHolder(ViewGroup parent) {
-        View inflate = LayoutInflater.from(context).inflate(R.layout.image_slider_profile_layout, parent, false);
+        View inflate = LayoutInflater.from(context).inflate(R.layout.image_slider_layout, parent, false);
         return new SliderAdapterVH(inflate);
     }
 

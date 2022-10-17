@@ -63,47 +63,38 @@ public class CaddieAvailabiltyActivity extends AppCompatActivity{
     }
 
     public void OctoberDatesClick(View view) {
-        boolean state = false;
         TextView t = (TextView) view;
         Toast.makeText(this, "October " + t.getText() + ", 2022", Toast.LENGTH_SHORT).show();
-        if (state){
+        if (t.getBackground() != null){
             t.setBackgroundResource(0);
             t.setTextColor(getResources().getColor(R.color.black));
-            state = false;
         } else {
             t.setBackground(getDrawable(R.drawable.circle_yellow));
             t.setTextColor(getResources().getColor(R.color.white));
-            state = true;
         }
     }
 
     public void NovemberDatesClick(View view) {
-        boolean state = false;
         TextView t = (TextView) view;
         Toast.makeText(this, "November " + t.getText() + ", 2022", Toast.LENGTH_SHORT).show();
-        if (state){
+        if (t.getBackground() != null){
             t.setBackgroundResource(0);
             t.setTextColor(getResources().getColor(R.color.black));
-            state = false;
         } else {
             t.setBackground(getDrawable(R.drawable.circle_yellow));
             t.setTextColor(getResources().getColor(R.color.white));
-            state = true;
         }
     }
 
     public void DecemberDatesClick(View view) {
-        boolean state = false;
         TextView t = (TextView) view;
         Toast.makeText(this, "December " + t.getText() + ", 2022", Toast.LENGTH_SHORT).show();
-        if (state){
+        if (t.getBackground() != null){
             t.setBackgroundResource(0);
             t.setTextColor(getResources().getColor(R.color.black));
-            state = false;
         } else {
             t.setBackground(getDrawable(R.drawable.circle_yellow));
             t.setTextColor(getResources().getColor(R.color.white));
-            state = true;
         }
     }
 }

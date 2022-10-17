@@ -5,13 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.moutamid.misscaddie.adapters.ImageSliderAdapter;
+import com.github.dhaval2404.imagepicker.ImagePicker;
+import com.moutamid.misscaddie.adapters.ImageSliderCaddieAdapter;
+import com.moutamid.misscaddie.adapters.ImageSliderGolferAdapter;
 import com.moutamid.misscaddie.models.SliderItem;
 import com.smarteist.autoimageslider.SliderView;
 
@@ -54,7 +55,7 @@ public class CaddieEditProfileActivity extends AppCompatActivity {
         SlideimageList.add(new SliderItem(img2));
         SlideimageList.add(new SliderItem(img3));
 
-        ImageSliderAdapter adapter = new ImageSliderAdapter(this, SlideimageList);
+        ImageSliderCaddieAdapter adapter = new ImageSliderCaddieAdapter(this, SlideimageList);
 
         sliderView.setSliderAdapter(adapter);
 
@@ -65,27 +66,33 @@ public class CaddieEditProfileActivity extends AppCompatActivity {
     }
 
     private void uploadImage() {
-        Intent intent = new Intent(Intent.ACTION_PICK,
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-        startActivityForResult(Intent.createChooser(intent, ""), 202);
+
+        ImagePicker.with(CaddieEditProfileActivity.this)
+                .crop(600, 600)
+                .compress(1024)
+                .maxResultSize(1080, 1080)
+                .start();
+
+        /*Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.setType("image/*");
+        startActivityForResult(Intent.createChooser(intent, ""), 2);*/
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         try {
-            if (requestCode == 202) {
                 try{
-                    if (resultCode == RESULT_OK && data != null && data.getClipData() != null) {
-
+                    if (resultCode == RESULT_OK && data != null) {
+                        profile.setImageURI(data.getData());
+                        overlay.setVisibility(View.VISIBLE);
+                        addImg.setVisibility(View.VISIBLE);
                     } else {
                         Toast.makeText(this, "Please Select Images", Toast.LENGTH_SHORT).show();
                     }
                 }  catch (Exception e){
                     Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
-            }
         } catch (Exception e) {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }

@@ -12,7 +12,7 @@ import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 import com.moutamid.misscaddie.adapters.CaddieProfileVPadapter;
-import com.moutamid.misscaddie.adapters.ImageSliderAdapter;
+import com.moutamid.misscaddie.adapters.ImageSliderGolferAdapter;
 import com.moutamid.misscaddie.fragments.CaddieInfoFragment;
 import com.moutamid.misscaddie.fragments.CaddieReviewsFragment;
 import com.moutamid.misscaddie.fragments.CaddieServicesFragment;
@@ -53,7 +53,7 @@ public class CaddieProfileActivity extends AppCompatActivity {
         SlideimageList.add(new SliderItem(img2));
         SlideimageList.add(new SliderItem(img3));
 
-        ImageSliderAdapter adapter = new ImageSliderAdapter(this, SlideimageList);
+        ImageSliderGolferAdapter adapter = new ImageSliderGolferAdapter(this, SlideimageList);
 
         sliderView.setSliderAdapter(adapter);
 
