@@ -1,4 +1,4 @@
-package com.moutamid.misscaddie.fragments;
+package com.moutamid.misscaddie;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;

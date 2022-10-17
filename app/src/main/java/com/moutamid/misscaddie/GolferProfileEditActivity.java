@@ -12,7 +12,6 @@ import android.widget.Toast;
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.moutamid.misscaddie.adapters.ManageImageAdapter;
-import com.moutamid.misscaddie.fragments.CaddiesRequestsActivity;
 import com.moutamid.misscaddie.models.ManageImageModel;
 
 import java.util.Collections;

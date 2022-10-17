@@ -55,7 +55,7 @@
             android:name=".CaddieContactActivity"
             android:exported="false" />
         <activity
-            android:name=".fragments.CaddiesRequestsActivity"
+            android:name=".CaddiesRequestsActivity"
             android:exported="false" />
         <activity
             android:name=".GolferFilterActivity"
