@@ -3,6 +3,7 @@ package com.moutamid.misscaddie;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.util.Pair;
 
 import android.Manifest;
@@ -69,15 +70,25 @@ public class CaddieContactActivity extends AppCompatActivity implements Location
             Animatoo.animateSwipeLeft(CaddieContactActivity.this);
         });
 
-
-        permissionAccess();
+        if (permissions()){
+            getlocation();
+        } else {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},1001);
+        }
+        //permissionAccess();
     }
 
     @SuppressLint("MissingPermission")
-    private void permissionAccess() {
+    private void getlocation() {
         LocationManager locationManager = (LocationManager) getApplicationContext().getSystemService(LOCATION_SERVICE);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 5, CaddieContactActivity.this);
+    }
 
+    private boolean permissions() {
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void permissionAccess() {
         Dexter.withContext(getApplicationContext())
                 .withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
                 .withListener(new PermissionListener() {
@@ -102,7 +113,7 @@ public class CaddieContactActivity extends AppCompatActivity implements Location
     public void onLocationChanged(@NonNull Location location) {
         try {
             Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
-            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 101);
             String adress = addresses.get(0).getAddressLine(0);
             et_location.setText(adress);
         } catch (IOException e) {

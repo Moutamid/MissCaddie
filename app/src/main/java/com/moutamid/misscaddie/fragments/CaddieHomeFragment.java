@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.moutamid.misscaddie.R;
 
 import java.util.Calendar;
@@ -20,9 +21,14 @@ import java.util.Date;
 
 public class CaddieHomeFragment extends Fragment {
     TextView welcomeText, datetext, viewCalender;
+    BottomNavigationView navigationView;
 
     public CaddieHomeFragment() {
         // Required empty public constructor
+    }
+
+    public CaddieHomeFragment(BottomNavigationView navigationView) {
+        this.navigationView = navigationView;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -36,6 +42,7 @@ public class CaddieHomeFragment extends Fragment {
         viewCalender = view.findViewById(R.id.view_cal);
 
         viewCalender.setOnClickListener(v -> {
+            navigationView.setSelectedItemId(R.id.calender_menu);
             FragmentManager.findFragment(view).getParentFragmentManager().beginTransaction().replace(R.id.fragment_container, new CaddieCalenderFragment()).commit();
         });
 

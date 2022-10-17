@@ -25,16 +25,17 @@ public class CaddieDashboardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_caddie_dashboard);
         navigationView = findViewById(R.id.bottomNavigation);
         fragmentLayouts = findViewById(R.id.fragment_container);
-
         navigationView.setItemIconTintList(null);
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CaddieHomeFragment()).commit();
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CaddieHomeFragment(navigationView)).commit();
+
         navigationView.setSelectedItemId(R.id.home_menu);
         navigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.home_menu:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CaddieHomeFragment()).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CaddieHomeFragment(navigationView)).commit();
                         break;
                     case R.id.list_menu:
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CaddieListFragment()).commit();

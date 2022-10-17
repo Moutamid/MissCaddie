@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -21,6 +22,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class GolferProfileEditActivity extends AppCompatActivity {
     ImageView back_btn;
     CircleImageView logo;
+    Uri imageURI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +61,7 @@ public class GolferProfileEditActivity extends AppCompatActivity {
         try {
             try{
                 if (resultCode == RESULT_OK && data != null) {
+                    imageURI = data.getData();
                     logo.setImageURI(data.getData());
                 } else {
                     Toast.makeText(this, "Please Select An Images", Toast.LENGTH_SHORT).show();
