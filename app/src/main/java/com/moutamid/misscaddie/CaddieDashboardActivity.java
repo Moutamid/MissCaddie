@@ -5,7 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -18,6 +21,7 @@ public class CaddieDashboardActivity extends AppCompatActivity {
 
     BottomNavigationView navigationView;
     FrameLayout fragmentLayouts;
+    CaddieCalenderFragment calenderFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +30,9 @@ public class CaddieDashboardActivity extends AppCompatActivity {
         navigationView = findViewById(R.id.bottomNavigation);
         fragmentLayouts = findViewById(R.id.fragment_container);
         navigationView.setItemIconTintList(null);
+
+        calenderFragment  = new CaddieCalenderFragment();
+
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CaddieHomeFragment(navigationView)).commit();
 
@@ -52,6 +59,22 @@ public class CaddieDashboardActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
+
+    /**
+     * Errors TODO
+     * */
+
+    public void OctoberDatesClick(View v) {
+        calenderFragment.OctoberDatesClick(v);
+    }
+
+    public void NovemberDatesClick(View v) {
+        calenderFragment.NovemberDatesClick(v);
+    }
+
+    public void DecemberDatesClick(View v) {
+        calenderFragment.DecemberDatesClick(v);
     }
 
 }

@@ -31,12 +31,13 @@ public class CaddieCalenderFragment extends Fragment {
         welcomeText = view.findViewById(R.id.text_heading);
         datetext = view.findViewById(R.id.date);
         greetingMessage();
+
         return view;
     }
 
     public void OctoberDatesClick(View v) {
         TextView t = (TextView) v;
-        Toast.makeText(view.getContext(), "October " + t.getText() + ", 2022", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity().getApplicationContext(), "October " + t.getText() + ", 2022", Toast.LENGTH_SHORT).show();
         if (t.getBackground() != null){
             t.setBackgroundResource(0);
             t.setTextColor(getResources().getColor(R.color.black));
@@ -48,7 +49,7 @@ public class CaddieCalenderFragment extends Fragment {
 
     public void NovemberDatesClick(View v) {
         TextView t = (TextView) v;
-        Toast.makeText(view.getContext(), "November " + t.getText() + ", 2022", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity().getApplicationContext(), "November " + t.getText() + ", 2022", Toast.LENGTH_SHORT).show();
         if (t.getBackground() != null){
             t.setBackgroundResource(0);
             t.setTextColor(getResources().getColor(R.color.black));
@@ -60,7 +61,7 @@ public class CaddieCalenderFragment extends Fragment {
 
     public void DecemberDatesClick(View v) {
         TextView t = (TextView) v;
-        Toast.makeText(view.getContext(), "December " + t.getText() + ", 2022", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity().getApplicationContext(), "December " + t.getText() + ", 2022", Toast.LENGTH_SHORT).show();
         if (t.getBackground() != null){
             t.setBackgroundResource(0);
             t.setTextColor(getResources().getColor(R.color.black));

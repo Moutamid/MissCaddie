@@ -51,6 +51,7 @@ public class CaddieDeatilsActivity extends AppCompatActivity {
             ServiceListModel model = new ServiceListModel("", "");
             list.add(model);
             adapter = new AddServiceAdapter(CaddieDeatilsActivity.this, list);
+            adapter.notifyItemInserted(list.size() - 1);
             addRecyclerRC.setAdapter(adapter);
         });
     }

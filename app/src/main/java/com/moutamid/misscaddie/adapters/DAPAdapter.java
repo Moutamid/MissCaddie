@@ -3,6 +3,7 @@ package com.moutamid.misscaddie.adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,7 +71,14 @@ public class DAPAdapter extends RecyclerView.Adapter<DAPAdapter.VH> {
         //Glide.with(context).load(model.getImage()).into(holder.image);
 
         holder.itemView.setOnClickListener(v -> {
-            context.startActivity(new Intent(context.getApplicationContext(), CaddieBookingDetailsActivity.class));
+            Intent i = new Intent(context.getApplicationContext(), CaddieBookingDetailsActivity.class);
+            i.putExtra("personName", model.getName());
+            i.putExtra("bookingDates", model.getDate());
+            i.putExtra("personImage", model.getImage());
+            i.putExtra("price", ("(US$" + model.getPrice() + ")"));
+            i.putExtra("services", (Parcelable) model.getTableRows());
+
+            context.startActivity(i);
         });
 
     }

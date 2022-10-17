@@ -3,7 +3,7 @@ package com.moutamid.misscaddie.models;
 import java.util.List;
 
 public class RequestsModel {
-    String image, name, price, status_title, date, address;
+    String image, name, price, status_title, date, address, message;
     List<ServiceListModel> tableRows;
 
     public RequestsModel() {
@@ -12,6 +12,17 @@ public class RequestsModel {
     public RequestsModel(String image, String name, String price, String status_title, String date, String address, List<ServiceListModel> tableRows) {
         this.image = image;
         this.name = name;
+        this.price = price;
+        this.status_title = status_title;
+        this.date = date;
+        this.address = address;
+        this.tableRows = tableRows;
+    }
+
+    public RequestsModel(String image, String name, String message, String price, String status_title, String date, String address, List<ServiceListModel> tableRows) {
+        this.image = image;
+        this.name = name;
+        this.message = message;
         this.price = price;
         this.status_title = status_title;
         this.date = date;

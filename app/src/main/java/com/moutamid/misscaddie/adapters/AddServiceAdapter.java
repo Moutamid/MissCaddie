@@ -37,6 +37,7 @@ public class AddServiceAdapter extends RecyclerView.Adapter<AddServiceAdapter.Se
         ServiceListModel model = list.get(position);
         holder.serviceTitle.setText(model.getTitle());
         holder.price.setText(model.getPrice());
+
         holder.deleteBtn.setOnClickListener(v -> {
             list.remove(position);
             notifyItemRemoved(position);
