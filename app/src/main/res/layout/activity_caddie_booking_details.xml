@@ -108,68 +108,11 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/service_list"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginBottom="20dp"
-                android:text="Booking By:"
-                android:layout_below="@id/circle" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:text="Booked Services:"
-                android:layout_below="@id/circle"
-                android:textStyle="bold" />
-
-            <TableLayout
-                android:id="@+id/reviews_golfer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/length_golfer"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="20dp"
-                android:layout_toEndOf="@id/img_golfer">
-                <TableRow>
-                    <TextView
-                        android:layout_column="1"
-                        android:layout_marginRight="15dp"
-                        android:text="\u2022" />
-                    <TextView
-                        android:layout_column="2"
-                        android:layout_width="wrap_content"
-                        android:fontFamily="@font/roboto"
-                        android:textSize="12sp"
-                        android:text="Ride Along ($80)"></TextView>
-                </TableRow>
-                <TableRow>
-                    <TextView
-                        android:layout_column="1"
-                        android:layout_marginRight="3dp"
-                        android:text="\u2022" />
-                    <TextView
-                        android:layout_column="2"
-                        android:layout_width="wrap_content"
-                        android:fontFamily="@font/roboto"
-                        android:textSize="12sp"
-                        android:text="Caddie Party ($150)"></TextView>
-                </TableRow>
-                <TableRow>
-                    <TextView
-                        android:layout_column="1"
-                        android:layout_marginRight="3dp"
-                        android:text="\u2022"/>
-                    <TextView
-                        android:layout_column="2"
-                        android:layout_width="wrap_content"
-                        android:fontFamily="@font/roboto"
-                        android:textSize="12sp"
-                        android:text="more"></TextView>
-                </TableRow>
-            </TableLayout>
-
+                android:layout_toEndOf="@id/img_golfer" />
 
             <TextView
                 android:layout_width="wrap_content"
