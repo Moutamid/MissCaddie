@@ -25,6 +25,8 @@
         <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/drawable/ic_home_selected.xml" value="0.216" />
         <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/drawable/ic_home_unselected.xml" value="0.216" />
         <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/drawable/list_icon.xml" value="0.1125" />
+        <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/drawable/message_recives_bg.xml" value="0.1875" />
+        <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/drawable/message_send_bg.xml" value="0.1875" />
         <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/drawable/profile_icon.xml" value="0.1125" />
         <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/drawable/selected_box.xml" value="0.216" />
         <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/drawable/shape_green.xml" value="0.1195" />
@@ -44,6 +46,8 @@
         <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/layout/activity_caddie_start3.xml" value="0.209375" />
         <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/layout/activity_caddie_start4.xml" value="0.25" />
         <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/layout/activity_caddies_requests.xml" value="0.18890977443609022" />
+        <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/layout/activity_conversation.xml" value="0.25" />
+        <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/layout/activity_converstation.xml" value="0.1718683197947841" />
         <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/layout/activity_dashboard_golfer.xml" value="0.22" />
         <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/layout/activity_golfer_filter.xml" value="0.33" />
         <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/layout/activity_golfer_profile_edit.xml" value="0.25" />
@@ -77,6 +81,8 @@
         <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/layout/image_slider_layout.xml" value="0.1718683197947841" />
         <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/layout/image_slider_profile_layout.xml" value="0.25" />
         <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/layout/manage_image_card.xml" value="0.18" />
+        <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/layout/message_recive_layout.xml" value="0.33" />
+        <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/layout/message_send_layout.xml" value="0.33" />
         <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/layout/requestes_card.xml" value="0.4313304721030043" />
         <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/layout/reviews_card.xml" value="0.5" />
         <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/layout/row_golfer.xml" value="0.67" />
