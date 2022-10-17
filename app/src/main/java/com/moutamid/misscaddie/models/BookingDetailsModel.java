@@ -1,12 +1,16 @@
 package com.moutamid.misscaddie.models;
 
+import java.util.ArrayList;
+
 public class BookingDetailsModel {
-    String personImage, personName, date, location, message, services;
+    String personImage, personName, date, location, message;
+    ArrayList<ServiceListModel> services;
 
     public BookingDetailsModel() {
+
     }
 
-    public BookingDetailsModel(String personImage, String personName, String date, String location, String message, String services) {
+    public BookingDetailsModel(String personImage, String personName, String date, String location, String message, ArrayList<ServiceListModel> services) {
         this.personImage = personImage;
         this.personName = personName;
         this.date = date;
@@ -15,11 +19,11 @@ public class BookingDetailsModel {
         this.services = services;
     }
 
-    public String getServices() {
+    public ArrayList<ServiceListModel> getServices() {
         return services;
     }
 
-    public void setServices(String services) {
+    public void setServices(ArrayList<ServiceListModel> services) {
         this.services = services;
     }
 
