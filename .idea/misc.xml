@@ -3,6 +3,19 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/layout/activity_caddie_availabilty.xml" value="0.14266304347826086" />
+        <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/layout/activity_caddie_contact.xml" value="0.14266304347826086" />
+        <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/layout/activity_caddie_dashboard.xml" value="0.14266304347826086" />
+        <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/layout/activity_caddie_deatils.xml" value="0.14266304347826086" />
+        <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/layout/activity_caddie_edit_profile.xml" value="0.14266304347826086" />
+        <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/layout/activity_caddie_manage_images.xml" value="0.14266304347826086" />
+        <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/layout/activity_caddie_profile.xml" value="0.14266304347826086" />
+        <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/layout/activity_dashboard_golfer.xml" value="0.1" />
+        <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/layout/activity_golfer_profile_edit.xml" value="0.14266304347826086" />
+        <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/layout/activity_register_caddie.xml" value="0.14266304347826086" />
+        <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/layout/activity_sign_up_caddie.xml" value="0.14266304347826086" />
+        <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/layout/activity_sign_up_golfer.xml" value="0.1" />
+        <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/layout/fragment_caddie_profile.xml" value="0.12273550724637682" />
         <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1195" />
         <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/drawable-v24/unselected_box.xml" value="0.216" />
         <entry key="..\:/Users/suleman/Desktop/MissCaddie/app/src/main/res/drawable/arrow_right.xml" value="0.196" />
@@ -115,7 +128,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

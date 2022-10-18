@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "926633363249",
+    "firebase_url": "https://misscaddieapp-default-rtdb.firebaseio.com",
+    "project_id": "misscaddieapp",
+    "storage_bucket": "misscaddieapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:926633363249:android:7ee38d1194e09f7b0e1210",
+        "android_client_info": {
+          "package_name": "com.moutamid.misscaddie"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "926633363249-25qtrge0qoce1rvfg3ou0jh8hgangvq2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.moutamid.misscaddie",
+            "certificate_hash": "309bc07aea5fffbbbf69c8b8435d380078ec8eba"
+          }
+        },
+        {
+          "client_id": "926633363249-s58b0rdqtredv0sabgh1r8h9rvtmes2b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzJRLPqhiT5xidbFqw4j9JIHngENpM7HQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "926633363249-s58b0rdqtredv0sabgh1r8h9rvtmes2b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

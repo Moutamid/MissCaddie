@@ -41,9 +41,12 @@ public class ManageImageAdapter extends RecyclerView.Adapter<ManageImageAdapter.
         ManageImageModel model = imageModelArrayList.get(position);
         if (model.isState()){
             holder.overlay.setVisibility(View.GONE);
+            holder.icon.setBackgroundResource(R.drawable.ic_add);
+        }else {
+            holder.icon.setBackgroundResource(R.drawable.ic_delete);
         }
         holder.image.setImageURI(model.getImage());
-        holder.icon.setBackgroundResource(model.getDrawable());
+        //holder.icon.setBackgroundResource(model.getDrawable());
 
         holder.itemView.setOnClickListener(v -> {
             if (model.isState()){

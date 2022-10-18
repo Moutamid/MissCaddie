@@ -61,7 +61,18 @@
 
     </LinearLayout>
 
-    <ScrollView
+    <DatePicker
+        android:id="@+id/datePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/almostFinished"
+        android:layout_below="@id/layout"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="10dp"
+        android:datePickerMode="calendar"
+        android:headerBackground="@color/yellow" />
+
+  <!--  <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -1884,7 +1895,7 @@
 
         </LinearLayout>
 
-    </ScrollView>
+    </ScrollView>-->
 
     <!--<androidx.recyclerview.widget.RecyclerView
         android:id="@+id/calenderRV"

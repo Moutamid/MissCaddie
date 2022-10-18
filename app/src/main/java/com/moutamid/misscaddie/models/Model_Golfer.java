@@ -1,13 +1,16 @@
 package com.moutamid.misscaddie.models;
 
 public class Model_Golfer {
-    String name , price , length , catagory , place , reviews , status;
-    int image;
+    String id;
+    String name , price,email, password , length , catagory , place , reviews , status;
+    String image;
 
     public Model_Golfer() {
     }
 
-    public Model_Golfer(String name, String price, String length, String catagory, String place, String reviews, String status, int image) {
+    public Model_Golfer(String id,String name, String price, String length, String catagory,
+                        String place, String reviews, String status, String image) {
+        this.id = id;
         this.name = name;
         this.price = price;
         this.length = length;
@@ -15,6 +18,30 @@ public class Model_Golfer {
         this.place = place;
         this.reviews = reviews;
         this.status = status;
+        this.image = image;
+    }
+
+    public Model_Golfer(String id, String name, String email, String password,String image) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.image = image;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
         this.image = image;
     }
 
@@ -74,11 +101,19 @@ public class Model_Golfer {
         this.status = status;
     }
 
-    public int getImage() {
-        return image;
+    public String getEmail() {
+        return email;
     }
 
-    public void setImage(int image) {
-        this.image = image;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

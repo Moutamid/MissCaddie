@@ -4,17 +4,24 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.moutamid.misscaddie.adapters.CalenderAdapter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class CaddieAvailabiltyActivity extends AppCompatActivity{
 
@@ -22,6 +29,11 @@ public class CaddieAvailabiltyActivity extends AppCompatActivity{
     CalenderAdapter adapter;
     ArrayList<String> months = new ArrayList<>();
     TextView almostFinished;
+    private DatePicker picker;
+    FirebaseAuth mAuth;
+    FirebaseUser currrentUser;
+    ProgressDialog dialog;
+    private DatabaseReference db;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -30,14 +42,29 @@ public class CaddieAvailabiltyActivity extends AppCompatActivity{
         setContentView(R.layout.activity_caddie_availabilty);
 
         almostFinished = findViewById(R.id.almostFinished);
+        picker = findViewById(R.id.datePicker);
+
+        mAuth = FirebaseAuth.getInstance();
+        currrentUser = mAuth.getCurrentUser();
+        db = FirebaseDatabase.getInstance().getReference().child("Caddie");
         almostFinished.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(CaddieAvailabiltyActivity.this , CaddieDashboardActivity.class);
+
+                String availabilty = picker.getDayOfMonth() + "/" + (picker.getMonth() + 1) + "/" + picker.getYear();
+                HashMap<String,Object> hashMap = new HashMap<>();
+                hashMap.put("availability",availabilty);
+                db.child(currrentUser.getUid()).updateChildren(hashMap);
+                //Toast.makeText(CaddieAvailabiltyActivity.this,availabilty,Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(CaddieAvailabiltyActivity.this ,
+                        CaddieDashboardActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
+                finish();
                 Animatoo.animateZoom(CaddieAvailabiltyActivity.this);
             }
         });
+
 
         /*calender = findViewById(R.id.calenderRV);
 
@@ -62,7 +89,7 @@ public class CaddieAvailabiltyActivity extends AppCompatActivity{
 
     }
 
-    public void OctoberDatesClick(View view) {
+    /*public void OctoberDatesClick(View view) {
         TextView t = (TextView) view;
         Toast.makeText(this, "October " + t.getText() + ", 2022", Toast.LENGTH_SHORT).show();
         if (t.getBackground() != null){
@@ -96,5 +123,5 @@ public class CaddieAvailabiltyActivity extends AppCompatActivity{
             t.setBackground(getDrawable(R.drawable.circle_yellow));
             t.setTextColor(getResources().getColor(R.color.white));
         }
-    }
+    }*/
 }

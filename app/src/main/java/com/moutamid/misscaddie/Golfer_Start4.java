@@ -3,6 +3,7 @@ package com.moutamid.misscaddie;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -32,6 +33,24 @@ public class Golfer_Start4 extends AppCompatActivity {
                 Animatoo.animateZoom(Golfer_Start4.this);
             }
         });
+
+        if(isOpenAlread()) {
+            Intent intent=new Intent(Golfer_Start4.this, Register_Golfer.class);
+            startActivity(intent);
+            finish();
+        }
+        else
+        {
+            SharedPreferences.Editor editor =getSharedPreferences("slide", MODE_PRIVATE).edit();
+            editor.putBoolean("slide",true);
+            editor.commit();
+        }
+    }
+
+    private boolean isOpenAlread() {
+        SharedPreferences sharedPreferences=getSharedPreferences("slide", MODE_PRIVATE);
+        boolean result= sharedPreferences.getBoolean("slide", false);
+        return result;
     }
 
     @Override

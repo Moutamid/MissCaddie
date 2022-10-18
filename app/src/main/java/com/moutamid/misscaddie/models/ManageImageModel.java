@@ -5,15 +5,15 @@ import android.net.Uri;
 public class ManageImageModel {
     Uri Image;
     boolean state;
-    int drawable;
+ //   int drawable;
 
     public ManageImageModel() {
     }
 
-    public ManageImageModel(Uri image, boolean state, int drawable) {
+    public ManageImageModel(Uri image, boolean state) {
         Image = image;
         this.state = state;
-        this.drawable = drawable;
+      //  this.drawable = drawable;
     }
 
     public Uri getImage() {
@@ -32,11 +32,4 @@ public class ManageImageModel {
         this.state = state;
     }
 
-    public int getDrawable() {
-        return drawable;
-    }
-
-    public void setDrawable(int drawable) {
-        this.drawable = drawable;
-    }
 }

@@ -1,19 +1,32 @@
 package com.moutamid.misscaddie;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.moutamid.misscaddie.adapters.AddServiceAdapter;
+import com.moutamid.misscaddie.databinding.ActivityCaddieDeatilsBinding;
 import com.moutamid.misscaddie.models.ServiceListModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class CaddieDeatilsActivity extends AppCompatActivity {
 
@@ -22,11 +35,18 @@ public class CaddieDeatilsActivity extends AppCompatActivity {
     TextView addService;
     AddServiceAdapter adapter;
     ArrayList<ServiceListModel> list;
+    private ActivityCaddieDeatilsBinding b;
+    FirebaseAuth mAuth;
+    FirebaseUser currrentUser;
+    ProgressDialog dialog;
+    private String  state;
+    private DatabaseReference db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_caddie_deatils);
+        b = ActivityCaddieDeatilsBinding.inflate(getLayoutInflater());
+        setContentView(b.getRoot());
 
         almostFinished = findViewById(R.id.almostFinished);
         addRecyclerRC = findViewById(R.id.addServiceRV);
@@ -34,25 +54,84 @@ public class CaddieDeatilsActivity extends AppCompatActivity {
 
         list = new ArrayList<>();
 
+        mAuth = FirebaseAuth.getInstance();
+        currrentUser = mAuth.getCurrentUser();
+        db = FirebaseDatabase.getInstance().getReference().child("Caddie");
+        //serviceDb = FirebaseDatabase.getInstance().getReference().child("Services");
         addRecyclerRC.setLayoutManager(new LinearLayoutManager(this));
         addRecyclerRC.setHasFixedSize(false);
 
+        b.spinnerStates.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                state = adapterView.getItemAtPosition(i).toString();
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
         almostFinished.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(CaddieDeatilsActivity.this , CaddieAvailabiltyActivity.class);
-                startActivity(intent);
-                Animatoo.animateZoom(CaddieDeatilsActivity.this);
+                String location = b.etLocation.getText().toString();
+                String service = b.etService.getText().toString();
+                String price = b.etPrice.getText().toString();
+                if (!TextUtils.isEmpty(location) && !TextUtils.isEmpty(service) && !TextUtils.isEmpty(price)) {
+                    saveData(location, service, price);
+                }
             }
         });
 
         addService.setOnClickListener(v -> {
-            ServiceListModel model = new ServiceListModel("", "");
-            list.add(model);
-            adapter = new AddServiceAdapter(CaddieDeatilsActivity.this, list);
-            adapter.notifyItemInserted(list.size() - 1);
-            addRecyclerRC.setAdapter(adapter);
+            String serviceName = b.etService.getText().toString();
+            String servicePrice = b.etPrice.getText().toString();
+            if (!TextUtils.isEmpty(serviceName) && !TextUtils.isEmpty(servicePrice)) {
+                String key = db.push().getKey();
+                ServiceListModel model = new ServiceListModel(serviceName, servicePrice);
+                db.child(currrentUser.getUid()).child("services").child(key).setValue(model);
+
+            }
         });
+        getServices();
+    }
+
+    private void getServices() {
+        db.child(currrentUser.getUid()).child("services")
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if(snapshot.exists()){
+                            list.clear();
+                            for (DataSnapshot ds : snapshot.getChildren()){
+                                ServiceListModel model= ds.getValue(ServiceListModel.class);
+                                list.add(model);
+                            }
+                            adapter = new AddServiceAdapter(CaddieDeatilsActivity.this, list);
+                            adapter.notifyItemInserted(list.size() - 1);
+                            addRecyclerRC.setAdapter(adapter);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+    }
+
+    private void saveData(String location, String service, String price) {
+        HashMap<String,Object> hashMap = new HashMap<>();
+        hashMap.put("state",state);
+        hashMap.put("place",location);
+        db.child(currrentUser.getUid()).updateChildren(hashMap);
+        String key = db.push().getKey();
+        ServiceListModel model = new ServiceListModel(service, price);
+        db.child(currrentUser.getUid()).child("services").child(key).setValue(model);
+        Intent intent = new Intent(CaddieDeatilsActivity.this , CaddieAvailabiltyActivity.class);
+        startActivity(intent);
+        finish();
+        Animatoo.animateZoom(CaddieDeatilsActivity.this);
     }
 }

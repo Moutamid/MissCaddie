@@ -10,11 +10,11 @@
         android:id="@+id/image_slider"
         android:layout_width="match_parent"
         android:layout_height="200dp"
+        android:background="@color/grey"
         app:sliderAnimationDuration="600"
         app:sliderAutoCycleDirection="back_and_forth"
         app:sliderAutoCycleEnabled="true"
         app:sliderIndicatorEnabled="false"
-        android:background="@color/grey"
         app:sliderScrollTimeInSec="1"
         app:sliderStartAutoCycle="true" />
 
@@ -95,15 +95,14 @@
         android:id="@+id/caddie_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:textColor="@color/black"
         android:layout_below="@id/profile_img"
-        android:text="M. Moutmid"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="15dp"
         android:fontFamily="@font/montserrat_bold"
         android:letterSpacing="0.08"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="15dp" />
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/place_caddie"
@@ -113,7 +112,6 @@
         android:layout_marginLeft="25dp"
         android:layout_marginTop="5dp"
         android:fontFamily="@font/roboto"
-        android:text="New York"
         android:textSize="16sp" />
 
     <TextView
@@ -126,7 +124,6 @@
         android:layout_marginRight="15dp"
         android:fontFamily="@font/roboto"
         android:letterSpacing="0.05"
-        android:text="US$65"
         android:textColor="@color/yellow"
         android:textSize="18sp"
         android:textStyle="bold" />

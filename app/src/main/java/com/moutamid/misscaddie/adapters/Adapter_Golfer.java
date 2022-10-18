@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.moutamid.misscaddie.CaddieProfileActivity;
 import com.moutamid.misscaddie.models.Model_Golfer;
 import com.moutamid.misscaddie.R;
@@ -45,7 +46,7 @@ public class Adapter_Golfer extends RecyclerView.Adapter<Adapter_Golfer.HolderAn
         String reviews_tv = modelAndroid.getReviews();
         String status_tv = modelAndroid.getStatus();
 
-        int image_1 = modelAndroid.getImage();
+     //   int image_1 = modelAndroid.getImage();
 
         holder.name.setText(name_tv);
         holder.price.setText(price_tv);
@@ -55,10 +56,16 @@ public class Adapter_Golfer extends RecyclerView.Adapter<Adapter_Golfer.HolderAn
         holder.reviews.setText(reviews_tv);
         holder.status.setText(status_tv);
 
-        holder.image.setImageResource(image_1);
+        Glide.with(context)
+                .load(modelAndroid.getImage())
+                        .into(holder.image);
+
+        //holder.image.setImageResource(image_1);
 
         holder.itemView.setOnClickListener(v -> {
-            context.startActivity(new Intent(context.getApplicationContext(), CaddieProfileActivity.class));
+            Intent intent = new Intent(context.getApplicationContext(), CaddieProfileActivity.class);
+            intent.putExtra("uId",modelAndroid.getId());
+            context.startActivity(intent);
         });
     }
 
