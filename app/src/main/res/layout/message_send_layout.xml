@@ -11,8 +11,8 @@
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
         android:fontFamily="@font/inter"
-        android:textSize="12sp"
-        android:text="Today, 6:00 pm" />
+        android:text="Today, 6:00 pm"
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/send_message"

@@ -8,15 +8,16 @@ public class Model_Caddie {
     private String image;
     private String password;
     private String place;
-    private String availability;
+    //private String availability;
     private String state;
-
+    private String length , catagory , reviews , status;
 
     public Model_Caddie(){
 
     }
 
-    public Model_Caddie(String id, String name, String email,String password, String image,String state,String place,String availability) {
+    public Model_Caddie(String id, String name, String email,String password,
+                        String image,String state,String place,String length,String catagory,String status) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -24,7 +25,41 @@ public class Model_Caddie {
         this.image = image;
         this.state = state;
         this.place = place;
-        this.availability = availability;
+        this.length = length;
+        this.catagory = catagory;
+        this.status = status;
+    }
+
+    public String getLength() {
+        return length;
+    }
+
+    public void setLength(String length) {
+        this.length = length;
+    }
+
+    public String getCatagory() {
+        return catagory;
+    }
+
+    public void setCatagory(String catagory) {
+        this.catagory = catagory;
+    }
+
+    public String getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(String reviews) {
+        this.reviews = reviews;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getState() {
@@ -43,13 +78,6 @@ public class Model_Caddie {
         this.place = place;
     }
 
-    public String getAvailability() {
-        return availability;
-    }
-
-    public void setAvailability(String availability) {
-        this.availability = availability;
-    }
 
     public String getPassword() {
         return password;

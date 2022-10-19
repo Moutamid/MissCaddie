@@ -3,6 +3,7 @@ package com.moutamid.misscaddie.adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +13,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.moutamid.misscaddie.CaddieBookingDetailsActivity;
 import com.moutamid.misscaddie.R;
+import com.moutamid.misscaddie.models.Model_Golfer;
 import com.moutamid.misscaddie.models.RequestsModel;
 
 import java.util.List;
@@ -42,9 +52,8 @@ public class RequestesAdapter extends RecyclerView.Adapter<RequestesAdapter.VH> 
     public void onBindViewHolder(@NonNull VH holder, int position) {
         RequestsModel model = itemList.get(position);
         String serviceList = "";
-        String bullet = context.getResources().getString(R.string.bullet);
 
-        holder.name.setText(model.getName());
+      //  holder.name.setText(model.getName());
         holder.price.setText("(US$" + model.getPrice() + ")");
         holder.address.setText(model.getAddress());
         holder.date.setText(model.getDate());
@@ -61,18 +70,38 @@ public class RequestesAdapter extends RecyclerView.Adapter<RequestesAdapter.VH> 
             holder.butn.setBackgroundResource(0);
         }
 
-        for (int i=0; i < model.getTableRows().size(); i++){
+       /* for (int i=0; i < model.getTableRows().size(); i++){
             String service = model.getTableRows().get(i).getTitle() + " ($" + model.getTableRows().get(i).getPrice() + ")";
             if (i==2){
                 serviceList = serviceList + bullet + "\t\t" + "more";
                 break;
             }
             serviceList = serviceList + bullet + "\t\t" + service +  "\n";
-        }
-
+        }*/
+        serviceList = model.getService();
         holder.service_list.setText(serviceList);
-        //Glide.with(context).load(model.getImage()).into(holder.image);
 
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Golfer")
+                .child(user.getUid());
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    Model_Golfer model_golfer = snapshot.getValue(Model_Golfer.class);
+                    holder.name.setText(model_golfer.getName());
+                    Glide.with(context).load(model_golfer.getImage()).placeholder(R.drawable.img3).into(holder.image);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        //Glide.with(context).load(model.getImage()).into(holder.image);
 
 
     }

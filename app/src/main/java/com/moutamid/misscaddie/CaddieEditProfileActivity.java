@@ -74,8 +74,10 @@ public class CaddieEditProfileActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
     private Bitmap bitmap = null;
     private StorageReference mStorage;
+    private ArrayAdapter<String> arrayAdapter;
     private static final int STORAGE_PERMISSION_CODE = 101;
 
+    @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,7 +120,7 @@ public class CaddieEditProfileActivity extends AppCompatActivity {
             }
         });
         getCaddieData();
-        @SuppressLint("ResourceType") ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>
+        arrayAdapter = new ArrayAdapter<String>
                 (CaddieEditProfileActivity.this,
                         androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,R.array.usa_states);
         b.spinnerStates.setAdapter(arrayAdapter);
@@ -229,6 +231,7 @@ public class CaddieEditProfileActivity extends AppCompatActivity {
                             b.etName.setText(name);
                             b.etLocation.setText(model.getPlace());
                             image = model.getImage();
+                            arrayAdapter.getPosition(state);
                             db.child(currrentUser.getUid()).child("services").addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -299,6 +302,7 @@ public class CaddieEditProfileActivity extends AppCompatActivity {
             profile.setImageURI(uri);
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                saveInformation();
             } catch (IOException e) {
                 e.printStackTrace();
             }

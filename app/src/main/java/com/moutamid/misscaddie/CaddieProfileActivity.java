@@ -22,7 +22,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.moutamid.misscaddie.adapters.CaddieProfileVPadapter;
 import com.moutamid.misscaddie.adapters.ImageSliderCaddieAdapter;
-import com.moutamid.misscaddie.adapters.ImageSliderGolferAdapter;
 import com.moutamid.misscaddie.fragments.CaddieInfoFragment;
 import com.moutamid.misscaddie.fragments.CaddieReviewsFragment;
 import com.moutamid.misscaddie.fragments.CaddieServicesFragment;
@@ -34,6 +33,8 @@ import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class CaddieProfileActivity extends AppCompatActivity {
     TabLayout tabLayout;
     ViewPager viewPager;
@@ -42,29 +43,36 @@ public class CaddieProfileActivity extends AppCompatActivity {
     TabItem info, services, reviews;
     ImageView backBtn;
     SliderView sliderView;
-    private com.moutamid.misscaddie.databinding.ActivityCaddieProfileBinding b;
+    private CircleImageView profileImg;
+    private TextView caddieName,placeCaddie,price;
+   // private ActivityCaddieProfileBinding b;
     private String userId;
     FirebaseAuth mAuth;
     FirebaseUser currrentUser;
     private DatabaseReference db;
-    private String name,price,service,place,state;
+    private String name,place;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        b = com.moutamid.misscaddie.databinding.ActivityCaddieProfileBinding.inflate(getLayoutInflater());
-        setContentView(b.getRoot());
+      //  b = ActivityCaddieProfileBinding.inflate(getLayoutInflater());
+        setContentView(R.layout.activity_caddie_profile);
         userId = getIntent().getStringExtra("uId");
         db = FirebaseDatabase.getInstance().getReference().child("Caddie");
         tabLayout = findViewById(R.id.tabsLayout);
         viewPager = findViewById(R.id.ProfileViewpager);
         info = findViewById(R.id.infoTab);
         services = findViewById(R.id.servicesTab);
-        reviews = findViewById(R.id.ReviewsTab);
+        reviews = findViewById(R.id.reviewsTab);
+        caddieName = findViewById(R.id.caddie_name);
+        placeCaddie = findViewById(R.id.place_caddie);
+        price = findViewById(R.id.price_golfer);
+        profileImg = findViewById(R.id.profile_img);
         contactCaddie = findViewById(R.id.contact_caddie);
         backBtn = findViewById(R.id.back_btn);
         sliderView = findViewById(R.id.image_slider);
-
+        mAuth = FirebaseAuth.getInstance();
+        currrentUser = mAuth.getCurrentUser();
         SlideimageList = new ArrayList<>();
         getCaddieData();
       /*  String img1 = "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg";
@@ -81,16 +89,26 @@ public class CaddieProfileActivity extends AppCompatActivity {
 
         getManageImages();
 
+        Bundle bundle = new Bundle();
+        bundle.putString("uId", userId);
         CaddieProfileVPadapter caddieProfileVPadapter = new CaddieProfileVPadapter(getSupportFragmentManager());
-        caddieProfileVPadapter.addFragment(new CaddieInfoFragment(), "Info");
-        caddieProfileVPadapter.addFragment(new CaddieServicesFragment(), "Services");
-        caddieProfileVPadapter.addFragment(new CaddieReviewsFragment(), "Reviews");
+        CaddieInfoFragment caddieInfoFragment = new CaddieInfoFragment();
+        caddieInfoFragment.setArguments(bundle);
+        CaddieServicesFragment caddieServicesFragment = new CaddieServicesFragment();
+        caddieServicesFragment.setArguments(bundle);
+        CaddieReviewsFragment caddieReviewsFragment = new CaddieReviewsFragment();
+        caddieReviewsFragment.setArguments(bundle);
+        caddieProfileVPadapter.addFragment(caddieInfoFragment, "Info");
+        caddieProfileVPadapter.addFragment(caddieServicesFragment, "Services");
+        caddieProfileVPadapter.addFragment(caddieReviewsFragment, "Reviews");
 
         viewPager.setAdapter(caddieProfileVPadapter);
         tabLayout.setupWithViewPager(viewPager);
 
         contactCaddie.setOnClickListener(v -> {
-            startActivity(new Intent(CaddieProfileActivity.this, CaddieContactActivity.class));
+            Intent intent = new Intent(CaddieProfileActivity.this, CaddieContactActivity.class);
+            intent.putExtra("userId",userId);
+            startActivity(intent);
             Animatoo.animateSwipeLeft(CaddieProfileActivity.this);
         });
 
@@ -142,13 +160,13 @@ public class CaddieProfileActivity extends AppCompatActivity {
                             Model_Caddie model = snapshot.getValue(Model_Caddie.class);
                             name = model.getName();
                             place = model.getPlace();
-                            state = model.getState();
-                            b.caddieName.setText(name);
-                            b.placeCaddie.setText(place);
+                            caddieName.setText(name);
+                            placeCaddie.setText(place);
                             Glide.with(CaddieProfileActivity.this)
-                                            .load(model.getImage())
-                                                    .into(b.profileImg);
-                            db.child(currrentUser.getUid()).child("services").addListenerForSingleValueEvent(new ValueEventListener() {
+                                    .load(model.getImage())
+                                    .placeholder(R.drawable.img3)
+                                    .into(profileImg);
+                            db.child(model.getId()).child("services").addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     if (snapshot.exists()){
@@ -156,7 +174,7 @@ public class CaddieProfileActivity extends AppCompatActivity {
                                             ServiceListModel model = ds.getValue(ServiceListModel.class);
                                             serviceListModels.add(model);
                                         }
-                                        b.priceGolfer.setText("US$ "+ serviceListModels.get(1).getPrice());
+                                        price.setText("US$ "+ serviceListModels.get(0).getPrice());
                                     }
                                 }
 

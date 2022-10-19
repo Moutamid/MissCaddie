@@ -11,9 +11,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.moutamid.misscaddie.CaddieProfileActivity;
 import com.moutamid.misscaddie.models.Model_Golfer;
 import com.moutamid.misscaddie.R;
+import com.moutamid.misscaddie.models.ServiceListModel;
 
 import java.util.ArrayList;
 
@@ -21,6 +27,7 @@ public class Adapter_Golfer extends RecyclerView.Adapter<Adapter_Golfer.HolderAn
 
     private Context context;
     private ArrayList<Model_Golfer> androidArrayList;
+    private ArrayList<ServiceListModel> serviceListModels = new ArrayList<>();
 
     public Adapter_Golfer(Context context, ArrayList<Model_Golfer> androidArrayList) {
         this.context = context;
@@ -49,17 +56,43 @@ public class Adapter_Golfer extends RecyclerView.Adapter<Adapter_Golfer.HolderAn
      //   int image_1 = modelAndroid.getImage();
 
         holder.name.setText(name_tv);
-        holder.price.setText(price_tv);
-        holder.length.setText(length_tv);
+       // holder.price.setText(price_tv);
+        holder.length.setText(length_tv + " cm");
+        holder.place.setText(place_tv);
         holder.catagory.setText(cat_tv);
         holder.price.setText(price_tv);
         holder.reviews.setText(reviews_tv);
-        holder.status.setText(status_tv);
+        if (status_tv.equals("willing")){
+            holder.status.setText("Willing to Travel");
+            holder.status_icon.setImageResource(R.drawable.charm_check);
+        }else {
+            holder.status.setText("Not Willing to Travel");
+            holder.status_icon.setImageResource(R.drawable.ic_charm_cross);
+        }
+
 
         Glide.with(context)
                 .load(modelAndroid.getImage())
+                .placeholder(R.drawable.img3)
                         .into(holder.image);
+        DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("Caddie");
+        db.child(modelAndroid.getId()).child("services").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    for (DataSnapshot ds : snapshot.getChildren()){
+                        ServiceListModel model = ds.getValue(ServiceListModel.class);
+                        serviceListModels.add(model);
+                    }
+                    holder.price.setText("US$ "+ serviceListModels.get(0).getPrice());
+                }
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         //holder.image.setImageResource(image_1);
 
         holder.itemView.setOnClickListener(v -> {
@@ -77,7 +110,7 @@ public class Adapter_Golfer extends RecyclerView.Adapter<Adapter_Golfer.HolderAn
     class HolderAndroid extends RecyclerView.ViewHolder {
 
         TextView name , price , length , catagory , place , reviews , status;
-        ImageView image;
+        ImageView image,status_icon;
 
         HolderAndroid(@NonNull View itemView) {
             super(itemView);
@@ -90,7 +123,7 @@ public class Adapter_Golfer extends RecyclerView.Adapter<Adapter_Golfer.HolderAn
             place = itemView.findViewById(R.id.place_golfer);
             reviews = itemView.findViewById(R.id.reviews_golfer);
             status = itemView.findViewById(R.id.status_golfer);
-
+            status_icon = itemView.findViewById(R.id.status_icon);
         }
     }
 }

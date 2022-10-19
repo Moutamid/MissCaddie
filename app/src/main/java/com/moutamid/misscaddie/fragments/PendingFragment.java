@@ -44,11 +44,6 @@ public class PendingFragment extends Fragment {
     {
         List<RequestsModel> itemList = new ArrayList<>();
 
-        RequestsModel item = new RequestsModel(null, "Suleman Ijaz", "5", "Pending", "5 Oct - 15 Nov", "Dean St, Brooklyn, NY, USA", tableMessage());
-        itemList.add(item);
-
-        RequestsModel item2 = new RequestsModel(null, "M. Moutamid", "65", "Pending", "15 Oct - 27 Nov", "Dean St, Brooklyn, NY, USA", tableMessage2() );
-        itemList.add(item2);
 
 
         return itemList;

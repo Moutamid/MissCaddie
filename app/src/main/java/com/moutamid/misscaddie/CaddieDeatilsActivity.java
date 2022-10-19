@@ -39,7 +39,7 @@ public class CaddieDeatilsActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     FirebaseUser currrentUser;
     ProgressDialog dialog;
-    private String  state;
+    private String state,status,category;
     private DatabaseReference db;
 
     @Override
@@ -72,14 +72,39 @@ public class CaddieDeatilsActivity extends AppCompatActivity {
 
             }
         });
+        b.spinnerStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                category = adapterView.getItemAtPosition(i).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        b.willingLayoutCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                status = "willing";
+            }
+        });
+        b.notWillingLayoutCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                status = "not willing";
+            }
+        });
         almostFinished.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String location = b.etLocation.getText().toString();
                 String service = b.etService.getText().toString();
                 String price = b.etPrice.getText().toString();
-                if (!TextUtils.isEmpty(location) && !TextUtils.isEmpty(service) && !TextUtils.isEmpty(price)) {
-                    saveData(location, service, price);
+                String height = b.height.getText().toString();
+                if (!TextUtils.isEmpty(location) && !TextUtils.isEmpty(service) &&
+                        !TextUtils.isEmpty(price) && !TextUtils.isEmpty(height)) {
+                    saveData(location, service, price,height);
                 }
             }
         });
@@ -121,10 +146,13 @@ public class CaddieDeatilsActivity extends AppCompatActivity {
                 });
     }
 
-    private void saveData(String location, String service, String price) {
+    private void saveData(String location, String service, String price,String height) {
         HashMap<String,Object> hashMap = new HashMap<>();
         hashMap.put("state",state);
         hashMap.put("place",location);
+        hashMap.put("length",height);
+        hashMap.put("catagory",category);
+        hashMap.put("status",status);
         db.child(currrentUser.getUid()).updateChildren(hashMap);
         String key = db.push().getKey();
         ServiceListModel model = new ServiceListModel(service, price);

@@ -27,8 +27,12 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.moutamid.misscaddie.databinding.ActivityRegisterGolferBinding;
 import com.moutamid.misscaddie.models.Model_Caddie;
 import com.moutamid.misscaddie.models.Model_Golfer;
@@ -61,10 +65,7 @@ public class Register_Golfer extends AppCompatActivity {
             public void onClick(View view) {
                 String email = b.email.getText().toString();
                 if (!TextUtils.isEmpty(email)) {
-                    Intent intent = new Intent(Register_Golfer.this, SignUp_Golfer.class);
-                    intent.putExtra("email",email);
-                    startActivity(intent);
-                    Animatoo.animateZoom(Register_Golfer.this);
+                    checkingExistance(email);
                 }else {
                     b.email.setError("Please Enter your email....");
                     b.email.requestFocus();
@@ -91,6 +92,31 @@ public class Register_Golfer extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 signIn();
+            }
+        });
+    }
+
+    private void checkingExistance(String email) {
+        Query query = db.orderByChild("email").equalTo(email);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    Intent intent = new Intent(Register_Golfer.this, Login_Golfer.class);
+                    intent.putExtra("email",email);
+                    startActivity(intent);
+                    Animatoo.animateZoom(Register_Golfer.this);
+                }else {
+                    Intent intent = new Intent(Register_Golfer.this, SignUp_Golfer.class);
+                    intent.putExtra("email",email);
+                    startActivity(intent);
+                    Animatoo.animateZoom(Register_Golfer.this);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
     }

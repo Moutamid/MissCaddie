@@ -34,6 +34,7 @@ public class CaddieAvailabiltyActivity extends AppCompatActivity{
     FirebaseUser currrentUser;
     ProgressDialog dialog;
     private DatabaseReference db;
+    private String availabilty = "";
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -42,7 +43,7 @@ public class CaddieAvailabiltyActivity extends AppCompatActivity{
         setContentView(R.layout.activity_caddie_availabilty);
 
         almostFinished = findViewById(R.id.almostFinished);
-        picker = findViewById(R.id.datePicker);
+        //picker = findViewById(R.id.datePicker);
 
         mAuth = FirebaseAuth.getInstance();
         currrentUser = mAuth.getCurrentUser();
@@ -51,10 +52,6 @@ public class CaddieAvailabiltyActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
 
-                String availabilty = picker.getDayOfMonth() + "/" + (picker.getMonth() + 1) + "/" + picker.getYear();
-                HashMap<String,Object> hashMap = new HashMap<>();
-                hashMap.put("availability",availabilty);
-                db.child(currrentUser.getUid()).updateChildren(hashMap);
                 //Toast.makeText(CaddieAvailabiltyActivity.this,availabilty,Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(CaddieAvailabiltyActivity.this ,
                         CaddieDashboardActivity.class);
@@ -89,8 +86,13 @@ public class CaddieAvailabiltyActivity extends AppCompatActivity{
 
     }
 
-    /*public void OctoberDatesClick(View view) {
+    public void OctoberDatesClick(View view) {
         TextView t = (TextView) view;
+        availabilty = "October " + t.getText() + ", 2022";
+        String key = db.child(currrentUser.getUid()).child("availability").push().getKey();
+        HashMap<String,Object> hashMap = new HashMap<>();
+        hashMap.put("date",availabilty);
+        db.child(currrentUser.getUid()).child("availability").child(key).updateChildren(hashMap);
         Toast.makeText(this, "October " + t.getText() + ", 2022", Toast.LENGTH_SHORT).show();
         if (t.getBackground() != null){
             t.setBackgroundResource(0);
@@ -103,6 +105,11 @@ public class CaddieAvailabiltyActivity extends AppCompatActivity{
 
     public void NovemberDatesClick(View view) {
         TextView t = (TextView) view;
+        availabilty = "November " + t.getText() + ", 2022";
+        String key = db.child(currrentUser.getUid()).child("availability").push().getKey();
+        HashMap<String,Object> hashMap = new HashMap<>();
+        hashMap.put("date",availabilty);
+        db.child(currrentUser.getUid()).child("availability").child(key).updateChildren(hashMap);
         Toast.makeText(this, "November " + t.getText() + ", 2022", Toast.LENGTH_SHORT).show();
         if (t.getBackground() != null){
             t.setBackgroundResource(0);
@@ -115,6 +122,11 @@ public class CaddieAvailabiltyActivity extends AppCompatActivity{
 
     public void DecemberDatesClick(View view) {
         TextView t = (TextView) view;
+        availabilty = "December " + t.getText() + ", 2022";
+        String key = db.child(currrentUser.getUid()).child("availability").push().getKey();
+        HashMap<String,Object> hashMap = new HashMap<>();
+        hashMap.put("date",availabilty);
+        db.child(currrentUser.getUid()).child("availability").child(key).updateChildren(hashMap);
         Toast.makeText(this, "December " + t.getText() + ", 2022", Toast.LENGTH_SHORT).show();
         if (t.getBackground() != null){
             t.setBackgroundResource(0);
@@ -123,5 +135,5 @@ public class CaddieAvailabiltyActivity extends AppCompatActivity{
             t.setBackground(getDrawable(R.drawable.circle_yellow));
             t.setTextColor(getResources().getColor(R.color.white));
         }
-    }*/
+    }
 }

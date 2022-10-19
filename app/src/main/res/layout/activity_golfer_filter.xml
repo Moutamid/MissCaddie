@@ -74,50 +74,50 @@
         android:layout_marginTop="35dp"
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"/>
-    
+
     <LinearLayout
         android:id="@+id/options_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/text"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="8dp"
         android:layout_marginRight="20dp"
-        android:orientation="horizontal"
-        android:layout_marginLeft="20dp">
-        
+        android:orientation="horizontal">
+
         <androidx.cardview.widget.CardView
             android:id="@+id/notWilling_layoutCard"
             android:layout_width="match_parent"
-            android:layout_weight="1"
+            android:layout_height="match_parent"
             android:layout_marginRight="6dp"
-            android:layout_height="match_parent">
+            android:layout_weight="1">
 
             <LinearLayout
                 android:id="@+id/notWilling"
                 android:layout_width="match_parent"
-                android:gravity="center"
-                android:padding="12dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/unselected_box"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="12dp">
 
                 <ImageView
                     android:id="@+id/notWilling_icon"
                     android:layout_width="62dp"
                     android:layout_height="62dp"
-                    android:src="@drawable/ic_charm_cross"/>
+                    android:src="@drawable/ic_charm_cross" />
 
                 <TextView
                     android:id="@+id/notwilling_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Not Willing"
-                    android:gravity="center"
-                    android:textColor="@color/black_light"
+                    android:layout_marginTop="5dp"
                     android:fontFamily="@font/roboto"
-                    android:textSize="16sp"
-                    android:layout_marginTop="5dp" />
+                    android:gravity="center"
+                    android:text="Not Willing"
+                    android:textColor="@color/black_light"
+                    android:textSize="16sp" />
 
             </LinearLayout>
 
@@ -126,36 +126,36 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/willing_layoutCard"
             android:layout_width="match_parent"
-            android:layout_weight="1"
+            android:layout_height="match_parent"
             android:layout_marginLeft="6dp"
-            android:layout_height="match_parent">
+            android:layout_weight="1">
 
             <LinearLayout
                 android:id="@+id/willing"
                 android:layout_width="match_parent"
-                android:gravity="center"
-                android:padding="12dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/selected_box"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="12dp">
 
                 <ImageView
                     android:id="@+id/willing_icon"
                     android:layout_width="62dp"
                     android:layout_height="62dp"
-                    android:src="@drawable/ic_charm_tick1"/>
+                    android:src="@drawable/ic_charm_tick1" />
 
                 <TextView
                     android:id="@+id/willing_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Willing"
-                    android:gravity="center"
-                    android:textColor="@color/black"
+                    android:layout_marginTop="5dp"
                     android:fontFamily="@font/roboto"
-                    android:textSize="16sp"
-                    android:layout_marginTop="5dp" />
+                    android:gravity="center"
+                    android:text="Willing"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
 
             </LinearLayout>
 
@@ -184,11 +184,11 @@
         android:layout_below="@id/bookingDatesTV"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="2dp"
-        android:textColor="@color/black"
-        android:text="Select Date (5 Oct - 15 Oct)"
-        android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24"
         android:layout_marginRight="20dp"
-        android:gravity="start" />
+        android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24"
+        android:gravity="start"
+        android:text="Select Date (5 Oct - 15 Oct)"
+        android:textColor="@color/black" />
 
     <TextView
         android:id="@+id/golfCourse"

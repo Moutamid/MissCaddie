@@ -1,5 +1,6 @@
 package com.moutamid.misscaddie;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -9,6 +10,14 @@ import android.os.Bundle;
 import android.widget.ImageView;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.moutamid.misscaddie.Dashboard_Golfer;
 import com.moutamid.misscaddie.R;
 import com.moutamid.misscaddie.models.RequestsModel;
@@ -21,6 +30,10 @@ import java.util.List;
 public class CaddiesRequestsActivity extends AppCompatActivity {
     ImageView back_btn;
     RecyclerView requestRC;
+    private DatabaseReference db;
+    private FirebaseAuth mAuth;
+    private FirebaseUser user;
+    private ArrayList<RequestsModel> itemList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,9 +43,11 @@ public class CaddiesRequestsActivity extends AppCompatActivity {
         back_btn = findViewById(R.id.back_btn);
         requestRC = findViewById(R.id.recyclerView_golfer);
 
-        RequestesAdapter adapter = new RequestesAdapter(RequestItems(), this);
-
-        requestRC.setAdapter(adapter);
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
+        db = FirebaseDatabase.getInstance().getReference().child("Requests");
+        itemList = new ArrayList<>();
+        getRequests();
         requestRC.setLayoutManager(new LinearLayoutManager(this));
         requestRC.setHasFixedSize(false);
 
@@ -44,22 +59,32 @@ public class CaddiesRequestsActivity extends AppCompatActivity {
 
     }
 
+    private void getRequests() {
+        Query query = db.orderByChild("userId").equalTo(user.getUid());
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    itemList.clear();
+                    for (DataSnapshot ds : snapshot.getChildren()){
+                        RequestsModel model = ds.getValue(RequestsModel.class);
+                        itemList.add(model);
+                    }
 
-    private List<RequestsModel> RequestItems()
-    {
-        List<RequestsModel> itemList = new ArrayList<>();
+                    RequestesAdapter adapter = new RequestesAdapter(itemList, CaddiesRequestsActivity.this);
+                    requestRC.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                }
+            }
 
-        RequestsModel item = new RequestsModel(null, "Suleman Ijaz", "5", "Accepted", "5 Oct - 15 Nov", "Dean St, Brooklyn, NY, USA", tableMessage());
-        itemList.add(item);
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-        RequestsModel item2 = new RequestsModel(null, "M. Moutamid", "65", "Declined", "15 Oct - 27 Nov", "Dean St, Brooklyn, NY, USA", tableMessage2() );
-        itemList.add(item2);
+            }
+        });
 
-        RequestsModel item3 = new RequestsModel(null, "Andrea Carl", "165", "Pending", "15 Oct - 27 Nov", "Dean St, Brooklyn, NY, USA", tableMessage() );
-        itemList.add(item3);
-
-        return itemList;
     }
+
 
     private List<ServiceListModel> tableMessage()
     {

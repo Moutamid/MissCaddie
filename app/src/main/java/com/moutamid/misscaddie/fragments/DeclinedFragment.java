@@ -46,11 +46,10 @@ public class DeclinedFragment extends Fragment {
     {
         List<RequestsModel> itemList = new ArrayList<>();
 
-        RequestsModel item2 = new RequestsModel(null, "M. Moutamid", "65", "Declined", "15 Oct - 27 Nov", "Dean St, Brooklyn, NY, USA", tableMessage2() );
+       /* RequestsModel item2 = new RequestsModel(null, "M. Moutamid", "65", "Declined", "15 Oct - 27 Nov", "Dean St, Brooklyn, NY, USA", tableMessage2() );
         itemList.add(item2);
         RequestsModel item4 = new RequestsModel(null, "M. Mohamed", "85", "Declined", "15 Oct - 27 Nov", "Dean St, Brooklyn, NY, USA", tableMessage2() );
-        itemList.add(item4);
-
+        itemList.add(item4);*/
 
         return itemList;
     }

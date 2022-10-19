@@ -103,7 +103,8 @@ public class SignUp_Golfer extends AppCompatActivity {
     private void sendActivityToLogin() {
 
         Intent intent = new Intent(SignUp_Golfer.this, Login_Golfer.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.putExtra("email",email);
+        //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
         Animatoo.animateZoom(SignUp_Golfer.this);

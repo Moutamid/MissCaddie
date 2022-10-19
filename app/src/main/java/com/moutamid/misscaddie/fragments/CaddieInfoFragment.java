@@ -2,15 +2,30 @@ package com.moutamid.misscaddie.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.moutamid.misscaddie.CaddieProfileActivity;
 import com.moutamid.misscaddie.R;
+import com.moutamid.misscaddie.databinding.FragmentCaddieInfoBinding;
+import com.moutamid.misscaddie.models.Model_Caddie;
+import com.moutamid.misscaddie.models.ServiceListModel;
 
 public class CaddieInfoFragment extends Fragment {
+
+    private FragmentCaddieInfoBinding b;
+    private String userId;
+    private DatabaseReference db;
 
     public CaddieInfoFragment() {
         // Required empty public constructor
@@ -20,6 +35,35 @@ public class CaddieInfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_caddie_info, container, false);
+        b = FragmentCaddieInfoBinding.inflate(getLayoutInflater());
+        userId = getArguments().getString("uId");
+        db = FirebaseDatabase.getInstance().getReference().child("Caddie");
+        getCaddieInfo();
+        return b.getRoot();
+    }
+
+    private void getCaddieInfo() {
+        db.child(userId)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()){
+                            Model_Caddie model = snapshot.getValue(Model_Caddie.class);
+                            b.height.setText(model.getLength() + " cm");
+                            b.location.setText(model.getPlace());
+                            b.aboutMessage.setText("Hello There!");
+                            if (model.getStatus().equals("willing")){
+                                b.WillingIcon.setImageResource(R.drawable.ic_charm_tick1);
+                            }else {
+                                b.WillingIcon.setImageResource(R.drawable.ic_charm_cross);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
     }
 }

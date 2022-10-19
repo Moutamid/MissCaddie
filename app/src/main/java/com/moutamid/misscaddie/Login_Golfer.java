@@ -42,12 +42,14 @@ public class Login_Golfer extends AppCompatActivity {
         currrentUser = mAuth.getCurrentUser();
         db = FirebaseDatabase.getInstance().getReference().child("Golfer");
         signInBtn = findViewById(R.id.signInBtn);
+        email = getIntent().getStringExtra("email");
+        b.email.setText(email);
         signInBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (validInfo()){
                     dialog = new ProgressDialog(Login_Golfer.this);
-                    dialog.setMessage("Creating yout account....");
+                    dialog.setMessage("Login into your account....");
                     dialog.show();
                     loginAccount();
                 }
@@ -67,6 +69,7 @@ public class Login_Golfer extends AppCompatActivity {
                             startActivity(intent);
                             finish();
                             Animatoo.animateZoom(Login_Golfer.this);
+                            dialog.dismiss();
                         }
                     }
                 });

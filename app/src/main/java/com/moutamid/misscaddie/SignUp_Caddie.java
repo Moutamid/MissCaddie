@@ -100,7 +100,7 @@ public class SignUp_Caddie extends AppCompatActivity {
                 if (task.isSuccessful()){
                     currrentUser = mAuth.getCurrentUser();
                     Model_Caddie model_caddie = new Model_Caddie(currrentUser.getUid(),
-                            fname + " " + lname,email,password,"","","","");
+                            fname + " " + lname,email,password,"","","","","","");
                     db.child(currrentUser.getUid()).setValue(model_caddie);
                     sendActivityToLogin();
                     dialog.dismiss();
@@ -112,7 +112,8 @@ public class SignUp_Caddie extends AppCompatActivity {
     private void sendActivityToLogin() {
 
         Intent intent = new Intent(SignUp_Caddie.this, Login_Caddie.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.putExtra("email",email);
+       // intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
         Animatoo.animateZoom(SignUp_Caddie.this);

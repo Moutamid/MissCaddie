@@ -40,12 +40,14 @@ public class Login_Caddie extends AppCompatActivity {
         currrentUser = mAuth.getCurrentUser();
         db = FirebaseDatabase.getInstance().getReference().child("Caddie");
         signInBtn = findViewById(R.id.signInBtn2);
+        email = getIntent().getStringExtra("email");
+        b.email.setText(email);
         signInBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (validInfo()){
                     dialog = new ProgressDialog(Login_Caddie.this);
-                    dialog.setMessage("Creating yout account....");
+                    dialog.setMessage("Login into your account....");
                     dialog.show();
                     loginAccount();
                 }
@@ -68,7 +70,7 @@ public class Login_Caddie extends AppCompatActivity {
                             startActivity(intent);
                             finish();
                             Animatoo.animateZoom(Login_Caddie.this);
-
+                            dialog.dismiss();
                         }
                     }
                 });

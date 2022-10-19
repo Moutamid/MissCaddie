@@ -51,27 +51,26 @@
         android:id="@+id/profile_img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/image_slider"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="-40dp"
         android:src="@drawable/img1"
         app:civ_border_color="@color/white"
-        app:civ_border_width="2dp"
-        android:layout_marginLeft="25dp"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@id/image_slider"
-        android:layout_marginTop="-40dp" />
+        app:civ_border_width="2dp" />
 
     <TextView
         android:id="@+id/caddie_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:textColor="@color/black"
         android:layout_below="@id/profile_img"
-        android:text="M. Moutmid"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="15dp"
         android:fontFamily="@font/montserrat_bold"
         android:letterSpacing="0.08"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="15dp" />
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/place_caddie"
@@ -81,7 +80,6 @@
         android:layout_marginLeft="25dp"
         android:layout_marginTop="5dp"
         android:fontFamily="@font/roboto"
-        android:text="New York"
         android:textSize="16sp" />
 
     <LinearLayout
@@ -125,12 +123,12 @@
         android:id="@+id/reviews_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="7 reviews"
-        android:layout_toEndOf="@id/starsLayout"
         android:layout_below="@id/place_caddie"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="5dp"
-        android:textSize="18sp"
-        android:layout_marginLeft="8dp" />
+        android:layout_toEndOf="@id/starsLayout"
+        android:text="7 reviews"
+        android:textSize="18sp" />
 
 
     <TextView
@@ -143,7 +141,6 @@
         android:layout_marginRight="15dp"
         android:fontFamily="@font/roboto"
         android:letterSpacing="0.05"
-        android:text="US$65"
         android:textColor="@color/green"
         android:textSize="18sp"
         android:textStyle="bold" />
@@ -172,7 +169,7 @@
             android:text="Services" />
 
         <com.google.android.material.tabs.TabItem
-            android:id="@+id/ReviewsTab"
+            android:id="@+id/reviewsTab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Reviews" />

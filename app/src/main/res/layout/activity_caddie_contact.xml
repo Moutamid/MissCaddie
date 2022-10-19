@@ -127,8 +127,9 @@
         android:layout_marginRight="20dp"
         android:background="@drawable/et_bg"
         android:gravity="top"
-        android:inputType="textMultiLine"
+        android:id="@+id/message"
         android:hint="Hello, $Caddie Name$. I have a question for you..."
+        android:inputType="textMultiLine"
         android:padding="12dp" />
 
     <TextView

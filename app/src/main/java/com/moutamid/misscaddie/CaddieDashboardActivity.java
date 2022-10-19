@@ -33,7 +33,6 @@ public class CaddieDashboardActivity extends AppCompatActivity {
 
         calenderFragment  = new CaddieCalenderFragment();
 
-
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CaddieHomeFragment(navigationView)).commit();
 
         navigationView.setSelectedItemId(R.id.home_menu);

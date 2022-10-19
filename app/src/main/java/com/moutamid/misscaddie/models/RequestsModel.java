@@ -3,47 +3,62 @@ package com.moutamid.misscaddie.models;
 import java.util.List;
 
 public class RequestsModel {
-    String image, name, price, status_title, date, address, message;
+    String id, userId, price, status_title, date, address, message,service,caddieId;
     List<ServiceListModel> tableRows;
 
     public RequestsModel() {
     }
 
-    public RequestsModel(String image, String name, String price, String status_title, String date, String address, List<ServiceListModel> tableRows) {
-        this.image = image;
-        this.name = name;
-        this.price = price;
+    public RequestsModel(String id, String userId, String status_title, String date, String address,
+                         String message, String service,String caddieId) {
+        this.id = id;
+        this.userId = userId;
         this.status_title = status_title;
         this.date = date;
         this.address = address;
-        this.tableRows = tableRows;
-    }
-
-    public RequestsModel(String image, String name, String message, String price, String status_title, String date, String address, List<ServiceListModel> tableRows) {
-        this.image = image;
-        this.name = name;
         this.message = message;
-        this.price = price;
-        this.status_title = status_title;
-        this.date = date;
-        this.address = address;
-        this.tableRows = tableRows;
+        this.service = service;
+        this.caddieId = caddieId;
     }
 
-    public String getImage() {
-        return image;
+    public String getCaddieId() {
+        return caddieId;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setCaddieId(String caddieId) {
+        this.caddieId = caddieId;
     }
 
-    public String getName() {
-        return name;
+    public String getService() {
+        return service;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setService(String service) {
+        this.service = service;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public String getPrice() {

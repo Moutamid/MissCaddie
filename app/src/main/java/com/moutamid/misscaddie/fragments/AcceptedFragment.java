@@ -44,13 +44,6 @@ public class AcceptedFragment extends Fragment {
     {
         List<RequestsModel> itemList = new ArrayList<>();
 
-        RequestsModel item = new RequestsModel(null, "Suleman Ijaz", "5", "Accepted", "5 Oct - 15 Nov", "Dean St, Brooklyn, NY, USA", tableMessage());
-        itemList.add(item);
-
-        RequestsModel item2 = new RequestsModel(null, "M. Moutamid", "65", "Accepted", "15 Oct - 27 Nov", "Dean St, Brooklyn, NY, USA", tableMessage2() );
-        itemList.add(item2);
-        RequestsModel item4 = new RequestsModel(null, "M. Mohamed", "85", "Accepted", "15 Oct - 27 Nov", "Dean St, Brooklyn, NY, USA", tableMessage2() );
-        itemList.add(item4);
 
 
         return itemList;
