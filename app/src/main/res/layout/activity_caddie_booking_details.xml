@@ -56,20 +56,24 @@
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:layout_below="@id/label"
-        android:layout_margin="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
         android:src="@drawable/img1" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="64dp"
+        android:layout_below="@id/label"
+        android:layout_marginTop="15dp"
+        android:layout_toEndOf="@id/profile_img"
         android:gravity="center_vertical"
+        android:text="M. Moutamid"
+        android:id="@+id/name"
         android:textColor="@color/black"
         android:textSize="18sp"
-        android:text="M. Moutamid"
-        android:layout_marginTop="15dp"
-        android:layout_below="@id/label"
-        android:layout_toEndOf="@id/profile_img"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -86,25 +90,26 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/circle"
                 android:layout_margin="15dp"
                 android:text="Booked Dates:"
-                android:layout_below="@id/circle"
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/circle"
                 android:layout_marginLeft="15dp"
                 android:layout_marginBottom="20dp"
-                android:text="5th Oct - 15th Oct"
-                android:layout_below="@id/circle" />
+                android:text="5th Oct - 15th Oct" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/circle"
                 android:layout_margin="15dp"
                 android:text="Booked Services:"
-                android:layout_below="@id/circle"
                 android:textStyle="bold" />
 
             <TextView
@@ -117,34 +122,36 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/circle"
                 android:layout_margin="15dp"
                 android:text="Complete Location:"
-                android:layout_below="@id/circle"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/circle"
                 android:layout_marginLeft="15dp"
                 android:layout_marginBottom="20dp"
-                android:text="Dean St, Brooklyn, NY, USA"
-                android:layout_below="@id/circle" />
+                android:id="@+id/place"
+                android:text="Dean St, Brooklyn, NY, USA" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/circle"
                 android:layout_margin="15dp"
                 android:text="Message:"
-                android:layout_below="@id/circle"
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/circle"
                 android:layout_marginLeft="15dp"
                 android:layout_marginBottom="20dp"
-                android:text="Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
-                android:layout_below="@id/circle" />
+                android:text="Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book." />
 
         </LinearLayout>
 
@@ -160,30 +167,56 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
         android:padding="10dp"
-        android:textAllCaps="true"
         android:text="Total : US$265"
+        android:textAllCaps="true"
         android:textColor="@color/yellow"
         android:textSize="26sp"
         android:textStyle="bold" />
 
-
-    <TextView
-        android:id="@+id/signUpBtn2"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/signUpBtn2"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/shape_yellow"
-        android:elevation="10dp"
-        android:gravity="center"
-        android:textAllCaps="true"
-        android:padding="10dp"
-        android:text="Accept Booking"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/acceptBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/shape_yellow"
+            android:elevation="10dp"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Accept Booking"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/declineBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/shape_yellow"
+            android:backgroundTint="#ff0000"
+            android:elevation="10dp"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Decline Booking"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
 
 </RelativeLayout>

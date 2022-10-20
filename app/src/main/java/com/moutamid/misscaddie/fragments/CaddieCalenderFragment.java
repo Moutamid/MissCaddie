@@ -1,7 +1,10 @@
 package com.moutamid.misscaddie.fragments;
 
+import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.text.format.DateFormat;
@@ -11,14 +14,27 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.moutamid.misscaddie.R;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 
 public class CaddieCalenderFragment extends Fragment {
     TextView welcomeText, datetext;
     View view;
+    FirebaseAuth mAuth;
+    FirebaseUser currrentUser;
+    ProgressDialog dialog;
+    private DatabaseReference db;
+    private String availabilty = "";
 
     public CaddieCalenderFragment() {
         // Required empty public constructor
@@ -32,42 +48,68 @@ public class CaddieCalenderFragment extends Fragment {
         datetext = view.findViewById(R.id.date);
         greetingMessage();
 
+        mAuth = FirebaseAuth.getInstance();
+        currrentUser = mAuth.getCurrentUser();
+        db = FirebaseDatabase.getInstance().getReference().child("Caddie");
+//        checkAvailability();
+
         return view;
     }
 
-    public void OctoberDatesClick(View v) {
-        TextView t = (TextView) v;
-        Toast.makeText(getActivity().getApplicationContext(), "October " + t.getText() + ", 2022", Toast.LENGTH_SHORT).show();
-        if (t.getBackground() != null){
-            t.setBackgroundResource(0);
-            t.setTextColor(getResources().getColor(R.color.black));
-        } else {
-            t.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            t.setTextColor(getResources().getColor(R.color.white));
+
+    @SuppressLint("NewApi")
+    public void OctoberDatesClick(View view) {
+        TextView t = (TextView) view;
+        availabilty = t.getText() + " Oct";
+        String key = db.child(currrentUser.getUid()).child("availability").push().getKey();
+        HashMap<String,Object> hashMap = new HashMap<>();
+        hashMap.put("date",availabilty);
+        db.child(currrentUser.getUid()).child("availability").child(key).updateChildren(hashMap);
+
+        if (isAdded()) {
+            if (t.getBackground() != null) {
+                t.setBackgroundResource(0);
+                t.setTextColor(requireActivity().getColor(R.color.black));
+            } else {
+                t.setBackground(requireActivity().getDrawable(R.drawable.circle_yellow));
+                t.setTextColor(requireActivity().getColor(R.color.white));
+            }
         }
     }
 
-    public void NovemberDatesClick(View v) {
-        TextView t = (TextView) v;
-        Toast.makeText(getActivity().getApplicationContext(), "November " + t.getText() + ", 2022", Toast.LENGTH_SHORT).show();
-        if (t.getBackground() != null){
-            t.setBackgroundResource(0);
-            t.setTextColor(getResources().getColor(R.color.black));
-        } else {
-            t.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            t.setTextColor(getResources().getColor(R.color.white));
+    public void NovemberDatesClick(View view) {
+        TextView t = (TextView) view;
+        availabilty = t.getText() + " Nov";
+        String key = db.child(currrentUser.getUid()).child("availability").push().getKey();
+        HashMap<String,Object> hashMap = new HashMap<>();
+        hashMap.put("date",availabilty);
+        db.child(currrentUser.getUid()).child("availability").child(key).updateChildren(hashMap);
+        if (isAdded()) {
+            if (t.getBackground() != null) {
+                t.setBackgroundResource(0);
+                t.setTextColor(getResources().getColor(R.color.black));
+            } else {
+                t.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
+                t.setTextColor(getResources().getColor(R.color.white));
+            }
         }
     }
 
-    public void DecemberDatesClick(View v) {
-        TextView t = (TextView) v;
-        Toast.makeText(getActivity().getApplicationContext(), "December " + t.getText() + ", 2022", Toast.LENGTH_SHORT).show();
-        if (t.getBackground() != null){
-            t.setBackgroundResource(0);
-            t.setTextColor(getResources().getColor(R.color.black));
-        } else {
-            t.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            t.setTextColor(getResources().getColor(R.color.white));
+    public void DecemberDatesClick(View view) {
+        TextView t = (TextView) view;
+        availabilty = t.getText() + " Dec";
+        String key = db.child(currrentUser.getUid()).child("availability").push().getKey();
+        HashMap<String,Object> hashMap = new HashMap<>();
+        hashMap.put("date",availabilty);
+        db.child(currrentUser.getUid()).child("availability").child(key).updateChildren(hashMap);
+        if (isAdded()) {
+            if (t.getBackground() != null) {
+                t.setBackgroundResource(0);
+                t.setTextColor(getResources().getColor(R.color.black));
+            } else {
+                t.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
+                t.setTextColor(getResources().getColor(R.color.white));
+            }
         }
     }
 

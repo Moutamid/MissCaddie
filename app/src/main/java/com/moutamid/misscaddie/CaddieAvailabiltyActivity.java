@@ -88,7 +88,7 @@ public class CaddieAvailabiltyActivity extends AppCompatActivity{
 
     public void OctoberDatesClick(View view) {
         TextView t = (TextView) view;
-        availabilty = "October " + t.getText() + ", 2022";
+        availabilty = t.getText() + " Oct";
         String key = db.child(currrentUser.getUid()).child("availability").push().getKey();
         HashMap<String,Object> hashMap = new HashMap<>();
         hashMap.put("date",availabilty);
@@ -105,7 +105,7 @@ public class CaddieAvailabiltyActivity extends AppCompatActivity{
 
     public void NovemberDatesClick(View view) {
         TextView t = (TextView) view;
-        availabilty = "November " + t.getText() + ", 2022";
+        availabilty = t.getText() + " Nov";
         String key = db.child(currrentUser.getUid()).child("availability").push().getKey();
         HashMap<String,Object> hashMap = new HashMap<>();
         hashMap.put("date",availabilty);
@@ -122,7 +122,7 @@ public class CaddieAvailabiltyActivity extends AppCompatActivity{
 
     public void DecemberDatesClick(View view) {
         TextView t = (TextView) view;
-        availabilty = "December " + t.getText() + ", 2022";
+        availabilty = t.getText() + " Dec";
         String key = db.child(currrentUser.getUid()).child("availability").push().getKey();
         HashMap<String,Object> hashMap = new HashMap<>();
         hashMap.put("date",availabilty);

@@ -57,6 +57,8 @@
         android:nestedScrollingEnabled="false"
         android:orientation="vertical"
         android:scrollbars="vertical"
+        android:layout_above="@+id/bottom"
+        android:layout_marginBottom="10dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
 
@@ -69,6 +71,7 @@
         android:layout_marginBottom="20dp"
         android:layout_marginLeft="20dp"
         android:padding="10dp"
+        android:id="@+id/bottom"
         android:layout_marginRight="20dp">
 
         <EditText

@@ -1,7 +1,11 @@
 package com.moutamid.misscaddie.fragments;
 
+import android.annotation.SuppressLint;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
@@ -11,10 +15,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.moutamid.misscaddie.R;
 import com.moutamid.misscaddie.adapters.CaddieProfileVPadapter;
+import com.moutamid.misscaddie.models.RequestsModel;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -23,6 +39,12 @@ public class CaddieListFragment extends Fragment {
     TabLayout tabLayout;
     ViewPager viewPager;
     TextView welcomeText, datetext;
+    private MaterialCardView cardView1,cardView2,cardView3,cardView4,cardView5,cardView6,cardView7;
+    private TextView date1,date2,date3,date4,date5,date6,date7;
+    private DatabaseReference requestsDb,db;
+    private FirebaseAuth mAuth;
+    private FirebaseUser user;
+    private ArrayList<String> availableList = new ArrayList<>();
 
     public CaddieListFragment() {
         // Required empty public constructor
@@ -35,11 +57,28 @@ public class CaddieListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_caddie_list, container, false);
 
         tabLayout = view.findViewById(R.id.tabsLayout);
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
         viewPager = view.findViewById(R.id.ProfileViewpager);
         welcomeText = view.findViewById(R.id.text_heading);
         datetext = view.findViewById(R.id.date);
-        greetingMessage();
-
+        cardView1 = view.findViewById(R.id.item_card1);
+        cardView2 = view.findViewById(R.id.item_card2);
+        cardView3 = view.findViewById(R.id.item_card3);
+        cardView4 = view.findViewById(R.id.item_card4);
+        cardView5 = view.findViewById(R.id.item_card5);
+        cardView6 = view.findViewById(R.id.item_card6);
+        cardView7 = view.findViewById(R.id.item_card7);
+        date1 = view.findViewById(R.id.calender_date1);
+        date2 = view.findViewById(R.id.calender_date2);
+        date3 = view.findViewById(R.id.calender_date3);
+        date4 = view.findViewById(R.id.calender_date4);
+        date5 = view.findViewById(R.id.calender_date5);
+        date6 = view.findViewById(R.id.calender_date6);
+        date7 = view.findViewById(R.id.calender_date7);
+        requestsDb = FirebaseDatabase.getInstance().getReference().child("Requests");
+        db = FirebaseDatabase.getInstance().getReference().child("Caddie")
+                .child(user.getUid()).child("availability");
         CaddieProfileVPadapter caddieProfileVPadapter = new CaddieProfileVPadapter(getActivity().getSupportFragmentManager());
         caddieProfileVPadapter.addFragment(new PendingFragment(), "Pending");
         caddieProfileVPadapter.addFragment(new AcceptedFragment(), "Accepted");
@@ -47,10 +86,130 @@ public class CaddieListFragment extends Fragment {
 
         viewPager.setAdapter(caddieProfileVPadapter);
         tabLayout.setupWithViewPager(viewPager);
-
+        greetingMessage();
+        getWeeksDate();
+        checkWeekUpdates();
         return view;
     }
 
+    private void checkWeekUpdates() {
+        Query query = requestsDb.orderByChild("status_title").equalTo("Accepted");
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    availableList.clear();
+                    for (DataSnapshot ds : snapshot.getChildren()){
+                        RequestsModel model = ds.getValue(RequestsModel.class);
+                        db.addValueEventListener(new ValueEventListener() {
+                            @RequiresApi(api = Build.VERSION_CODES.M)
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot1) {
+                                if (snapshot1.exists()){
+                                    for (DataSnapshot dataSnapshot : snapshot1.getChildren()){
+                                        String date = dataSnapshot.child("date").getValue().toString();
+                                        //Toast.makeText(getActivity(),date,Toast.LENGTH_LONG).show();
+                                        if (model.getDate().equals(date)){
+                                            availableList.add(model.getDate());
+                                            getHighlightWeeksDate();
+                                        }
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    @SuppressLint("ResourceAsColor")
+    private void getHighlightWeeksDate() {
+     /*   SimpleDateFormat format = new SimpleDateFormat("dd");
+        Calendar calendar = Calendar.getInstance();
+        calendar.setFirstDayOfWeek(Calendar.MONDAY);
+        calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+
+        String[] days = new String[7];
+        for (int i = 0; i < 7; i++) {
+            for (int j = 0; j < availableList.size(); j++){
+                days[i] = format.format(calendar.getTime());
+                calendar.add(Calendar.DAY_OF_MONTH, 1);
+                String available = availableList.get(j);
+                String day=available.substring(0,2);
+                if (days[i].equals(day)){
+
+                }
+            }
+        }*/
+        for (int j = 0; j < availableList.size(); j++){
+
+            String available = availableList.get(j);
+            String day=available.substring(0,2);
+            if (date1.getText().equals(day)){
+                cardView1.setCardBackgroundColor(getActivity().getColor(R.color.yellow));
+                date1.setTextColor(getResources().getColor(R.color.white));
+            }
+            if (date2.getText().equals(day)){
+                cardView2.setCardBackgroundColor(getActivity().getColor(R.color.yellow));
+                date2.setTextColor(getResources().getColor(R.color.white));
+            }
+            if (date3.getText().equals(day)){
+                cardView3.setCardBackgroundColor(getActivity().getColor(R.color.yellow));
+                date3.setTextColor(getResources().getColor(R.color.white));
+            }
+            if (date4.getText().equals(day)){
+                cardView4.setCardBackgroundColor(getActivity().getColor(R.color.yellow));
+                date4.setTextColor(getResources().getColor(R.color.white));
+            }
+            if (date5.getText().equals(day)){
+                cardView5.setCardBackgroundColor(getActivity().getColor(R.color.yellow));
+                date5.setTextColor(getResources().getColor(R.color.white));
+            }
+            if (date6.getText().equals(day)){
+                cardView6.setCardBackgroundColor(getActivity().getColor(R.color.yellow));
+                date6.setTextColor(getResources().getColor(R.color.white));
+            }
+            if (date7.getText().equals(day)){
+                cardView7.setCardBackgroundColor(getActivity().getColor(R.color.yellow));
+                date7.setTextColor(getResources().getColor(R.color.white));
+            }
+        }
+    }
+
+
+    private void getWeeksDate() {
+        SimpleDateFormat format = new SimpleDateFormat("dd");
+        Calendar calendar = Calendar.getInstance();
+        calendar.setFirstDayOfWeek(Calendar.MONDAY);
+        calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+
+        String[] days = new String[7];
+        for (int i = 0; i < 7; i++)
+        {
+            days[i] = format.format(calendar.getTime());
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+        }
+        date1.setText(days[0]);
+        date2.setText(days[1]);
+        date3.setText(days[2]);
+        date4.setText(days[3]);
+        date5.setText(days[4]);
+        date6.setText(days[5]);
+        date7.setText(days[6]);
+    }
     private void greetingMessage() {
         Calendar c = Calendar.getInstance();
         int timeOfDay = c.get(Calendar.HOUR_OF_DAY);

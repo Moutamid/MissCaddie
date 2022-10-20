@@ -69,6 +69,7 @@ public class CaddieContactActivity extends AppCompatActivity {
     private String place = "";
     private String date = "";
     private String message = "";
+    private String price = "";
     private FirebaseAuth mAuth;
     private LocationListener locationListener;
     private double latitude = 0.0;
@@ -133,6 +134,7 @@ public class CaddieContactActivity extends AppCompatActivity {
                     sendMessage(message,"golfer");
                     startActivity(new Intent(CaddieContactActivity.this,CaddiesRequestsActivity.class));
                     finish();
+                    Animatoo.animateZoom(CaddieContactActivity.this);
                 }
             }
         });
@@ -141,8 +143,8 @@ public class CaddieContactActivity extends AppCompatActivity {
 
     private void sendRequest() {
         String key = requestsDb.push().getKey();
-        RequestsModel requestsModel = new RequestsModel(key,user.getUid(),"Pending",date,
-                place,message,service,"");
+        RequestsModel requestsModel = new RequestsModel(key,user.getUid(),price,"Pending",date,
+                place,message,service,uId);
         requestsDb.child(key).setValue(requestsModel);
     }
 
@@ -208,12 +210,17 @@ public class CaddieContactActivity extends AppCompatActivity {
                                 serviceListModels.add(model.getTitle() + " " + model.getPrice());
                             }
                             arrayAdapter = new ArrayAdapter<String>(CaddieContactActivity.this,
-                                    androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,serviceListModels);
+                                    androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
+                                    serviceListModels);
                             serviceSpinner.setAdapter(arrayAdapter);
                             serviceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                                 @Override
                                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                                     service = adapterView.getItemAtPosition(i).toString();
+                                    int last = service.lastIndexOf(" ");
+                                    String lastname = service.substring(last,service.length());
+                                    price = lastname;
+                                    //Toast.makeText(CaddieContactActivity.this,"" + lastname,Toast.LENGTH_LONG).show();
                                 }
 
                                 @Override

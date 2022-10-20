@@ -86,7 +86,7 @@
         android:orientation="horizontal">
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/item_card"
+            android:id="@+id/item_card1"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="5dp"
@@ -95,9 +95,9 @@
             app:cardElevation="0dp">
 
             <TextView
-                android:id="@+id/calender_date"
+                android:id="@+id/calender_date1"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="36dp"
                 android:gravity="center"
                 android:padding="8dp"
                 android:text="25"
@@ -108,6 +108,7 @@
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="50dp"
+            android:id="@+id/item_card2"
             android:layout_height="50dp"
             android:layout_margin="5dp"
             android:layout_weight="1"
@@ -131,7 +132,7 @@
             android:layout_height="50dp"
             android:layout_margin="5dp"
             android:layout_weight="1"
-            app:cardBackgroundColor="@color/yellow"
+            android:id="@+id/item_card3"
             app:cardCornerRadius="50dp"
             app:cardElevation="0dp">
 
@@ -153,6 +154,7 @@
             android:layout_margin="5dp"
             android:layout_weight="1"
             app:cardCornerRadius="50dp"
+            android:id="@+id/item_card4"
             app:cardElevation="0dp">
 
             <TextView
@@ -170,9 +172,9 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:id="@+id/item_card5"
             android:layout_margin="5dp"
             android:layout_weight="1"
-            app:cardBackgroundColor="@color/yellow"
             app:cardCornerRadius="50dp"
             app:cardElevation="0dp">
 
@@ -191,9 +193,9 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:id="@+id/item_card6"
             android:layout_margin="5dp"
             android:layout_weight="1"
-            app:cardBackgroundColor="@color/yellow"
             app:cardCornerRadius="50dp"
             app:cardElevation="0dp">
 
@@ -213,6 +215,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="5dp"
+            android:id="@+id/item_card7"
             android:layout_weight="1"
             app:cardCornerRadius="50dp"
             app:cardElevation="0dp">
@@ -229,9 +232,7 @@
 
         </com.google.android.material.card.MaterialCardView>
 
-
     </LinearLayout>
-
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabsLayout"
         android:layout_width="match_parent"

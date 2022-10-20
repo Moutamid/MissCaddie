@@ -34,7 +34,6 @@
             android:layout_toEndOf="@+id/img_golfer"
             android:fontFamily="@font/roboto"
             android:letterSpacing="0.05"
-            android:text="Andrea Carl"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -47,7 +46,6 @@
             android:layout_toEndOf="@id/name_golfer"
             android:fontFamily="@font/roboto"
             android:letterSpacing="0.05"
-            android:text="(US$65)"
             android:textColor="@color/green"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -60,7 +58,6 @@
             android:layout_toEndOf="@id/price_golfer"
             android:fontFamily="@font/roboto"
             android:letterSpacing="0.05"
-            android:text="(Declined)"
             android:textColor="@color/red"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -81,7 +78,6 @@
             android:layout_marginTop="5dp"
             android:layout_toEndOf="@id/img_golfer"
             android:fontFamily="@font/roboto"
-            android:text="5th Oct - 15 Oct"
             android:textColor="@color/grey" />
 
         <TextView
@@ -102,7 +98,6 @@
             android:layout_marginTop="5dp"
             android:layout_toEndOf="@id/img_golfer"
             android:fontFamily="@font/roboto"
-            android:text="Dean St, Brooklyn, NY, USA"
             android:textSize="14sp"
             android:textStyle="bold" />
 

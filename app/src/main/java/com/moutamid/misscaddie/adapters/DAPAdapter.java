@@ -88,10 +88,8 @@ public class DAPAdapter extends RecyclerView.Adapter<DAPAdapter.VH> {
                     holder.itemView.setOnClickListener(v -> {
                         Intent i = new Intent(context.getApplicationContext(), CaddieBookingDetailsActivity.class);
                         i.putExtra("personName", model_golfer.getName());
-                        i.putExtra("bookingDates", model.getDate());
                         i.putExtra("personImage", model_golfer.getImage());
-                        i.putExtra("price", ("(US$" + model.getPrice() + ")"));
-                        i.putExtra("services", (Parcelable) model.getTableRows());
+                        i.putExtra("requestModel",model);
 
                         context.startActivity(i);
                     });
