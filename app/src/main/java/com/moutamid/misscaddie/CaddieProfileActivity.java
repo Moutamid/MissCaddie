@@ -159,7 +159,7 @@ public class CaddieProfileActivity extends AppCompatActivity {
                         if (snapshot.exists()){
                             Model_Caddie model = snapshot.getValue(Model_Caddie.class);
                             name = model.getName();
-                            place = model.getPlace();
+                            place = model.getState();
                             caddieName.setText(name);
                             placeCaddie.setText(place);
                             Glide.with(CaddieProfileActivity.this)

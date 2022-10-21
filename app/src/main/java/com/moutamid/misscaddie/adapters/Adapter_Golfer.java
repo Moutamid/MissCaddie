@@ -50,7 +50,7 @@ public class Adapter_Golfer extends RecyclerView.Adapter<Adapter_Golfer.HolderAn
         //String price_tv = modelAndroid.getPrice();
         String length_tv = modelAndroid.getLength();
         String cat_tv = modelAndroid.getCatagory();
-        String place_tv = modelAndroid.getPlace();
+        String place_tv = modelAndroid.getState();
         String reviews_tv = modelAndroid.getReviews();
         String status_tv = modelAndroid.getStatus();
 
@@ -65,7 +65,7 @@ public class Adapter_Golfer extends RecyclerView.Adapter<Adapter_Golfer.HolderAn
         holder.reviews.setText(reviews_tv);
         if (status_tv.equals("willing")){
             holder.status.setText("Willing to Travel");
-            holder.status_icon.setImageResource(R.drawable.charm_check);
+            holder.status_icon.setImageResource(R.drawable.ic_charm_tick1);
         }else {
             holder.status.setText("Not Willing to Travel");
             holder.status_icon.setImageResource(R.drawable.ic_charm_cross);

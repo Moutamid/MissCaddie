@@ -188,6 +188,7 @@
         android:layout_marginRight="20dp"
         android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24"
         android:gravity="start"
+        android:text="Select Date (5 Oct)"
         android:textColor="@color/black" />
 
     <TextView

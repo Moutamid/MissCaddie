@@ -45,7 +45,7 @@ public class CaddieReviewsFragment extends Fragment {
 
         modelGolferArrayList = new ArrayList<>();
 
-        loadData(view);
+      //  loadData(view);
 
         return view;
     }

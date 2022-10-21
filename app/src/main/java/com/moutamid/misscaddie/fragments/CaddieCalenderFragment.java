@@ -23,6 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.moutamid.misscaddie.R;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -35,6 +36,7 @@ public class CaddieCalenderFragment extends Fragment {
     ProgressDialog dialog;
     private DatabaseReference db;
     private String availabilty = "";
+    private ArrayList<String> dates = new ArrayList<>();
 
     public CaddieCalenderFragment() {
         // Required empty public constructor
@@ -50,9 +52,31 @@ public class CaddieCalenderFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         currrentUser = mAuth.getCurrentUser();
         db = FirebaseDatabase.getInstance().getReference().child("Caddie");
-//        checkAvailability();
+        checkAvailability();
 
         return view;
+    }
+
+    private void checkAvailability() {
+        if (isAdded()){
+            db.child(currrentUser.getUid()).child("availability").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()){
+                        for (DataSnapshot ds : snapshot.getChildren()){
+                            String date = ds.child("date").getValue().toString();
+                            String day = date.substring(0, 2);
+                            dates.add(day);
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
     }
 
 

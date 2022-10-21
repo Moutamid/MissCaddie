@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -56,8 +57,8 @@ public class GolferProfileEditActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     FirebaseUser currrentUser;
     private DatabaseReference db;
-    private EditText nameTxt,emailTxt,passwordTxt;
-    private TextView saveBtn;
+    private EditText nameTxt,passwordTxt;
+    private TextView saveBtn,emailTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,12 +95,8 @@ public class GolferProfileEditActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 name = nameTxt.getText().toString();
-                email = emailTxt.getText().toString();
                 password = passwordTxt.getText().toString();
-
-                if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(password) && !image.equals("")){
-                 updateUser();
-                }
+                updateUser();
             }
         });
     }
@@ -107,7 +104,6 @@ public class GolferProfileEditActivity extends AppCompatActivity {
     private void updateUser() {
         HashMap<String,Object> hashMap = new HashMap<>();
         hashMap.put("name",name);
-        hashMap.put("email",email);
         hashMap.put("password",password);
         hashMap.put("image",image);
         db.child(currrentUser.getUid()).updateChildren(hashMap);
@@ -132,7 +128,7 @@ public class GolferProfileEditActivity extends AppCompatActivity {
                     passwordTxt.setText(password);
                     Glide.with(GolferProfileEditActivity.this)
                             .load(image)
-                            .placeholder(R.drawable.img3)
+                            .placeholder(R.drawable.bi_person_fill)
                             .into(logo);
                 }
             }
@@ -159,6 +155,7 @@ public class GolferProfileEditActivity extends AppCompatActivity {
                 if (resultCode == RESULT_OK && data != null) {
                     imageURI = data.getData();
                     logo.setImageURI(data.getData());
+                    bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageURI);
                     saveInformation();
                 } else {
                     Toast.makeText(this, "Please Select An Images", Toast.LENGTH_SHORT).show();

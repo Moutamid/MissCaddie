@@ -41,7 +41,9 @@ public class CaddieDeatilsActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     FirebaseUser currrentUser;
     ProgressDialog dialog;
-    private String state,status,category;
+    private String state ="";
+    private String status = "willing";
+    private String category = "";
     private DatabaseReference db;
     boolean willingState = true, notWillingState = false;
     LinearLayout notWillingLayout, WillingLayout;
@@ -211,5 +213,7 @@ public class CaddieDeatilsActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
         Animatoo.animateZoom(CaddieDeatilsActivity.this);
+        b.etService.setText("");
+        b.etPrice.setText("");
     }
 }

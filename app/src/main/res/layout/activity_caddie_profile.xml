@@ -127,7 +127,6 @@
         android:layout_marginLeft="8dp"
         android:layout_marginTop="5dp"
         android:layout_toEndOf="@id/starsLayout"
-        android:text="7 reviews"
         android:textSize="18sp" />
 
 

@@ -64,6 +64,9 @@ public class Register_Caddie extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String email = b.email.getText().toString();
+                dialog.setTitle("Creating your account");
+                dialog.setCanceledOnTouchOutside(true);
+                dialog.show();
                 if (!TextUtils.isEmpty(email)) {
                     checkingExistance(email);
                 }else {
@@ -106,11 +109,13 @@ public class Register_Caddie extends AppCompatActivity {
                     intent.putExtra("email",email);
                     startActivity(intent);
                     Animatoo.animateZoom(Register_Caddie.this);
+                    dialog.dismiss();
                 }else {
                     Intent intent = new Intent(Register_Caddie.this, SignUp_Caddie.class);
                     intent.putExtra("email",email);
                     startActivity(intent);
                     Animatoo.animateZoom(Register_Caddie.this);
+                    dialog.dismiss();
                 }
             }
 

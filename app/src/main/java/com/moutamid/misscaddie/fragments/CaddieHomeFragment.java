@@ -117,36 +117,38 @@ public class CaddieHomeFragment extends Fragment {
                     availableList.clear();
                     for (DataSnapshot ds : snapshot.getChildren()){
                         RequestsModel model = ds.getValue(RequestsModel.class);
-                        db.addValueEventListener(new ValueEventListener() {
-                            @RequiresApi(api = Build.VERSION_CODES.M)
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot1) {
-                                if (snapshot1.exists()){
-                                    for (DataSnapshot dataSnapshot : snapshot1.getChildren()){
-                                        String date = dataSnapshot.child("date").getValue().toString();
-                                        //Toast.makeText(getActivity(),date,Toast.LENGTH_LONG).show();
-                                        if (model.getDate().equals(date)){
-                                            availableList.add(model.getDate());
-                                            getHighlightWeeksDate();
-                                            String day = model.getDate().substring(0, 2);
-                                            Calendar c = Calendar.getInstance();
-                                            SimpleDateFormat format = new SimpleDateFormat("dd");
-                                            String d = format.format(c.getTime());
-                                            if (day.equals(d)){
-                                                getUserData(model.getUserId(),model.getAddress());
-                                            }else {
-                                                todayHead.setText("Today: No Booking");
+                        if (model.getCaddieId().equals(user.getUid())){
+                            db.addValueEventListener(new ValueEventListener() {
+                                @RequiresApi(api = Build.VERSION_CODES.M)
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot1) {
+                                    if (snapshot1.exists()){
+                                        for (DataSnapshot dataSnapshot : snapshot1.getChildren()){
+                                            String date = dataSnapshot.child("date").getValue().toString();
+                                            //Toast.makeText(getActivity(),date,Toast.LENGTH_LONG).show();
+                                            if (model.getDate().equals(date)){
+                                                availableList.add(model.getDate());
+                                                getHighlightWeeksDate();
+                                                String day = model.getDate().substring(0, 2);
+                                                Calendar c = Calendar.getInstance();
+                                                SimpleDateFormat format = new SimpleDateFormat("dd");
+                                                String d = format.format(c.getTime());
+                                                if (day.equals(d)){
+                                                    getUserData(model.getUserId(),model.getAddress());
+                                                }else {
+                                                    todayHead.setText("Today: No Booking");
+                                                }
                                             }
                                         }
                                     }
                                 }
-                            }
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
 
-                            }
-                        });
+                                }
+                            });
+                        }
                     }
 
                 }
