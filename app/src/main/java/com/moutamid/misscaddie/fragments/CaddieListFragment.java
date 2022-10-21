@@ -40,7 +40,7 @@ public class CaddieListFragment extends Fragment {
     ViewPager viewPager;
     TextView welcomeText, datetext;
     private MaterialCardView cardView1,cardView2,cardView3,cardView4,cardView5,cardView6,cardView7;
-    private TextView date1,date2,date3,date4,date5,date6,date7;
+    private TextView date1,date2,date3,date4,date5,date6,date7,todayHead;
     private DatabaseReference requestsDb,db;
     private FirebaseAuth mAuth;
     private FirebaseUser user;
@@ -60,6 +60,7 @@ public class CaddieListFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
         viewPager = view.findViewById(R.id.ProfileViewpager);
+        todayHead = view.findViewById(R.id.head);
         welcomeText = view.findViewById(R.id.text_heading);
         datetext = view.findViewById(R.id.date);
         cardView1 = view.findViewById(R.id.item_card1);

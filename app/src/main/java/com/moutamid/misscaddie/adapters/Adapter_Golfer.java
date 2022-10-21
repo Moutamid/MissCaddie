@@ -17,6 +17,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.moutamid.misscaddie.CaddieProfileActivity;
+import com.moutamid.misscaddie.models.Model_Caddie;
 import com.moutamid.misscaddie.models.Model_Golfer;
 import com.moutamid.misscaddie.R;
 import com.moutamid.misscaddie.models.ServiceListModel;
@@ -26,10 +27,10 @@ import java.util.ArrayList;
 public class Adapter_Golfer extends RecyclerView.Adapter<Adapter_Golfer.HolderAndroid> {
 
     private Context context;
-    private ArrayList<Model_Golfer> androidArrayList;
+    private ArrayList<Model_Caddie> androidArrayList;
     private ArrayList<ServiceListModel> serviceListModels = new ArrayList<>();
 
-    public Adapter_Golfer(Context context, ArrayList<Model_Golfer> androidArrayList) {
+    public Adapter_Golfer(Context context, ArrayList<Model_Caddie> androidArrayList) {
         this.context = context;
         this.androidArrayList = androidArrayList;
     }
@@ -43,10 +44,10 @@ public class Adapter_Golfer extends RecyclerView.Adapter<Adapter_Golfer.HolderAn
 
     @Override
     public void onBindViewHolder(@NonNull HolderAndroid holder, int position) {
-        Model_Golfer modelAndroid = androidArrayList.get(position);
+        Model_Caddie modelAndroid = androidArrayList.get(position);
 
         String name_tv= modelAndroid.getName();
-        String price_tv = modelAndroid.getPrice();
+        //String price_tv = modelAndroid.getPrice();
         String length_tv = modelAndroid.getLength();
         String cat_tv = modelAndroid.getCatagory();
         String place_tv = modelAndroid.getPlace();
@@ -60,7 +61,7 @@ public class Adapter_Golfer extends RecyclerView.Adapter<Adapter_Golfer.HolderAn
         holder.length.setText(length_tv + " cm");
         holder.place.setText(place_tv);
         holder.catagory.setText(cat_tv);
-        holder.price.setText(price_tv);
+        //holder.price.setText(price_tv);
         holder.reviews.setText(reviews_tv);
         if (status_tv.equals("willing")){
             holder.status.setText("Willing to Travel");

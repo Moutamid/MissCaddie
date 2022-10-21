@@ -51,7 +51,7 @@ public class CaddieHomeFragment extends Fragment {
     private CaddieChatListAdapter mAdapter;
     private RecyclerView recyclerView;
     private MaterialCardView cardView1,cardView2,cardView3,cardView4,cardView5,cardView6,cardView7;
-    private TextView date1,date2,date3,date4,date5,date6,date7;
+    private TextView date1,date2,date3,date4,date5,date6,date7,todayHead;
     private ArrayList<String> availableList = new ArrayList<>();
 
     public CaddieHomeFragment() {
@@ -70,6 +70,7 @@ public class CaddieHomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_caddie_home, container, false);
         welcomeText = view.findViewById(R.id.text_heading);
         datetext = view.findViewById(R.id.date);
+        todayHead = view.findViewById(R.id.head);
         viewCalender = view.findViewById(R.id.view_cal);
         recyclerView = view.findViewById(R.id.recyclerView);
         cardView1 = view.findViewById(R.id.item_card1);
@@ -126,6 +127,15 @@ public class CaddieHomeFragment extends Fragment {
                                         if (model.getDate().equals(date)){
                                             availableList.add(model.getDate());
                                             getHighlightWeeksDate();
+                                            String day = model.getDate().substring(0, 2);
+                                            Calendar c = Calendar.getInstance();
+                                            SimpleDateFormat format = new SimpleDateFormat("dd");
+                                            String d = format.format(c.getTime());
+                                            if (day.equals(d)){
+                                                todayHead.setText("Today: Booking with" + model.getAddress());
+                                            }else {
+                                                todayHead.setText("Today: No Booking");
+                                            }
                                         }
                                     }
                                 }
@@ -172,6 +182,7 @@ public class CaddieHomeFragment extends Fragment {
             if (isAdded()) {
                 String available = availableList.get(j);
                 String day = available.substring(0, 2);
+
                 if (date1.getText().equals(day)) {
                     cardView1.setCardBackgroundColor(getActivity().getColor(R.color.yellow));
                     date1.setTextColor(getResources().getColor(R.color.white));

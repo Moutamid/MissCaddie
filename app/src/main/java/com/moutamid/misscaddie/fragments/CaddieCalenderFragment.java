@@ -48,9 +48,6 @@ public class CaddieCalenderFragment extends Fragment {
         datetext = view.findViewById(R.id.date);
         greetingMessage();
 
-        mAuth = FirebaseAuth.getInstance();
-        currrentUser = mAuth.getCurrentUser();
-        db = FirebaseDatabase.getInstance().getReference().child("Caddie");
 //        checkAvailability();
 
         return view;
@@ -59,21 +56,23 @@ public class CaddieCalenderFragment extends Fragment {
 
     @SuppressLint("NewApi")
     public void OctoberDatesClick(View view) {
-        TextView t = (TextView) view;
-        availabilty = t.getText() + " Oct";
-        String key = db.child(currrentUser.getUid()).child("availability").push().getKey();
-        HashMap<String,Object> hashMap = new HashMap<>();
-        hashMap.put("date",availabilty);
-        db.child(currrentUser.getUid()).child("availability").child(key).updateChildren(hashMap);
-
-        if (isAdded()) {
+      //  if (isAdded()) {
+            TextView t = (TextView) view;
+            availabilty = t.getText() + " Oct";
+            mAuth = FirebaseAuth.getInstance();
+            currrentUser = mAuth.getCurrentUser();
+            db = FirebaseDatabase.getInstance().getReference().child("Caddie");
+            String key = db.child(currrentUser.getUid()).child("availability").push().getKey();
+            HashMap<String,Object> hashMap = new HashMap<>();
+            hashMap.put("date",availabilty);
+            db.child(currrentUser.getUid()).child("availability").child(key).updateChildren(hashMap);
             if (t.getBackground() != null) {
-                t.setBackgroundResource(0);
-                t.setTextColor(requireActivity().getColor(R.color.black));
+            t.setBackgroundResource(0);
+            t.setTextColor(getResources().getColor(R.color.black));
             } else {
-                t.setBackground(requireActivity().getDrawable(R.drawable.circle_yellow));
-                t.setTextColor(requireActivity().getColor(R.color.white));
-            }
+            t.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
+            t.setTextColor(getResources().getColor(R.color.white));
+        //    }
         }
     }
 

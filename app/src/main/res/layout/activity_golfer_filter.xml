@@ -23,10 +23,11 @@
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
+        android:id="@+id/cancel"
         android:src="@drawable/ic_charm_cross1" />
 
     <View
-        android:id="@+id/rectangle_3"
+        android:id="@+id/save"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_alignParentRight="true"
@@ -43,6 +44,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="15dp"
         android:layout_marginRight="10dp"
+        android:id="@+id/filter"
         android:layout_marginBottom="10dp"
         android:src="@drawable/ic_charm_tick" />
 
@@ -50,7 +52,6 @@
         android:id="@+id/text_heading"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="10dp"
         android:fontFamily="@font/montserrat_bold"
@@ -187,7 +188,6 @@
         android:layout_marginRight="20dp"
         android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24"
         android:gravity="start"
-        android:text="Select Date (5 Oct - 15 Oct)"
         android:textColor="@color/black" />
 
     <TextView
@@ -213,19 +213,22 @@
         android:layout_marginTop="2dp"
         android:layout_marginRight="20dp"
         android:entries="@array/usa_states"
-        android:gravity="start"/>
+        android:gravity="start" />
 
     <TextView
         android:id="@+id/reset_filters"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/green"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="25dp"
+        android:letterSpacing="0.08"
         android:text="Reset Filters"
         android:textAllCaps="true"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:textStyle="bold"
-        android:letterSpacing="0.08"
-        android:layout_margin="25dp" />
+        android:textColor="@color/green"
+        android:textStyle="bold" />
 
 </RelativeLayout>
