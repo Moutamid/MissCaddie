@@ -92,7 +92,8 @@ public class CaddieContactActivity extends AppCompatActivity {
         mChatReference = FirebaseDatabase.getInstance().getReference().child("chats");
         mConversationReference = FirebaseDatabase.getInstance().getReference().child("conversation");
         caddie_db = FirebaseDatabase.getInstance().getReference().child("Caddie");
-        MaterialDatePicker.Builder<Pair<Long, Long>> materialDateBuilder = MaterialDatePicker.Builder.dateRangePicker();
+        MaterialDatePicker.Builder<Long> materialDateBuilder =
+                MaterialDatePicker.Builder.datePicker();
         materialDateBuilder.setTitleText("SELECT A DATE");
         serviceListModels = new ArrayList<>();
         mAuth = FirebaseAuth.getInstance();
@@ -108,9 +109,8 @@ public class CaddieContactActivity extends AppCompatActivity {
                     @SuppressLint("SetTextI18n")
                     @Override
                     public void onPositiveButtonClick(Object selection) {
-                        date = materialDatePicker.getHeaderText();
-                        booking_dates.setText("Selected Date is (" + materialDatePicker.getHeaderText() + ")");
-                    }
+                        String day = date.substring(0, 6);
+                        booking_dates.setText("Selected Date is (" + day + ")"); }
                 });
 
         backBtn.setOnClickListener(v -> {

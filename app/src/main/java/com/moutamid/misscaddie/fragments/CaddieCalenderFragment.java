@@ -47,7 +47,9 @@ public class CaddieCalenderFragment extends Fragment {
         welcomeText = view.findViewById(R.id.text_heading);
         datetext = view.findViewById(R.id.date);
         greetingMessage();
-
+        mAuth = FirebaseAuth.getInstance();
+        currrentUser = mAuth.getCurrentUser();
+        db = FirebaseDatabase.getInstance().getReference().child("Caddie");
 //        checkAvailability();
 
         return view;
@@ -56,34 +58,14 @@ public class CaddieCalenderFragment extends Fragment {
 
     @SuppressLint("NewApi")
     public void OctoberDatesClick(View view) {
-      //  if (isAdded()) {
+        if (isAdded()) {
             TextView t = (TextView) view;
             availabilty = t.getText() + " Oct";
-            mAuth = FirebaseAuth.getInstance();
-            currrentUser = mAuth.getCurrentUser();
-            db = FirebaseDatabase.getInstance().getReference().child("Caddie");
+
             String key = db.child(currrentUser.getUid()).child("availability").push().getKey();
             HashMap<String,Object> hashMap = new HashMap<>();
             hashMap.put("date",availabilty);
             db.child(currrentUser.getUid()).child("availability").child(key).updateChildren(hashMap);
-            if (t.getBackground() != null) {
-            t.setBackgroundResource(0);
-            t.setTextColor(getResources().getColor(R.color.black));
-            } else {
-            t.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            t.setTextColor(getResources().getColor(R.color.white));
-        //    }
-        }
-    }
-
-    public void NovemberDatesClick(View view) {
-        TextView t = (TextView) view;
-        availabilty = t.getText() + " Nov";
-        String key = db.child(currrentUser.getUid()).child("availability").push().getKey();
-        HashMap<String,Object> hashMap = new HashMap<>();
-        hashMap.put("date",availabilty);
-        db.child(currrentUser.getUid()).child("availability").child(key).updateChildren(hashMap);
-        if (isAdded()) {
             if (t.getBackground() != null) {
                 t.setBackgroundResource(0);
                 t.setTextColor(getResources().getColor(R.color.black));
@@ -94,20 +76,40 @@ public class CaddieCalenderFragment extends Fragment {
         }
     }
 
-    public void DecemberDatesClick(View view) {
-        TextView t = (TextView) view;
-        availabilty = t.getText() + " Dec";
-        String key = db.child(currrentUser.getUid()).child("availability").push().getKey();
-        HashMap<String,Object> hashMap = new HashMap<>();
-        hashMap.put("date",availabilty);
-        db.child(currrentUser.getUid()).child("availability").child(key).updateChildren(hashMap);
-        if (isAdded()) {
+    public void NovemberDatesClick(View view) {
+        if(isAdded()) {
+            TextView t = (TextView) view;
+            availabilty = t.getText() + " Nov";
+            String key = db.child(currrentUser.getUid()).child("availability").push().getKey();
+            HashMap<String, Object> hashMap = new HashMap<>();
+            hashMap.put("date", availabilty);
+            db.child(currrentUser.getUid()).child("availability").child(key).updateChildren(hashMap);
             if (t.getBackground() != null) {
                 t.setBackgroundResource(0);
                 t.setTextColor(getResources().getColor(R.color.black));
             } else {
                 t.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
                 t.setTextColor(getResources().getColor(R.color.white));
+                //    }
+            }
+        }
+    }
+
+    public void DecemberDatesClick(View view) {
+        if (isAdded()) {
+            TextView t = (TextView) view;
+            availabilty = t.getText() + " Dec";
+            String key = db.child(currrentUser.getUid()).child("availability").push().getKey();
+            HashMap<String, Object> hashMap = new HashMap<>();
+            hashMap.put("date", availabilty);
+            db.child(currrentUser.getUid()).child("availability").child(key).updateChildren(hashMap);
+            if (t.getBackground() != null) {
+                t.setBackgroundResource(0);
+                t.setTextColor(getResources().getColor(R.color.black));
+            } else {
+                t.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
+                t.setTextColor(getResources().getColor(R.color.white));
+                //    }
             }
         }
     }

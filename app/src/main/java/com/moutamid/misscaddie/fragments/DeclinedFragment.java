@@ -68,7 +68,9 @@ public class DeclinedFragment extends Fragment {
                     itemList.clear();
                     for (DataSnapshot ds : snapshot.getChildren()){
                         RequestsModel model = ds.getValue(RequestsModel.class);
-                        itemList.add(model);
+                        if(model.getCaddieId().equals(user.getUid())) {
+                            itemList.add(model);
+                        }
                     }
 
                     DAPAdapter adapter = new DAPAdapter(itemList, getActivity());

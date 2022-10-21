@@ -41,13 +41,15 @@ public class CaddieDashboardActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.home_menu:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CaddieHomeFragment(navigationView)).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                                new CaddieHomeFragment(navigationView)).commit();
                         break;
                     case R.id.list_menu:
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CaddieListFragment()).commit();
                         break;
                     case R.id.calender_menu:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CaddieCalenderFragment()).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                                calenderFragment).commit();
                         break;
                     case R.id.profile_menu:
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CaddieProfileFragment()).commit();

@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
@@ -41,16 +43,26 @@ public class CaddieDeatilsActivity extends AppCompatActivity {
     ProgressDialog dialog;
     private String state,status,category;
     private DatabaseReference db;
+    boolean willingState = true, notWillingState = false;
+    LinearLayout notWillingLayout, WillingLayout;
+    TextView willingTv, notWillingTv;
+    ImageView iconsNot, iconWill;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         b = ActivityCaddieDeatilsBinding.inflate(getLayoutInflater());
         setContentView(b.getRoot());
-
+        notWillingLayout = findViewById(R.id.notWilling);
+        WillingLayout = findViewById(R.id.willing);
+        iconsNot = findViewById(R.id.notWilling_icon);
+        iconWill = findViewById(R.id.willing_icon);
         almostFinished = findViewById(R.id.almostFinished);
         addRecyclerRC = findViewById(R.id.addServiceRV);
         addService = findViewById(R.id.addNewService);
+        willingTv = findViewById(R.id.willing_tv);
+        notWillingTv = findViewById(R.id.notwilling_tv);
+
 
         list = new ArrayList<>();
 
@@ -86,12 +98,50 @@ public class CaddieDeatilsActivity extends AppCompatActivity {
         b.willingLayoutCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (willingState){
+                    WillingLayout.setBackground(getDrawable(R.drawable.unselected_box));
+                    //iconWill.setBackground(getDrawable(R.drawable.ic_charm_tick));
+                    willingState = false;
+                    notWillingLayout.setBackground(getDrawable(R.drawable.selected_box));
+                    //iconsNot.setBackground(getDrawable(R.drawable.ic_charm_cross));
+                    notWillingState = true;
+                    willingTv.setTextColor(getResources().getColor(R.color.black_light));
+                    notWillingTv.setTextColor(getResources().getColor(R.color.black));
+                } else {
+                    WillingLayout.setBackground(getDrawable(R.drawable.selected_box));
+                    //iconWill.setBackground(getDrawable(R.drawable.ic_charm_tick1));
+                    notWillingLayout.setBackground(getDrawable(R.drawable.unselected_box));
+                    //iconsNot.setBackground(getDrawable(R.drawable.ic_charm_cross2));
+                    willingState = true;
+                    willingTv.setTextColor(getResources().getColor(R.color.black));
+                    notWillingTv.setTextColor(getResources().getColor(R.color.black_light));
+                    notWillingState = false;
+                }
                 status = "willing";
             }
         });
         b.notWillingLayoutCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (notWillingState) {
+                    WillingLayout.setBackground(getDrawable(R.drawable.selected_box));
+                    //iconWill.setBackground(getDrawable(R.drawable.ic_charm_tick1));
+                    notWillingLayout.setBackground(getDrawable(R.drawable.unselected_box));
+                    //iconsNot.setBackground(getDrawable(R.drawable.ic_charm_cross2));
+                    willingState = true;
+                    willingTv.setTextColor(getResources().getColor(R.color.black));
+                    notWillingTv.setTextColor(getResources().getColor(R.color.black_light));
+                    notWillingState = false;
+                } else {
+                    notWillingLayout.setBackground(getDrawable(R.drawable.selected_box));
+                    //iconsNot.setBackground(getDrawable(R.drawable.ic_charm_cross));
+                    notWillingState = true;
+                    WillingLayout.setBackground(getDrawable(R.drawable.unselected_box));
+                    //iconWill.setBackground(getDrawable(R.drawable.ic_charm_tick));
+                    willingTv.setTextColor(getResources().getColor(R.color.black_light));
+                    notWillingTv.setTextColor(getResources().getColor(R.color.black));
+                    willingState = false;
+                }
                 status = "not willing";
             }
         });

@@ -33,6 +33,7 @@ public class Dashboard_Golfer extends AppCompatActivity {
     FirebaseAuth mAuth;
     private String state,status,date;
     FirebaseUser currrentUser;
+    private boolean filter = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,12 +59,14 @@ public class Dashboard_Golfer extends AppCompatActivity {
         });
         modelGolferArrayList = new ArrayList<>();
         golfer_recycler = findViewById(R.id.recyclerView_golfer);
-        if (getIntent() != null) {
-            state = getIntent().getStringExtra("state");
-            status = getIntent().getStringExtra("status");
-            date = getIntent().getStringExtra("date");
+        state = getIntent().getStringExtra("state");
+        status = getIntent().getStringExtra("status");
+        date = getIntent().getStringExtra("date");
+        filter = getIntent().getBooleanExtra("filter",false);
+        if (filter) {
             filterDate();
-        }else {
+        }
+        else {
             load_detail();
         }
     }
@@ -76,7 +79,8 @@ public class Dashboard_Golfer extends AppCompatActivity {
                     modelGolferArrayList.clear();
                     for (DataSnapshot ds : snapshot.getChildren()){
                         Model_Caddie model_golfer = ds.getValue(Model_Caddie.class);
-                        if (model_golfer.getStatus().equals(status) && model_golfer.getState().equals(state)) {
+                        if (model_golfer.getStatus().equals(status)
+                                && model_golfer.getState().equals(state)) {
                             modelGolferArrayList.add(model_golfer);
                         }
                     }

@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -76,6 +77,51 @@ public class CaddieEditProfileActivity extends AppCompatActivity {
     private StorageReference mStorage;
     private ArrayAdapter<String> arrayAdapter;
     private static final int STORAGE_PERMISSION_CODE = 101;
+    private String[] states = {"Select State (New York)","Alabama","Alaska","Arizona","Arkansas",
+    "California","Colorado", "Connecticut", "Delaware",
+        "Florida",
+        "Georgia",
+        "Hawaii",
+        "Idaho",
+        "	Illinois	",
+        "	Indiana	",
+        "	Iowa	",
+        "	Kansas	",
+        "	Kentucky	",
+        "	Louisiana	",
+        "	Maine	",
+        "	Maryland	",
+        "	Massachusetts	",
+        "	Michigan	",
+        "	Minnesota	",
+        "	Mississippi	",
+        "	Missouri	",
+        "	Montana	",
+        "	Nebraska	",
+        "	Nevada	",
+            "	New Hampshire	",
+            "	New Jersey	",
+    "	New Mexico	",
+    "	New York	",
+    "	North Carolina	",
+    "	North Dakota	",
+        "	Ohio	",
+        "	Oklahoma	",
+        "	Oregon	",
+        "	Pennsylvania	",
+    "	Rhode Island	",
+    "	South Carolina	",
+    "	South Dakota	",
+        "	Tennessee	",
+        "	Texas	",
+        "	Utah	",
+        "	Vermont	",
+        "	Virginia	",
+        "	Washington	",
+            "	West Virginia	",
+        "	Wisconsin	",
+        "	Wyoming	",
+};
 
     @SuppressLint("ResourceType")
     @Override
@@ -119,10 +165,9 @@ public class CaddieEditProfileActivity extends AppCompatActivity {
                 startActivity(new Intent(CaddieEditProfileActivity.this, CaddieDashboardActivity.class));
             }
         });
-        getCaddieData();
         arrayAdapter = new ArrayAdapter<String>
                 (CaddieEditProfileActivity.this,
-                        androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,R.array.usa_states);
+                        androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,states);
         b.spinnerStates.setAdapter(arrayAdapter);
         b.spinnerStates.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -151,6 +196,7 @@ public class CaddieEditProfileActivity extends AppCompatActivity {
 
             }
         });
+        getCaddieData();
     }
 
     private void getManageImages() {
@@ -231,7 +277,19 @@ public class CaddieEditProfileActivity extends AppCompatActivity {
                             b.etName.setText(name);
                             b.etLocation.setText(model.getPlace());
                             image = model.getImage();
-                            arrayAdapter.getPosition(state);
+                            Glide.with(CaddieEditProfileActivity.this)
+                                    .load(image)
+                                    .placeholder(R.drawable.bi_person_fill)
+                                    .into(b.profileImg);
+                            for (int i = 0; i < states.length; i++){
+
+                                if(states[i].equals(state)){
+                                    b.spinnerStates.setSelection(i);
+                                    Toast.makeText(getApplicationContext(),states[i],Toast.LENGTH_LONG).show();
+                                }
+                            }
+
+
                             db.child(currrentUser.getUid()).child("services").addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -262,31 +320,35 @@ public class CaddieEditProfileActivity extends AppCompatActivity {
 
     private void uploadImage() {
 
-      /*  ImagePicker.with(CaddieEditProfileActivity.this)
+        ImagePicker.with(CaddieEditProfileActivity.this)
                 .crop(600, 600)
                 .compress(1024)
                 .maxResultSize(1080, 1080)
                 .start();
 
-        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+/*        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         intent.setType("image/*");
         startActivityForResult(Intent.createChooser(intent, "Choose Image"), 2);*/
-        Intent intent = new Intent();
+      /*  Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent,"SELECT IMAGE"),PICK_IMAGE_REQUEST);
+        startActivityForResult(Intent.createChooser(intent,"SELECT IMAGE"),PICK_IMAGE_REQUEST);*/
 
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-      /*  try {
+        try {
                 try{
                     if (resultCode == RESULT_OK && data != null) {
-                        profile.setImageURI(data.getData());
+                        uri = data.getData();
+                        profile.setImageURI(uri);
                         overlay.setVisibility(View.VISIBLE);
                         addImg.setVisibility(View.VISIBLE);
+
+                        bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                        saveInformation();
                     } else {
                         Toast.makeText(this, "Please Select Images", Toast.LENGTH_SHORT).show();
                     }
@@ -295,8 +357,8 @@ public class CaddieEditProfileActivity extends AppCompatActivity {
                 }
         } catch (Exception e) {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
-        }*/
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK &&
+        }
+        /*if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK &&
                 data != null && data.getData() != null) {
             uri = data.getData();
             profile.setImageURI(uri);
@@ -307,7 +369,7 @@ public class CaddieEditProfileActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-        }
+        }*/
     }
     private void saveInformation() {
         dialog = new ProgressDialog(CaddieEditProfileActivity.this);

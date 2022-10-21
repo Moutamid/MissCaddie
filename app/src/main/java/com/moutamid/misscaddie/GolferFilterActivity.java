@@ -69,7 +69,7 @@ public class GolferFilterActivity extends AppCompatActivity {
 
             }
         });
-        MaterialDatePicker.Builder<Pair<Long, Long>> materialDateBuilder = MaterialDatePicker.Builder.dateRangePicker();
+        MaterialDatePicker.Builder<Long> materialDateBuilder = MaterialDatePicker.Builder.datePicker();
         materialDateBuilder.setTitleText("SELECT A DATE");
 
         final MaterialDatePicker materialDatePicker = materialDateBuilder.build();
@@ -84,7 +84,8 @@ public class GolferFilterActivity extends AppCompatActivity {
                     @Override
                     public void onPositiveButtonClick(Object selection) {
                         date = materialDatePicker.getHeaderText();
-                        booking_dates.setText("Selected Date is (" + date + ")");
+                        String day = date.substring(0, 6);
+                        booking_dates.setText("Selected Date is (" + day + ")");
                     }
                 });
 
@@ -141,7 +142,9 @@ public class GolferFilterActivity extends AppCompatActivity {
                     intent.putExtra("state",state);
                     intent.putExtra("status",status);
                     intent.putExtra("date",date);
+                    intent.putExtra("filter",true);
                     startActivity(intent);
+                    finish();
                     Animatoo.animateZoom(GolferFilterActivity.this);
                 }
             }

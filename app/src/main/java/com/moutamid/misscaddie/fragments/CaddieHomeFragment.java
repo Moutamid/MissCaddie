@@ -34,6 +34,7 @@ import com.moutamid.misscaddie.adapters.CaddieChatListAdapter;
 import com.moutamid.misscaddie.adapters.DAPAdapter;
 import com.moutamid.misscaddie.adapters.GoflerChatListAdapter;
 import com.moutamid.misscaddie.models.Conversation;
+import com.moutamid.misscaddie.models.Model_Golfer;
 import com.moutamid.misscaddie.models.RequestsModel;
 
 import java.text.SimpleDateFormat;
@@ -132,7 +133,7 @@ public class CaddieHomeFragment extends Fragment {
                                             SimpleDateFormat format = new SimpleDateFormat("dd");
                                             String d = format.format(c.getTime());
                                             if (day.equals(d)){
-                                                todayHead.setText("Today: Booking with" + model.getAddress());
+                                                getUserData(model.getUserId(),model.getAddress());
                                             }else {
                                                 todayHead.setText("Today: No Booking");
                                             }
@@ -148,6 +149,25 @@ public class CaddieHomeFragment extends Fragment {
                         });
                     }
 
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void getUserData(String userId, String address) {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Golfer")
+                .child(userId);
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    Model_Golfer model_golfer = snapshot.getValue(Model_Golfer.class);
+                    todayHead.setText("Today: Booking with "+ model_golfer.getName() + " in " + address);
                 }
             }
 
