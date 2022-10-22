@@ -114,7 +114,7 @@ public class CaddieContactActivity extends AppCompatActivity {
         serviceListModels = new ArrayList<>();
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
-        changeStatusBarColor(this,R.color.yellow);
+    //    changeStatusBarColor(this,R.color.yellow);
         MaterialDatePicker.Builder<Long> materialDateBuilder = MaterialDatePicker.Builder.datePicker();
         materialDateBuilder.setTitleText("SELECT A DATE");
 

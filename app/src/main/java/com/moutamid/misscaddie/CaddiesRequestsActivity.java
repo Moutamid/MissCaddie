@@ -54,7 +54,7 @@ public class CaddiesRequestsActivity extends AppCompatActivity {
         getRequests();
         requestRC.setLayoutManager(new LinearLayoutManager(this));
         requestRC.setHasFixedSize(false);
-        changeStatusBarColor(this,R.color.yellow);
+        //changeStatusBarColor(this,R.color.yellow);
         back_btn.setOnClickListener(v -> {
             Intent intent = new Intent(CaddiesRequestsActivity.this , Dashboard_Golfer.class);
             startActivity(intent);

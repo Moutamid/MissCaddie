@@ -190,22 +190,22 @@ public class CaddieEditProfileActivity extends AppCompatActivity {
         });
 
 
-        b.range.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        b.range.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isb) {
-                if (isb){
+            public void onClick(View view) {
+                if (!range){
                     range = true;
-                   b.range.setChecked(true);
+                    b.range.setChecked(true);
                 }else {
                     range = false;
                     b.range.setChecked(false);
                 }
             }
         });
-        b.video.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        b.video.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isb) {
-                if (isb){
+            public void onClick(View view) {
+                if (!video){
                     video = true;
                     b.video.setChecked(true);
                 }else {
@@ -214,10 +214,10 @@ public class CaddieEditProfileActivity extends AppCompatActivity {
                 }
             }
         });
-        b.willing.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        b.willing.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isb) {
-                if (isb){
+            public void onClick(View view) {
+                if (!travel){
                     travel = true;
                     b.willing.setChecked(true);
                 }else {

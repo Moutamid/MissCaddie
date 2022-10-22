@@ -110,7 +110,7 @@ public class CaddieAvailabiltyActivity extends AppCompatActivity{
         HashMap<String,Object> hashMap = new HashMap<>();
         hashMap.put("date",availabilty);
         db.child(currrentUser.getUid()).child("availability").child(key).updateChildren(hashMap);
-        Toast.makeText(this, "October " + t.getText() + ", 2022", Toast.LENGTH_SHORT).show();
+
         if (t.getBackground() != null){
             t.setBackgroundResource(0);
             t.setTextColor(getResources().getColor(R.color.black));
@@ -127,7 +127,7 @@ public class CaddieAvailabiltyActivity extends AppCompatActivity{
         HashMap<String,Object> hashMap = new HashMap<>();
         hashMap.put("date",availabilty);
         db.child(currrentUser.getUid()).child("availability").child(key).updateChildren(hashMap);
-        Toast.makeText(this, "November " + t.getText() + ", 2022", Toast.LENGTH_SHORT).show();
+
         if (t.getBackground() != null){
             t.setBackgroundResource(0);
             t.setTextColor(getResources().getColor(R.color.black));
@@ -144,7 +144,6 @@ public class CaddieAvailabiltyActivity extends AppCompatActivity{
         HashMap<String,Object> hashMap = new HashMap<>();
         hashMap.put("date",availabilty);
         db.child(currrentUser.getUid()).child("availability").child(key).updateChildren(hashMap);
-        Toast.makeText(this, "December " + t.getText() + ", 2022", Toast.LENGTH_SHORT).show();
         if (t.getBackground() != null){
             t.setBackgroundResource(0);
             t.setTextColor(getResources().getColor(R.color.black));

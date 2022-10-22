@@ -54,6 +54,9 @@ public class CaddieDeatilsActivity extends AppCompatActivity {
     LinearLayout notWillingLayout, WillingLayout;
     TextView willingTv, notWillingTv;
     ImageView iconsNot, iconWill;
+    private boolean range = false;
+    private boolean video = false;
+    private boolean travel = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,48 +155,43 @@ public class CaddieDeatilsActivity extends AppCompatActivity {
                 status = "not willing";
             }
         });
-        b.range.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        b.range.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isb) {
-                if (isb){
-                    String key = db.child(currrentUser.getUid()).child("bonus").push().getKey();
-                    HashMap<String,Object> hashMap = new HashMap<>();
-                    hashMap.put("name",b.range.getText().toString());
-                    db.child(currrentUser.getUid()).child("bonus").child(key).updateChildren(hashMap);
+            public void onClick(View view) {
+                if (!range){
+                    range = true;
                     b.range.setChecked(true);
                 }else {
+                    range = false;
                     b.range.setChecked(false);
                 }
             }
         });
-        b.video.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        b.video.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isb) {
-                if (isb){
-                    String key = db.child(currrentUser.getUid()).child("bonus").push().getKey();
-                    HashMap<String,Object> hashMap = new HashMap<>();
-                    hashMap.put("name",b.video.getText().toString());
-                    db.child(currrentUser.getUid()).child("bonus").child(key).updateChildren(hashMap);
+            public void onClick(View view) {
+                if (!video){
+                    video = true;
                     b.video.setChecked(true);
                 }else {
+                    video = false;
                     b.video.setChecked(false);
                 }
             }
         });
-        b.travel.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        b.travel.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isb) {
-                if (isb){
-                    String key = db.child(currrentUser.getUid()).child("bonus").push().getKey();
-                    HashMap<String,Object> hashMap = new HashMap<>();
-                    hashMap.put("name",b.travel.getText().toString());
-                    db.child(currrentUser.getUid()).child("bonus").child(key).updateChildren(hashMap);
+            public void onClick(View view) {
+                if (!travel){
+                    travel = true;
                     b.travel.setChecked(true);
                 }else {
+                    travel = false;
                     b.travel.setChecked(false);
                 }
             }
         });
+
         almostFinished.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -202,14 +200,18 @@ public class CaddieDeatilsActivity extends AppCompatActivity {
                 String price = b.etPrice.getText().toString();
                 String height = b.height.getText().toString();
                 if (!TextUtils.isEmpty(location) && !TextUtils.isEmpty(service) &&
-                        !TextUtils.isEmpty(price) && !TextUtils.isEmpty(height)) {
+                        !TextUtils.isEmpty(price) && !TextUtils.isEmpty(height) && list.size() > 0) {
                     saveData(location, service, price,height);
+                    for (int i = 0; i < list.size(); i++){
+                        ServiceListModel model = list.get(i);
+                        db.child(currrentUser.getUid()).child("services").child(String.valueOf(i)).setValue(model);
+                    }
                 }
             }
         });
 
         addService.setOnClickListener(v -> {
-            String serviceName = b.etService.getText().toString();
+          /*  String serviceName = b.etService.getText().toString();
             String servicePrice = b.etPrice.getText().toString();
             if (!TextUtils.isEmpty(serviceName) && !TextUtils.isEmpty(servicePrice)) {
                 String key = db.push().getKey();
@@ -217,7 +219,19 @@ public class CaddieDeatilsActivity extends AppCompatActivity {
                 db.child(currrentUser.getUid()).child("services").child(key).setValue(model);
             }
             b.etService.setText("");
-            b.etPrice.setText("");
+            b.etPrice.setText("");*/
+            String title = b.etService.getText().toString();
+            String price = b.etPrice.getText().toString();
+            if (!TextUtils.isEmpty(title) && !TextUtils.isEmpty(price)) {
+                //String key = db.push().getKey();
+                ServiceListModel model = new ServiceListModel(title, price);
+                list.add(model);
+
+                adapter = new AddServiceAdapter(CaddieDeatilsActivity.this, list);
+                adapter.notifyItemInserted(list.size() - 1);
+                addRecyclerRC.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+            }
         });
         getServices();
         changeStatusBarColor(this,R.color.yellow);
@@ -270,6 +284,24 @@ public class CaddieDeatilsActivity extends AppCompatActivity {
         hashMap.put("catagory",category);
         hashMap.put("status",status);
         db.child(currrentUser.getUid()).updateChildren(hashMap);
+        if (range){
+            String key = db.child(currrentUser.getUid()).child("bonus").push().getKey();
+            HashMap<String,Object> hashMap1 = new HashMap<>();
+            hashMap1.put("name",b.range.getText().toString());
+            db.child(currrentUser.getUid()).child("bonus").child(key).updateChildren(hashMap1);
+        }
+        if (video){
+            String key = db.child(currrentUser.getUid()).child("bonus").push().getKey();
+            HashMap<String,Object> hashMap1 = new HashMap<>();
+            hashMap1.put("name",b.video.getText().toString());
+            db.child(currrentUser.getUid()).child("bonus").child(key).updateChildren(hashMap1);
+        }
+        if (travel){
+            String key = db.child(currrentUser.getUid()).child("bonus").push().getKey();
+            HashMap<String,Object> hashMap1 = new HashMap<>();
+            hashMap1.put("name",b.travel.getText().toString());
+            db.child(currrentUser.getUid()).child("bonus").child(key).updateChildren(hashMap1);
+        }
      /*   String key = db.push().getKey();
         ServiceListModel model = new ServiceListModel(service, price);
         db.child(currrentUser.getUid()).child("services").child(key).setValue(model);*/

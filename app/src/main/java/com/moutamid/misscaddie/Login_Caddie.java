@@ -69,7 +69,6 @@ public class Login_Caddie extends AppCompatActivity {
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             window.setStatusBarColor(activity.getResources().getColor(id));
         }
-
         // CHANGE STATUS BAR TO TRANSPARENT
         //window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
     }

@@ -68,17 +68,33 @@ public class CaddieProServicesActivity extends AppCompatActivity {
             String title = serviceTxt.getText().toString();
             String price = priceTxt.getText().toString();
             if (!TextUtils.isEmpty(title) && !TextUtils.isEmpty(price)) {
+                //String key = db.push().getKey();
+                ServiceListModel model = new ServiceListModel(title, price);
+                list.add(model);
+
+                adapter = new AddServiceAdapter(CaddieProServicesActivity.this, list);
+                adapter.notifyItemInserted(list.size() - 1);
+                addRecyclerRC.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+          //      adapter.notifyDataSetChanged();
+            }
+        });
+
+        updateService.setOnClickListener(v -> {
+            /*String title = serviceTxt.getText().toString();
+            String price = priceTxt.getText().toString();
+            if (!TextUtils.isEmpty(title) && !TextUtils.isEmpty(price)) {
                 String key = db.push().getKey();
                 ServiceListModel model = new ServiceListModel(key,title, price);
                 db.child(key).setValue(model);
 //                adapter.notifyDataSetChanged();
             }
-
             serviceTxt.setText("");
-            priceTxt.setText("");
-        });
-
-        updateService.setOnClickListener(v -> {
+            priceTxt.setText("");*/
+            for (int i = 0; i < list.size(); i++){
+                ServiceListModel model = list.get(i);
+                db.child(String.valueOf(i)).setValue(model);
+            }
 
         });
 

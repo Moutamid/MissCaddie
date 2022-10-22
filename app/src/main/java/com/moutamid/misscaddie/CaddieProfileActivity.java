@@ -120,7 +120,7 @@ public class CaddieProfileActivity extends AppCompatActivity {
             startActivity(new Intent(CaddieProfileActivity.this, Dashboard_Golfer.class));
             Animatoo.animateSwipeLeft(CaddieProfileActivity.this);
         });
-        changeStatusBarColor(this,R.color.yellow);
+      //  changeStatusBarColor(this,R.color.yellow);
     }
 
     public void changeStatusBarColor(Activity activity, int id) {

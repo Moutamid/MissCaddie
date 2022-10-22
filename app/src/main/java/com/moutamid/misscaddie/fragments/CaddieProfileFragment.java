@@ -48,75 +48,75 @@ public class CaddieProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_caddie_profile, container, false);
+        if (isAdded()) {
+            profileBtn = view.findViewById(R.id.profilebtn);
+            serviceBtn = view.findViewById(R.id.servicebtn);
+            termsbtn = view.findViewById(R.id.termsbtn);
+            privacybtn = view.findViewById(R.id.privacybtn);
+            welcomeText = view.findViewById(R.id.text_heading);
+            datetext = view.findViewById(R.id.date);
+            logoutBtn = view.findViewById(R.id.logoutbtn);
+            greetingMessage();
+            manager = new SharedPreferencesManager(getActivity());
+            mAuth = FirebaseAuth.getInstance();
+            termsbtn.setOnClickListener(v -> {
+                Uri webpage = Uri.parse("https://www.google.com");
+                Intent webIntent = new Intent(Intent.ACTION_VIEW, webpage);
+                try {
+                    startActivity(webIntent);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
 
-        profileBtn = view.findViewById(R.id.profilebtn);
-        serviceBtn = view.findViewById(R.id.servicebtn);
-        termsbtn = view.findViewById(R.id.termsbtn);
-        privacybtn = view.findViewById(R.id.privacybtn);
-        welcomeText = view.findViewById(R.id.text_heading);
-        datetext = view.findViewById(R.id.date);
-        logoutBtn = view.findViewById(R.id.logoutbtn);
-        greetingMessage();
-        manager = new SharedPreferencesManager(getActivity());
-        mAuth = FirebaseAuth.getInstance();
-        termsbtn.setOnClickListener(v -> {
-            Uri webpage = Uri.parse("https://www.google.com");
-            Intent webIntent = new Intent(Intent.ACTION_VIEW, webpage);
-            try {
-                startActivity(webIntent);
-            } catch (Exception e){
-                e.printStackTrace();
-            }
-        });
+            privacybtn.setOnClickListener(v -> {
+                Uri webpage = Uri.parse("https://www.google.com");
+                Intent webIntent = new Intent(Intent.ACTION_VIEW, webpage);
+                try {
+                    startActivity(webIntent);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
 
-        privacybtn.setOnClickListener(v -> {
-            Uri webpage = Uri.parse("https://www.google.com");
-            Intent webIntent = new Intent(Intent.ACTION_VIEW, webpage);
-            try {
-                startActivity(webIntent);
-            } catch (Exception e){
-                e.printStackTrace();
-            }
-        });
+            GoogleSignInOptions gso = new GoogleSignInOptions.Builder(
+                    GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    .requestIdToken(getString(R.string.default_web_client_id))
+                    .requestEmail()
+                    .build();
+            mGoogleSignInClient = new GoogleApiClient.Builder(getActivity())
+                    .enableAutoManage(getActivity(), new GoogleApiClient.OnConnectionFailedListener() {
+                        @Override
+                        public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+                            Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_LONG).show();
+                        }
+                    }).addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                    .build();
 
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(
-                GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build();
-        mGoogleSignInClient = new GoogleApiClient.Builder(getActivity())
-                .enableAutoManage(getActivity(), new GoogleApiClient.OnConnectionFailedListener() {
-                    @Override
-                    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-                        Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_LONG).show();
-                    }
-                }).addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
+            profileBtn.setOnClickListener(v -> {
+                startActivity(new Intent(getActivity().getApplicationContext(), CaddieEditProfileActivity.class));
+            });
+            serviceBtn.setOnClickListener(v -> {
+                startActivity(new Intent(getActivity().getApplicationContext(), CaddieProServicesActivity.class));
+            });
 
-        profileBtn.setOnClickListener(v -> {
-            startActivity(new Intent(getActivity().getApplicationContext(), CaddieEditProfileActivity.class));
-        });
-        serviceBtn.setOnClickListener(v -> {
-            startActivity(new Intent(getActivity().getApplicationContext(), CaddieProServicesActivity.class));
-        });
+            logoutBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    manager.storeString("module", "");
+                    mAuth.signOut();
+                    Auth.GoogleSignInApi.signOut(mGoogleSignInClient).setResultCallback(new ResultCallback<Status>() {
+                        @Override
+                        public void onResult(@NonNull Status status) {
 
-        logoutBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                manager.storeString("module","");
-                mAuth.signOut();
-                Auth.GoogleSignInApi.signOut(mGoogleSignInClient).setResultCallback(new ResultCallback<Status>() {
-                    @Override
-                    public void onResult(@NonNull Status status) {
-
-                    }
-                });
-                mGoogleSignInClient.disconnect();
-                startActivity(new Intent(getActivity(), MainActivity.class));
-                getActivity().finish();
-            }
-        });
-
+                        }
+                    });
+                    mGoogleSignInClient.disconnect();
+                    startActivity(new Intent(getActivity(), MainActivity.class));
+                    getActivity().finish();
+                }
+            });
+        }
         return view;
     }
 
@@ -137,6 +137,25 @@ public class CaddieProfileFragment extends Fragment {
             welcomeText.setText("Good Evening");
         }else if(timeOfDay >= 21 && timeOfDay < 24){
             welcomeText.setText("Good Night");
+        }
+    }
+
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mGoogleSignInClient != null && mGoogleSignInClient.isConnected()) {
+            mGoogleSignInClient.stopAutoManage(requireActivity());
+            mGoogleSignInClient.disconnect();
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (mGoogleSignInClient != null && mGoogleSignInClient.isConnected()) {
+            mGoogleSignInClient.stopAutoManage(requireActivity());
+            mGoogleSignInClient.disconnect();
         }
     }
 }
