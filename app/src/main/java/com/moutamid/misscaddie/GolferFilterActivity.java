@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.google.android.material.datepicker.MaterialDatePicker;
@@ -25,7 +26,7 @@ public class GolferFilterActivity extends AppCompatActivity {
     ImageView iconsNot, iconWill;
     boolean willingState = true, notWillingState = false;
     CardView willingCard, notWillingCard;
-    TextView booking_dates;
+    TextView booking_dates,resetBtn;
     private ImageView cancelBtn,filterBtn;
     private String status = "";
     private String date = "";
@@ -52,6 +53,7 @@ public class GolferFilterActivity extends AppCompatActivity {
         booking_dates = findViewById(R.id.booking_dates);
         spinner = findViewById(R.id.spinner_golfCourse);
         save_btn = findViewById(R.id.save);
+        resetBtn = findViewById(R.id.reset_filters);
 
         close_btn.setOnClickListener(v -> {
             Intent intent = new Intent(GolferFilterActivity.this , Dashboard_Golfer.class);
@@ -83,9 +85,9 @@ public class GolferFilterActivity extends AppCompatActivity {
                     @SuppressLint("SetTextI18n")
                     @Override
                     public void onPositiveButtonClick(Object selection) {
-                        date = materialDatePicker.getHeaderText();
-                        String day = date.substring(0, 6);
-                        booking_dates.setText("Selected Date is (" + day + ")");
+                        String day = materialDatePicker.getHeaderText();
+                        date = day.substring(0, 6);
+                        booking_dates.setText("Selected Date is (" + date + ")");
                     }
                 });
 
@@ -147,6 +149,12 @@ public class GolferFilterActivity extends AppCompatActivity {
                     finish();
                     Animatoo.animateZoom(GolferFilterActivity.this);
                 }
+            }
+        });
+        resetBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(GolferFilterActivity.this, "Reset Filter", Toast.LENGTH_SHORT).show();
             }
         });
     }

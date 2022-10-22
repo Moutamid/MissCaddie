@@ -5,12 +5,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -147,6 +152,48 @@ public class CaddieDeatilsActivity extends AppCompatActivity {
                 status = "not willing";
             }
         });
+        b.range.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isb) {
+                if (isb){
+                    String key = db.child(currrentUser.getUid()).child("bonus").push().getKey();
+                    HashMap<String,Object> hashMap = new HashMap<>();
+                    hashMap.put("name",b.range.getText().toString());
+                    db.child(currrentUser.getUid()).child("bonus").child(key).updateChildren(hashMap);
+                    b.range.setChecked(true);
+                }else {
+                    b.range.setChecked(false);
+                }
+            }
+        });
+        b.video.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isb) {
+                if (isb){
+                    String key = db.child(currrentUser.getUid()).child("bonus").push().getKey();
+                    HashMap<String,Object> hashMap = new HashMap<>();
+                    hashMap.put("name",b.video.getText().toString());
+                    db.child(currrentUser.getUid()).child("bonus").child(key).updateChildren(hashMap);
+                    b.video.setChecked(true);
+                }else {
+                    b.video.setChecked(false);
+                }
+            }
+        });
+        b.travel.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isb) {
+                if (isb){
+                    String key = db.child(currrentUser.getUid()).child("bonus").push().getKey();
+                    HashMap<String,Object> hashMap = new HashMap<>();
+                    hashMap.put("name",b.travel.getText().toString());
+                    db.child(currrentUser.getUid()).child("bonus").child(key).updateChildren(hashMap);
+                    b.travel.setChecked(true);
+                }else {
+                    b.travel.setChecked(false);
+                }
+            }
+        });
         almostFinished.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -166,13 +213,30 @@ public class CaddieDeatilsActivity extends AppCompatActivity {
             String servicePrice = b.etPrice.getText().toString();
             if (!TextUtils.isEmpty(serviceName) && !TextUtils.isEmpty(servicePrice)) {
                 String key = db.push().getKey();
-                ServiceListModel model = new ServiceListModel(serviceName, servicePrice);
+                ServiceListModel model = new ServiceListModel(key,serviceName, servicePrice);
                 db.child(currrentUser.getUid()).child("services").child(key).setValue(model);
-
             }
+            b.etService.setText("");
+            b.etPrice.setText("");
         });
         getServices();
+        changeStatusBarColor(this,R.color.yellow);
     }
+
+    public void changeStatusBarColor(Activity activity, int id) {
+
+        // Changing the color of status bar
+        if (Build.VERSION.SDK_INT >= 21) {
+            Window window = activity.getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setStatusBarColor(activity.getResources().getColor(id));
+        }
+
+        // CHANGE STATUS BAR TO TRANSPARENT
+        //window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+    }
+
 
     private void getServices() {
         db.child(currrentUser.getUid()).child("services")
@@ -206,9 +270,9 @@ public class CaddieDeatilsActivity extends AppCompatActivity {
         hashMap.put("catagory",category);
         hashMap.put("status",status);
         db.child(currrentUser.getUid()).updateChildren(hashMap);
-        String key = db.push().getKey();
+     /*   String key = db.push().getKey();
         ServiceListModel model = new ServiceListModel(service, price);
-        db.child(currrentUser.getUid()).child("services").child(key).setValue(model);
+        db.child(currrentUser.getUid()).child("services").child(key).setValue(model);*/
         Intent intent = new Intent(CaddieDeatilsActivity.this , CaddieAvailabiltyActivity.class);
         startActivity(intent);
         finish();

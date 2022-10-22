@@ -83,35 +83,4 @@ public class AcceptedFragment extends Fragment {
     }
 
 
-    private List<RequestsModel> RequestItems()
-    {
-
-
-
-
-        return itemList;
-    }
-
-    private List<ServiceListModel> tableMessage()
-    {
-        List<ServiceListModel> ChildItemList = new ArrayList<>();
-
-        ChildItemList.add(new ServiceListModel("Ride Along", "80"));
-        ChildItemList.add(new ServiceListModel("Caddie Party", "30"));
-        ChildItemList.add(new ServiceListModel("Service 3", "450"));
-        ChildItemList.add(new ServiceListModel("Service 5", "10"));
-
-        return ChildItemList;
-    }
-
-    private List<ServiceListModel> tableMessage2()
-    {
-        List<ServiceListModel> ChildItemList = new ArrayList<>();
-
-        ChildItemList.add(new ServiceListModel("Ride Along", "80"));
-        ChildItemList.add(new ServiceListModel("Caddie Party", "30"));
-
-        return ChildItemList;
-    }
-
 }

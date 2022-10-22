@@ -3,10 +3,14 @@ package com.moutamid.misscaddie;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.google.firebase.auth.FirebaseAuth;
@@ -50,6 +54,7 @@ public class ChatRoomActivity extends AppCompatActivity {
         mChatReference = FirebaseDatabase.getInstance().getReference().child("chats");
         mConversationReference = FirebaseDatabase.getInstance().getReference().child("conversation");
         b.nameTxt.setText(name);
+        changeStatusBarColor(this,R.color.yellow);
         b.backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -101,7 +106,19 @@ public class ChatRoomActivity extends AppCompatActivity {
     }
 
 
+    public void changeStatusBarColor(Activity activity, int id) {
 
+        // Changing the color of status bar
+        if (Build.VERSION.SDK_INT >= 21) {
+            Window window = activity.getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setStatusBarColor(activity.getResources().getColor(id));
+        }
+
+        // CHANGE STATUS BAR TO TRANSPARENT
+        //window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+    }
     private void getChatData() {
         mChatReference.child(userUid).child(id).orderByChild("timestamp")
                 .addValueEventListener(new ValueEventListener() {

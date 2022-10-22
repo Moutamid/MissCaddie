@@ -16,6 +16,14 @@
 
     </style>
 
+
+    <style name="EditText.Grey" parent="@style/Theme.MissCaddie">
+        <item name="colorControlActivated">@color/grey_60</item>
+        <item name="colorControlHighlight">@color/grey_60</item>
+        <item name="colorControlNormal">@color/grey_40</item>
+    </style>
+
+
     <style name="text">
         <item name="android:textSize">12sp</item>
         <item name="android:letterSpacing">0.02</item>

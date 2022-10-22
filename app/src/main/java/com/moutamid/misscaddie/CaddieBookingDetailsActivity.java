@@ -1,22 +1,41 @@
 package com.moutamid.misscaddie;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.moutamid.misscaddie.Notifications.Client;
+import com.moutamid.misscaddie.Notifications.Data;
+import com.moutamid.misscaddie.Notifications.MyResponse;
+import com.moutamid.misscaddie.Notifications.Sender;
+import com.moutamid.misscaddie.Notifications.Token;
 import com.moutamid.misscaddie.databinding.ActivityCaddieBookingDetailsBinding;
+import com.moutamid.misscaddie.listners.APIService;
 import com.moutamid.misscaddie.models.RequestsModel;
 
 import java.util.HashMap;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CaddieBookingDetailsActivity extends AppCompatActivity {
 
@@ -25,6 +44,7 @@ public class CaddieBookingDetailsActivity extends AppCompatActivity {
     private String name,image;
     private DatabaseReference requestsDb;
     private FirebaseAuth mAuth;
+    private APIService apiService;
     private FirebaseUser user;
 
     @Override
@@ -35,6 +55,7 @@ public class CaddieBookingDetailsActivity extends AppCompatActivity {
         model = getIntent().getParcelableExtra("requestModel");
         name = getIntent().getStringExtra("personName");
         image = getIntent().getStringExtra("personImage");
+        apiService = Client.getRetrofit("https://fcm.googleapis.com/").create(APIService.class);
         b.backBtn.setOnClickListener(v -> {
             onBackPressed();
             Animatoo.animateSwipeLeft(CaddieBookingDetailsActivity.this);
@@ -45,7 +66,7 @@ public class CaddieBookingDetailsActivity extends AppCompatActivity {
         b.name.setText(name);
         Glide.with(CaddieBookingDetailsActivity.this)
                 .load(image)
-                .placeholder(R.drawable.img3)
+                .placeholder(R.drawable.bi_person_fill)
                 .into(b.profileImg);
         
         b.date.setText(model.getDate());
@@ -65,6 +86,20 @@ public class CaddieBookingDetailsActivity extends AppCompatActivity {
                 declineBooking();
             }
         });
+        changeStatusBarColor(this,R.color.yellow);
+    }
+    public void changeStatusBarColor(Activity activity, int id) {
+
+        // Changing the color of status bar
+        if (Build.VERSION.SDK_INT >= 21) {
+            Window window = activity.getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setStatusBarColor(activity.getResources().getColor(id));
+        }
+
+        // CHANGE STATUS BAR TO TRANSPARENT
+        //window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
     }
 
     private void declineBooking() {
@@ -75,6 +110,7 @@ public class CaddieBookingDetailsActivity extends AppCompatActivity {
         startActivity(new Intent(CaddieBookingDetailsActivity.this,CaddieDashboardActivity.class));
         finish();
         Animatoo.animateZoom(CaddieBookingDetailsActivity.this);
+        sendNotification(model.getUserId(),"Your request has been declined!");
     }
 
     private void acceptBooking() {
@@ -82,8 +118,51 @@ public class CaddieBookingDetailsActivity extends AppCompatActivity {
         hashMap.put("status_title","Accepted");
       //  hashMap.put("caddieId",user.getUid());
         requestsDb.child(model.getId()).updateChildren(hashMap);
-        startActivity(new Intent(CaddieBookingDetailsActivity.this,CaddieDashboardActivity.class));
+        startActivity(new Intent(CaddieBookingDetailsActivity.this,CardPaymentActivity.class));
         finish();
         Animatoo.animateZoom(CaddieBookingDetailsActivity.this);
+        sendNotification(model.getUserId(),"Your request has been accepted!");
+    }
+
+    private void sendNotification(String uId, String message) {
+        DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("Tokens");
+        Query query = tokens.orderByKey().equalTo(uId);
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    Token token = snapshot.getValue(Token.class);
+                    Data data = new Data("Golfer",user.getUid(), R.mipmap.ic_launcher, message,
+                            "Request Update", uId);
+
+                    Sender sender = new Sender(data, token.getToken());
+
+                    apiService.sendNotification(sender)
+                            .enqueue(new Callback<MyResponse>() {
+                                @Override
+                                public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
+                                    if(response.code() == 200){
+                                        if (response.body().success != 1){
+                                            System.out.println("Failed to send notification!");
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<MyResponse> call, Throwable t) {
+
+                                }
+                            });
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 }

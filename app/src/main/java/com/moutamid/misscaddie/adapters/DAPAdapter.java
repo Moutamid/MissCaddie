@@ -83,7 +83,7 @@ public class DAPAdapter extends RecyclerView.Adapter<DAPAdapter.VH> {
                 if (snapshot.exists()){
                     Model_Golfer model_golfer = snapshot.getValue(Model_Golfer.class);
                     holder.name.setText(model_golfer.getName());
-                    Glide.with(context).load(model_golfer.getImage()).placeholder(R.drawable.img3).into(holder.image);
+                    Glide.with(context).load(model_golfer.getImage()).placeholder(R.drawable.bi_person_fill).into(holder.image);
 
                     holder.itemView.setOnClickListener(v -> {
                         Intent i = new Intent(context.getApplicationContext(), CaddieBookingDetailsActivity.class);

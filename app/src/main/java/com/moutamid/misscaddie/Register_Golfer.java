@@ -160,14 +160,9 @@ public class Register_Golfer extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    manager.storeString("module","golfer");
+
                     FirebaseUser firebaseUser = mAuth.getCurrentUser();
-                    Model_Golfer model_caddie = new Model_Golfer(firebaseUser.getUid()
-                            ,account.getDisplayName(),account.getEmail(),"",
-                            account.getPhotoUrl().toString());
-                    db.child(firebaseUser.getUid()).setValue(model_caddie);
-                    sendActivityToSignUp();
-                    dialog.dismiss();
+                    checkUserExists(account.getEmail(),account);
                     // Toast.makeText(Login.this, "User Signed In", Toast.LENGTH_SHORT).show();
                 } else {
 
@@ -182,6 +177,37 @@ public class Register_Golfer extends AppCompatActivity {
 
     }
 
+    private void checkUserExists(String email, GoogleSignInAccount account) {
+        FirebaseUser firebaseUser = mAuth.getCurrentUser();
+        Query query = db.orderByChild("email").equalTo(email);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    manager.storeString("module","golfer");
+                    Intent intent = new Intent(Register_Golfer.this, Dashboard_Golfer.class);
+                    //intent.putExtra("email",email);
+                    startActivity(intent);
+                    Animatoo.animateZoom(Register_Golfer.this);
+                    dialog.dismiss();
+                }else {
+                    manager.storeString("module","golfer");
+                    FirebaseUser firebaseUser = mAuth.getCurrentUser();
+                    Model_Golfer model_caddie = new Model_Golfer(firebaseUser.getUid()
+                            ,account.getDisplayName(),account.getEmail(),"",
+                            account.getPhotoUrl().toString());
+                    db.child(firebaseUser.getUid()).setValue(model_caddie);
+                    sendActivityToSignUp();
+                    dialog.dismiss();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
 
     private void sendActivityToSignUp(){
         Intent intent = new Intent(Register_Golfer.this, Dashboard_Golfer.class);

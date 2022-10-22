@@ -74,7 +74,7 @@ public class Adapter_Golfer extends RecyclerView.Adapter<Adapter_Golfer.HolderAn
 
         Glide.with(context)
                 .load(modelAndroid.getImage())
-                .placeholder(R.drawable.img3)
+                .placeholder(R.drawable.bi_person_fill)
                         .into(holder.image);
         DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("Caddie");
         db.child(modelAndroid.getId()).child("services").addListenerForSingleValueEvent(new ValueEventListener() {

@@ -83,15 +83,15 @@ public class RequestesAdapter extends RecyclerView.Adapter<RequestesAdapter.VH> 
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Golfer")
-                .child(user.getUid());
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Caddie")
+                .child(model.getCaddieId());
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()){
                     Model_Golfer model_golfer = snapshot.getValue(Model_Golfer.class);
                     holder.name.setText(model_golfer.getName());
-                    Glide.with(context).load(model_golfer.getImage()).placeholder(R.drawable.img3).into(holder.image);
+                    Glide.with(context).load(model_golfer.getImage()).placeholder(R.drawable.bi_person_fill).into(holder.image);
                 }
             }
 

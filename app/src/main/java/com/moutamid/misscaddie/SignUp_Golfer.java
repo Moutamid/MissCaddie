@@ -146,6 +146,7 @@ public class SignUp_Golfer extends AppCompatActivity {
 
         if (!password.equals(cpassword)){
             Toast.makeText(SignUp_Golfer.this,"Password are not matched",Toast.LENGTH_LONG).show();
+            return false;
         }
         return true;
     }

@@ -61,7 +61,7 @@ public class GoflerChatListAdapter extends RecyclerView.Adapter<GoflerChatListAd
                     holder.name.setText(model_caddie.getName());
                     Glide.with(context)
                             .load(model_caddie.getImage())
-                            .placeholder(R.drawable.img2)
+                            .placeholder(R.drawable.bi_person_fill)
                             .into(holder.imageView);
                     holder.itemView.setOnClickListener(new View.OnClickListener() {
                         @Override

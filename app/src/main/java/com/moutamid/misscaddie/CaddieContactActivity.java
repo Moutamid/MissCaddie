@@ -8,6 +8,8 @@ import androidx.core.util.Pair;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.Notification;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -16,9 +18,12 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -36,6 +41,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
@@ -44,6 +50,12 @@ import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.DialogOnDeniedPermissionListener;
 import com.karumi.dexter.listener.single.PermissionListener;
+import com.moutamid.misscaddie.Notifications.Client;
+import com.moutamid.misscaddie.Notifications.Data;
+import com.moutamid.misscaddie.Notifications.MyResponse;
+import com.moutamid.misscaddie.Notifications.Sender;
+import com.moutamid.misscaddie.Notifications.Token;
+import com.moutamid.misscaddie.listners.APIService;
 import com.moutamid.misscaddie.models.Chat;
 import com.moutamid.misscaddie.models.Conversation;
 import com.moutamid.misscaddie.models.RequestsModel;
@@ -53,7 +65,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CaddieContactActivity extends AppCompatActivity {
     ImageView backBtn;
@@ -75,6 +92,7 @@ public class CaddieContactActivity extends AppCompatActivity {
     private double latitude = 0.0;
     private double longitude = 0.0;
     FirebaseUser user;
+    private APIService apiService;
     private LocationManager locationManager;
 
     @Override
@@ -88,16 +106,18 @@ public class CaddieContactActivity extends AppCompatActivity {
         serviceSpinner = findViewById(R.id.spinner_booking);
         sendBtn = findViewById(R.id.sendRequest);
         uId = getIntent().getStringExtra("userId");
+        apiService = Client.getRetrofit("https://fcm.googleapis.com/").create(APIService.class);
         requestsDb = FirebaseDatabase.getInstance().getReference().child("Requests");
         mChatReference = FirebaseDatabase.getInstance().getReference().child("chats");
         mConversationReference = FirebaseDatabase.getInstance().getReference().child("conversation");
         caddie_db = FirebaseDatabase.getInstance().getReference().child("Caddie");
-        MaterialDatePicker.Builder<Long> materialDateBuilder =
-                MaterialDatePicker.Builder.datePicker();
-        materialDateBuilder.setTitleText("SELECT A DATE");
         serviceListModels = new ArrayList<>();
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
+        changeStatusBarColor(this,R.color.yellow);
+        MaterialDatePicker.Builder<Long> materialDateBuilder = MaterialDatePicker.Builder.datePicker();
+        materialDateBuilder.setTitleText("SELECT A DATE");
+
         final MaterialDatePicker materialDatePicker = materialDateBuilder.build();
 
         booking_dates.setOnClickListener(v -> {
@@ -109,8 +129,10 @@ public class CaddieContactActivity extends AppCompatActivity {
                     @SuppressLint("SetTextI18n")
                     @Override
                     public void onPositiveButtonClick(Object selection) {
-                        String day = date.substring(0, 6);
-                        booking_dates.setText("Selected Date is (" + day + ")"); }
+                        String day = materialDatePicker.getHeaderText();
+                        date = day.substring(0, 6);
+                        booking_dates.setText("Selected Date is (" + date + ")");
+                    }
                 });
 
         backBtn.setOnClickListener(v -> {
@@ -140,12 +162,71 @@ public class CaddieContactActivity extends AppCompatActivity {
         });
         //permissionAccess();
     }
+    public void changeStatusBarColor(Activity activity, int id) {
+
+        // Changing the color of status bar
+        if (Build.VERSION.SDK_INT >= 21) {
+            Window window = activity.getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setStatusBarColor(activity.getResources().getColor(id));
+        }
+
+        // CHANGE STATUS BAR TO TRANSPARENT
+        //window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+    }
 
     private void sendRequest() {
         String key = requestsDb.push().getKey();
         RequestsModel requestsModel = new RequestsModel(key,user.getUid(),price,"Pending",date,
                 place,message,service,uId);
         requestsDb.child(key).setValue(requestsModel);
+
+        sendNotification(uId);
+
+    }
+
+    private void sendNotification(String uId) {
+        DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("Tokens");
+        Query query = tokens.orderByKey().equalTo(uId);
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    Token token = snapshot.getValue(Token.class);
+                    Data data = new Data("Caddie",user.getUid(), R.mipmap.ic_launcher, "You have new Request..",
+                            "New Request", uId);
+
+                    Sender sender = new Sender(data, token.getToken());
+
+                    apiService.sendNotification(sender)
+                            .enqueue(new Callback<MyResponse>() {
+                                @Override
+                                public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
+                                    if(response.code() == 200){
+                                        if (response.body().success != 1){
+                                            System.out.println("Failed to send notification!");
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<MyResponse> call, Throwable t) {
+
+                                }
+                            });
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
     }
 
     private void sendMessage(String message, String mode) {

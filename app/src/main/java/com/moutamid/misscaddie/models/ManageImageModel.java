@@ -3,24 +3,34 @@ package com.moutamid.misscaddie.models;
 import android.net.Uri;
 
 public class ManageImageModel {
-    Uri Image;
+    String id;
+    String Image;
     boolean state;
  //   int drawable;
 
     public ManageImageModel() {
     }
 
-    public ManageImageModel(Uri image, boolean state) {
+    public ManageImageModel(String id,String image, boolean state) {
+        this.id = id;
         Image = image;
         this.state = state;
       //  this.drawable = drawable;
     }
 
-    public Uri getImage() {
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getImage() {
         return Image;
     }
 
-    public void setImage(Uri image) {
+    public void setImage(String image) {
         Image = image;
     }
 

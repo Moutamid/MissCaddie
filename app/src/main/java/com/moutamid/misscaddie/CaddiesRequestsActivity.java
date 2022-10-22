@@ -5,8 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
@@ -50,7 +54,7 @@ public class CaddiesRequestsActivity extends AppCompatActivity {
         getRequests();
         requestRC.setLayoutManager(new LinearLayoutManager(this));
         requestRC.setHasFixedSize(false);
-
+        changeStatusBarColor(this,R.color.yellow);
         back_btn.setOnClickListener(v -> {
             Intent intent = new Intent(CaddiesRequestsActivity.this , Dashboard_Golfer.class);
             startActivity(intent);
@@ -84,27 +88,18 @@ public class CaddiesRequestsActivity extends AppCompatActivity {
         });
 
     }
+    public void changeStatusBarColor(Activity activity, int id) {
 
+        // Changing the color of status bar
+        if (Build.VERSION.SDK_INT >= 21) {
+            Window window = activity.getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setStatusBarColor(activity.getResources().getColor(id));
+        }
 
-    private List<ServiceListModel> tableMessage()
-    {
-        List<ServiceListModel> ChildItemList = new ArrayList<>();
-
-        ChildItemList.add(new ServiceListModel("Ride Along", "80"));
-        ChildItemList.add(new ServiceListModel("Caddie Party", "30"));
-        ChildItemList.add(new ServiceListModel("Service 3", "450"));
-        ChildItemList.add(new ServiceListModel("Service 5", "10"));
-
-        return ChildItemList;
+        // CHANGE STATUS BAR TO TRANSPARENT
+        //window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
     }
 
-    private List<ServiceListModel> tableMessage2()
-    {
-        List<ServiceListModel> ChildItemList = new ArrayList<>();
-
-        ChildItemList.add(new ServiceListModel("Ride Along", "80"));
-        ChildItemList.add(new ServiceListModel("Caddie Party", "30"));
-
-        return ChildItemList;
-    }
 }

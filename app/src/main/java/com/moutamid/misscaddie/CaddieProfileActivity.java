@@ -4,8 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -116,6 +120,21 @@ public class CaddieProfileActivity extends AppCompatActivity {
             startActivity(new Intent(CaddieProfileActivity.this, Dashboard_Golfer.class));
             Animatoo.animateSwipeLeft(CaddieProfileActivity.this);
         });
+        changeStatusBarColor(this,R.color.yellow);
+    }
+
+    public void changeStatusBarColor(Activity activity, int id) {
+
+        // Changing the color of status bar
+        if (Build.VERSION.SDK_INT >= 21) {
+            Window window = activity.getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setStatusBarColor(activity.getResources().getColor(id));
+        }
+
+        // CHANGE STATUS BAR TO TRANSPARENT
+        //window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
     }
 
     private void getManageImages() {
@@ -130,8 +149,10 @@ public class CaddieProfileActivity extends AppCompatActivity {
                     for (DataSnapshot ds: snapshot.getChildren()){
                         ManageImageModel model = ds.getValue(ManageImageModel.class);
                         String image = model.getImage().toString();
-                        SliderItem sliderItem = new SliderItem(image);
-                        SlideimageList.add(sliderItem);
+                        if (!image.equals("")) {
+                            SliderItem sliderItem = new SliderItem(image);
+                            SlideimageList.add(sliderItem);
+                        }
                     }
 
                     ImageSliderCaddieAdapter adapter = new ImageSliderCaddieAdapter(CaddieProfileActivity.this,
@@ -164,7 +185,7 @@ public class CaddieProfileActivity extends AppCompatActivity {
                             placeCaddie.setText(place);
                             Glide.with(CaddieProfileActivity.this)
                                     .load(model.getImage())
-                                    .placeholder(R.drawable.img3)
+                                    .placeholder(R.drawable.bi_person_fill)
                                     .into(profileImg);
                             db.child(model.getId()).child("services").addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override

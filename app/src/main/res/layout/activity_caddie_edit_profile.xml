@@ -144,10 +144,10 @@
                 android:id="@+id/label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Your Personals"
+                android:fontFamily="@font/roboto"
                 android:gravity="center"
-                android:textSize="22sp"
-                android:fontFamily="@font/roboto" />
+                android:text="Your Personals"
+                android:textSize="22sp" />
 
             <EditText
                 android:id="@+id/et_name"
@@ -183,11 +183,11 @@
                 android:id="@+id/label2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Wanna change your place?"
                 android:layout_marginTop="15dp"
+                android:fontFamily="@font/roboto"
                 android:gravity="center"
-                android:textSize="22sp"
-                android:fontFamily="@font/roboto" />
+                android:text="Wanna change your place?"
+                android:textSize="22sp" />
 
             <TextView
                 android:id="@+id/GolfCourseStateTV"
@@ -210,8 +210,8 @@
                 android:layout_below="@id/bookingDatesTV"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="10dp"
                 android:layout_marginRight="20dp"
+                android:layout_marginBottom="10dp"
                 android:entries="@array/usa_states"
                 android:gravity="start" />
 
@@ -220,9 +220,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="12dp"
-                android:layout_marginTop="5dp"
                 android:background="@drawable/et_bg"
                 android:fontFamily="@font/roboto"
                 android:hint="Complete location"
@@ -234,46 +234,51 @@
                 android:id="@+id/label3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Do you provide Add Ons?"
                 android:layout_marginTop="15dp"
-                android:gravity="center"
-                android:textSize="22sp"
                 android:fontFamily="@font/roboto"
-                android:textColor="@color/black" />
+                android:gravity="center"
+                android:text="Do you provide Add Ons?"
+                android:textColor="@color/black"
+                android:textSize="22sp" />
 
             <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/range"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:button="@drawable/checkbox_style"
+                android:buttonTint="@color/yellow"
+                android:fontFamily="@font/roboto"
                 android:text="\t\tRange Finder"
-                android:fontFamily="@font/roboto"
-                android:textSize="18sp"
-                android:buttonTint="@color/yellow"
-                android:button="@drawable/checkbox_style"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp" />
+                android:textSize="18sp" />
+
             <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/video"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:button="@drawable/checkbox_style"
+                android:buttonTint="@color/yellow"
+                android:fontFamily="@font/roboto"
                 android:text="\t\tShort Video of Round"
-                android:buttonTint="@color/yellow"
-                android:button="@drawable/checkbox_style"
-                android:fontFamily="@font/roboto"
-                android:textSize="18sp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp" />
+                android:textSize="18sp" />
+
             <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/willing"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:button="@drawable/checkbox_style"
                 android:layout_gravity="start"
-                android:buttonTint="@color/yellow"
-                android:text="\t\tAre you willing to Travel ?"
-                android:textSize="18sp"
-                android:fontFamily="@font/roboto"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="10dp"
+                android:button="@drawable/checkbox_style"
+                android:buttonTint="@color/yellow"
+                android:fontFamily="@font/roboto"
+                android:text="\t\tAre you willing to Travel ?"
+                android:textSize="18sp" />
 
         </LinearLayout>
 

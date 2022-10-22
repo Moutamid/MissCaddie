@@ -89,7 +89,7 @@
         android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24"
         android:entries="@array/usa_states"
         android:gravity="start"
-        android:text="Select Date (5 Oct -15 Oct)" />
+        android:text="Select Date (5 Oct)" />
 
     <EditText
         android:id="@+id/location"

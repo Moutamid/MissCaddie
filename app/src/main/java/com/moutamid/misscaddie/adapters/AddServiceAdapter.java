@@ -10,6 +10,9 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 import com.moutamid.misscaddie.R;
 import com.moutamid.misscaddie.models.ServiceListModel;
 
@@ -39,10 +42,20 @@ public class AddServiceAdapter extends RecyclerView.Adapter<AddServiceAdapter.Se
         holder.price.setText(model.getPrice());
 
         holder.deleteBtn.setOnClickListener(v -> {
+            removeItem(model.getId());
             list.remove(position);
             notifyItemRemoved(position);
             notifyDataSetChanged();
         });
+    }
+
+    private void removeItem(String id) {
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        FirebaseDatabase.getInstance().getReference().child("Caddie")
+                .child(currentUser.getUid())
+                .child("services").child(id).removeValue();
     }
 
     @Override

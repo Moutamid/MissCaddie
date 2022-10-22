@@ -3,11 +3,16 @@ package com.moutamid.misscaddie;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -42,6 +47,7 @@ public class Login_Caddie extends AppCompatActivity {
         signInBtn = findViewById(R.id.signInBtn2);
         email = getIntent().getStringExtra("email");
         b.email.setText(email);
+        changeStatusBarColor(this,R.color.yellow);
         signInBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -51,13 +57,22 @@ public class Login_Caddie extends AppCompatActivity {
                     dialog.show();
                     loginAccount();
                 }
-             /*   Intent intent = new Intent(Login_Caddie.this , CaddieDeatilsActivity.class);
-                startActivity(intent);
-                Animatoo.animateZoom(Login_Caddie.this);*/
             }
         });
     }
+    public void changeStatusBarColor(Activity activity, int id) {
 
+        // Changing the color of status bar
+        if (Build.VERSION.SDK_INT >= 21) {
+            Window window = activity.getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setStatusBarColor(activity.getResources().getColor(id));
+        }
+
+        // CHANGE STATUS BAR TO TRANSPARENT
+        //window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+    }
     private void loginAccount() {
         mAuth.signInWithEmailAndPassword(email,password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -71,6 +86,8 @@ public class Login_Caddie extends AppCompatActivity {
                             finish();
                             Animatoo.animateZoom(Login_Caddie.this);
                             dialog.dismiss();
+                        }else {
+                            Toast.makeText(Login_Caddie.this,"Wrong Password",Toast.LENGTH_LONG).show();
                         }
                     }
                 });

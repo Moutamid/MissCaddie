@@ -5,8 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -64,20 +68,36 @@ public class CaddieProServicesActivity extends AppCompatActivity {
             String title = serviceTxt.getText().toString();
             String price = priceTxt.getText().toString();
             if (!TextUtils.isEmpty(title) && !TextUtils.isEmpty(price)) {
-                ServiceListModel model = new ServiceListModel(title, price);
                 String key = db.push().getKey();
+                ServiceListModel model = new ServiceListModel(key,title, price);
                 db.child(key).setValue(model);
-                adapter.notifyDataSetChanged();
+//                adapter.notifyDataSetChanged();
             }
+
+            serviceTxt.setText("");
+            priceTxt.setText("");
         });
 
         updateService.setOnClickListener(v -> {
-            String title = serviceTxt.getText().toString();
-            String price = priceTxt.getText().toString();
 
         });
 
         getServices();
+        changeStatusBarColor(this,R.color.yellow);
+    }
+
+    public void changeStatusBarColor(Activity activity, int id) {
+
+        // Changing the color of status bar
+        if (Build.VERSION.SDK_INT >= 21) {
+            Window window = activity.getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setStatusBarColor(activity.getResources().getColor(id));
+        }
+
+        // CHANGE STATUS BAR TO TRANSPARENT
+        //window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
     }
 
     private void getServices() {

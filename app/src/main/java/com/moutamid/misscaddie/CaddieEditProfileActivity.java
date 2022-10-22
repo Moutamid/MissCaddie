@@ -8,16 +8,21 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -77,50 +82,53 @@ public class CaddieEditProfileActivity extends AppCompatActivity {
     private StorageReference mStorage;
     private ArrayAdapter<String> arrayAdapter;
     private static final int STORAGE_PERMISSION_CODE = 101;
+    private boolean range = false;
+    private boolean video = false;
+    private boolean travel = false;
     private String[] states = {"Select State (New York)","Alabama","Alaska","Arizona","Arkansas",
     "California","Colorado", "Connecticut", "Delaware",
         "Florida",
         "Georgia",
         "Hawaii",
         "Idaho",
-        "	Illinois	",
-        "	Indiana	",
-        "	Iowa	",
-        "	Kansas	",
-        "	Kentucky	",
-        "	Louisiana	",
-        "	Maine	",
-        "	Maryland	",
-        "	Massachusetts	",
-        "	Michigan	",
-        "	Minnesota	",
-        "	Mississippi	",
-        "	Missouri	",
-        "	Montana	",
-        "	Nebraska	",
-        "	Nevada	",
-            "	New Hampshire	",
-            "	New Jersey	",
-    "	New Mexico	",
-    "	New York	",
-    "	North Carolina	",
-    "	North Dakota	",
-        "	Ohio	",
-        "	Oklahoma	",
-        "	Oregon	",
-        "	Pennsylvania	",
-    "	Rhode Island	",
-    "	South Carolina	",
-    "	South Dakota	",
-        "	Tennessee	",
-        "	Texas	",
-        "	Utah	",
-        "	Vermont	",
-        "	Virginia	",
-        "	Washington	",
-            "	West Virginia	",
-        "	Wisconsin	",
-        "	Wyoming	",
+        "Illinois",
+        "Indiana",
+        "Iowa",
+        "Kansas",
+        "Kentucky",
+        "Louisiana",
+        "Maine",
+        "Maryland",
+        "Massachusetts",
+        "Michigan",
+        "Minnesota",
+        "Mississippi",
+        "Missouri",
+        "Montana",
+        "Nebraska",
+        "Nevada",
+            "New Hampshire",
+            "New Jersey",
+    "New Mexico",
+    "New York",
+    "North Carolina",
+    "North Dakota",
+        "Ohio",
+        "Oklahoma",
+        "Oregon",
+        "Pennsylvania",
+    "Rhode Island",
+    "South Carolina",
+    "South Dakota",
+        "Tennessee",
+        "Texas",
+        "Utah",
+        "Vermont",
+        "Virginia",
+        "Washington",
+            "West Virginia",
+        "Wisconsin",
+        "Wyoming",
 };
 
     @SuppressLint("ResourceType")
@@ -181,6 +189,44 @@ public class CaddieEditProfileActivity extends AppCompatActivity {
             }
         });
 
+
+        b.range.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isb) {
+                if (isb){
+                    range = true;
+                   b.range.setChecked(true);
+                }else {
+                    range = false;
+                    b.range.setChecked(false);
+                }
+            }
+        });
+        b.video.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isb) {
+                if (isb){
+                    video = true;
+                    b.video.setChecked(true);
+                }else {
+                    video = false;
+                    b.video.setChecked(false);
+                }
+            }
+        });
+        b.willing.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isb) {
+                if (isb){
+                    travel = true;
+                    b.willing.setChecked(true);
+                }else {
+                    travel = false;
+                    b.willing.setChecked(false);
+                }
+            }
+        });
+
         b.update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -193,11 +239,45 @@ public class CaddieEditProfileActivity extends AppCompatActivity {
                 hashMap.put("state",state);
                 hashMap.put("image",image);
                 db.child(currrentUser.getUid()).updateChildren(hashMap);
-
+                getCaddieData();
+                if (range){
+                    String key = db.child(currrentUser.getUid()).child("bonus").push().getKey();
+                    HashMap<String,Object> hashMap1 = new HashMap<>();
+                    hashMap1.put("name",b.range.getText().toString());
+                    db.child(currrentUser.getUid()).child("bonus").child(key).updateChildren(hashMap1);
+                }
+                if (video){
+                    String key = db.child(currrentUser.getUid()).child("bonus").push().getKey();
+                    HashMap<String,Object> hashMap1 = new HashMap<>();
+                    hashMap1.put("name",b.video.getText().toString());
+                    db.child(currrentUser.getUid()).child("bonus").child(key).updateChildren(hashMap1);
+                }
+                if (travel){
+                    String key = db.child(currrentUser.getUid()).child("bonus").push().getKey();
+                    HashMap<String,Object> hashMap1 = new HashMap<>();
+                    hashMap1.put("name",b.willing.getText().toString());
+                    db.child(currrentUser.getUid()).child("bonus").child(key).updateChildren(hashMap1);
+                }
             }
         });
         getCaddieData();
+        changeStatusBarColor(this,R.color.yellow);
     }
+
+    public void changeStatusBarColor(Activity activity, int id) {
+
+        // Changing the color of status bar
+        if (Build.VERSION.SDK_INT >= 21) {
+            Window window = activity.getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setStatusBarColor(activity.getResources().getColor(id));
+        }
+
+        // CHANGE STATUS BAR TO TRANSPARENT
+        //window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+    }
+
 
     private void getManageImages() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Caddie").child(currrentUser.getUid())
@@ -211,8 +291,10 @@ public class CaddieEditProfileActivity extends AppCompatActivity {
                     for (DataSnapshot ds: snapshot.getChildren()){
                         ManageImageModel model = ds.getValue(ManageImageModel.class);
                         String image = model.getImage().toString();
-                        SliderItem sliderItem = new SliderItem(image);
-                        SlideimageList.add(sliderItem);
+                        if (!image.equals("")) {
+                            SliderItem sliderItem = new SliderItem(image);
+                            SlideimageList.add(sliderItem);
+                        }
                     }
 
                     ImageSliderCaddieAdapter adapter = new ImageSliderCaddieAdapter(CaddieEditProfileActivity.this,
@@ -285,7 +367,6 @@ public class CaddieEditProfileActivity extends AppCompatActivity {
 
                                 if(states[i].equals(state)){
                                     b.spinnerStates.setSelection(i);
-                                    Toast.makeText(getApplicationContext(),states[i],Toast.LENGTH_LONG).show();
                                 }
                             }
 
@@ -300,6 +381,31 @@ public class CaddieEditProfileActivity extends AppCompatActivity {
                                         }
                                         b.priceGolfer.setText("US$ "+ serviceListModels.get(0).getPrice());
                                         b.etPrice.setText("US$ "+ serviceListModels.get(0).getPrice());
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+
+                            db.child(currrentUser.getUid()).child("bonus").addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if (snapshot.exists()){
+                                        for (DataSnapshot ds : snapshot.getChildren()){
+                                            String name = ds.child("name").getValue().toString();
+                                            if (name.equals(b.range.getText())){
+                                                b.range.setChecked(true);
+                                            }
+                                            if (name.equals(b.video.getText())){
+                                                b.video.setChecked(true);
+                                            }
+                                            if (name.equals(b.willing.getText())){
+                                                b.willing.setChecked(true);
+                                            }
+                                        }
                                     }
                                 }
 

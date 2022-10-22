@@ -10,6 +10,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.moutamid.misscaddie.listners.ManageImageListner;
 import com.moutamid.misscaddie.models.ManageImageModel;
 import com.moutamid.misscaddie.R;
@@ -45,13 +50,22 @@ public class ManageImageAdapter extends RecyclerView.Adapter<ManageImageAdapter.
         }else {
             holder.icon.setBackgroundResource(R.drawable.ic_delete);
         }
-        holder.image.setImageURI(model.getImage());
+
+        if (!model.getImage().equals("")){
+            Glide.with(context)
+                    .load(model.getImage())
+                    .into(holder.image);
+        }else {
+            holder.overlay.setVisibility(View.GONE);
+            holder.icon.setBackgroundResource(R.drawable.ic_add);
+        }
         //holder.icon.setBackgroundResource(model.getDrawable());
 
         holder.itemView.setOnClickListener(v -> {
             if (model.isState()){
                 clickListner.onClick(imageModelArrayList.get(holder.getAdapterPosition()));
             } else {
+                removeFromDb(model.getId());
                 imageModelArrayList.remove(position);
                 notifyItemRemoved(position);
                 notifyDataSetChanged();
@@ -62,6 +76,14 @@ public class ManageImageAdapter extends RecyclerView.Adapter<ManageImageAdapter.
                 }
             }
         });
+    }
+
+    private void removeFromDb(String id) {
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        FirebaseDatabase.getInstance().getReference().child("Caddie")
+                .child(currentUser.getUid())
+                .child("Manage Image").child(id).removeValue();
     }
 
     @Override

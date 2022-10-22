@@ -4,11 +4,14 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,7 +47,7 @@ public class CaddieAvailabiltyActivity extends AppCompatActivity{
 
         almostFinished = findViewById(R.id.almostFinished);
         //picker = findViewById(R.id.datePicker);
-
+        changeStatusBarColor(this,R.color.yellow);
         mAuth = FirebaseAuth.getInstance();
         currrentUser = mAuth.getCurrentUser();
         db = FirebaseDatabase.getInstance().getReference().child("Caddie");
@@ -84,6 +87,20 @@ public class CaddieAvailabiltyActivity extends AppCompatActivity{
         calender.setHasFixedSize(false);
         calender.setAdapter(adapter);*/
 
+    }
+
+    public void changeStatusBarColor(Activity activity, int id) {
+
+        // Changing the color of status bar
+        if (Build.VERSION.SDK_INT >= 21) {
+            Window window = activity.getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setStatusBarColor(activity.getResources().getColor(id));
+        }
+
+        // CHANGE STATUS BAR TO TRANSPARENT
+        //window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
     }
 
     public void OctoberDatesClick(View view) {

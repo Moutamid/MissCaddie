@@ -4,12 +4,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -97,6 +101,7 @@ public class Register_Caddie extends AppCompatActivity {
                 signIn();
             }
         });
+        changeStatusBarColor(this,R.color.yellow);
     }
 
     private void checkingExistance(String email) {
@@ -161,13 +166,7 @@ public class Register_Caddie extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     FirebaseUser firebaseUser = mAuth.getCurrentUser();
-                    manager.storeString("module","caddie");
-                    Model_Caddie model_caddie = new Model_Caddie(firebaseUser.getUid(),
-                            account.getDisplayName(),account.getEmail(),"",
-                            account.getPhotoUrl().toString(),"","","","","");
-                    db.child(firebaseUser.getUid()).setValue(model_caddie);
-                    sendActivityToSignUp();
-                    dialog.dismiss();
+                    checkUserExists(account.getEmail(),account);
                     // Toast.makeText(Login.this, "User Signed In", Toast.LENGTH_SHORT).show();
                 } else {
 
@@ -182,6 +181,49 @@ public class Register_Caddie extends AppCompatActivity {
 
     }
 
+    private void checkUserExists(String email, GoogleSignInAccount account) {
+        FirebaseUser firebaseUser = mAuth.getCurrentUser();
+        Query query = db.orderByChild("email").equalTo(email);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    manager.storeString("module","caddie");
+                    Intent intent = new Intent(Register_Caddie.this, CaddieDashboardActivity.class);
+                    //intent.putExtra("email",email);
+                    startActivity(intent);
+                    Animatoo.animateZoom(Register_Caddie.this);
+                    dialog.dismiss();
+                }else {
+                    manager.storeString("module","caddie");
+                    Model_Caddie model_caddie = new Model_Caddie(firebaseUser.getUid(),
+                            account.getDisplayName(),account.getEmail(),"",
+                            account.getPhotoUrl().toString(),"","","","","");
+                    db.child(firebaseUser.getUid()).setValue(model_caddie);
+                    sendActivityToSignUp();
+                    dialog.dismiss();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+    public void changeStatusBarColor(Activity activity, int id) {
+
+        // Changing the color of status bar
+        if (Build.VERSION.SDK_INT >= 21) {
+            Window window = activity.getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setStatusBarColor(activity.getResources().getColor(id));
+        }
+
+        // CHANGE STATUS BAR TO TRANSPARENT
+        //window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+    }
     private void sendActivityToSignUp(){
         Intent intent = new Intent(Register_Caddie.this, CaddieDeatilsActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
