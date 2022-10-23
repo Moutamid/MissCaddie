@@ -218,15 +218,14 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         String userUid = mAuth.getCurrentUser().getUid();
         Chat chat = (Chat) chatList.get(position);
         if (chat != null) {
-            //if (chat.getReplyId() == 0) {
 
-               // holder.reply_layout.setVisibility(View.GONE);
-                if (chat.getType().equals("text")) {
-
-                    holder.message.setVisibility(View.VISIBLE);
-                    holder.message.setText(chat.getMessage());
-                    //checkOutgoingReply(chat,holder);
-                }
+            holder.message.setVisibility(View.VISIBLE);
+            holder.message.setText(chat.getMessage());
+             if (chat.getMode().equals("caddie")){
+                    holder.message.setBackground(mContext.getDrawable(R.drawable.message_send_yellow_bg));
+             }else {
+                 holder.message.setBackground(mContext.getDrawable(R.drawable.message_send_bg));
+             }
                 calculateTimeAgo(chat.getTimestamp(),holder.time);
         }
     }

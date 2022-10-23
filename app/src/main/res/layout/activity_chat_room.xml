@@ -7,6 +7,7 @@
     tools:context=".ChatRoomActivity">
 
     <View
+        android:id="@+id/top1"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_alignParentLeft="true"
@@ -22,6 +23,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginRight="-40dp"
         android:layout_marginTop="-31dp"
+        android:id="@+id/top2"
         android:background="@drawable/circle_yellow1" />
 
     <ImageView
@@ -63,35 +65,35 @@
 
 
     <LinearLayout
+        android:id="@+id/bottom"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:background="@drawable/message_back_yellow"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp"
         android:layout_marginLeft="20dp"
-        android:padding="10dp"
-        android:id="@+id/bottom"
-        android:layout_marginRight="20dp">
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/message_back_yellow"
+        android:orientation="horizontal"
+        android:padding="10dp">
 
         <EditText
+            android:id="@+id/message"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:inputType="text"
             android:layout_gravity="center_vertical"
-            android:hint="Write message..."
-            android:textColor="@android:color/white"
-            android:textColorHint="@android:color/white"
+            android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:id="@+id/message"/>
+            android:hint="Write message..."
+            android:inputType="text"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white" />
 
         <ImageView
+            android:id="@+id/send"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/send"
-            android:id="@+id/send"
-            android:layout_marginRight="10dp"/>
+            android:layout_marginRight="10dp"
+            android:src="@drawable/send" />
 
     </LinearLayout>
 

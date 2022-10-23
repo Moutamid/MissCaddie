@@ -57,7 +57,8 @@ public class CaddieBookingDetailsActivity extends AppCompatActivity {
         image = getIntent().getStringExtra("personImage");
         apiService = Client.getRetrofit("https://fcm.googleapis.com/").create(APIService.class);
         b.backBtn.setOnClickListener(v -> {
-            onBackPressed();
+            startActivity(new Intent(CaddieBookingDetailsActivity.this,CaddieDashboardActivity.class));
+            finish();
             Animatoo.animateSwipeLeft(CaddieBookingDetailsActivity.this);
         });
         requestsDb = FirebaseDatabase.getInstance().getReference().child("Requests");

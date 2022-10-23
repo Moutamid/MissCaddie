@@ -72,13 +72,15 @@
         android:datePickerMode="calendar"
         android:headerBackground="@color/yellow" />-->
 
+
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="5dp"
         android:layout_above="@id/almostFinished"
-        android:layout_below="@id/layout">
+        android:layout_below="@id/layout"
+        android:layout_marginTop="5dp"
+        tools:ignore="NotSibling">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -90,7 +92,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                tools:visibility="gone">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -255,6 +258,7 @@
 
 
                     <TextView
+                        android:id="@+id/oct_tv_1"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -268,6 +272,7 @@
 
 
                     <TextView
+                        android:id="@+id/oct_tv_2"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -288,6 +293,7 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/oct_tv_3"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -301,6 +307,7 @@
 
 
                     <TextView
+                        android:id="@+id/oct_tv_4"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -314,6 +321,7 @@
 
 
                     <TextView
+                        android:id="@+id/oct_tv_5"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -326,6 +334,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/oct_tv_6"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -338,6 +347,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/oct_tv_7"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -350,6 +360,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/oct_tv_8"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -362,6 +373,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/oct_tv_9"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -382,6 +394,7 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/oct_tv_10"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -394,6 +407,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/oct_tv_11"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -407,6 +421,7 @@
 
 
                     <TextView
+                        android:id="@+id/oct_tv_12"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -420,6 +435,7 @@
 
 
                     <TextView
+                        android:id="@+id/oct_tv_13"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -433,6 +449,7 @@
 
 
                     <TextView
+                        android:id="@+id/oct_tv_14"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -446,6 +463,7 @@
 
 
                     <TextView
+                        android:id="@+id/oct_tv_15"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -459,6 +477,7 @@
 
 
                     <TextView
+                        android:id="@+id/oct_tv_16"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -479,6 +498,7 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/oct_tv_17"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -492,6 +512,7 @@
 
 
                     <TextView
+                        android:id="@+id/oct_tv_18"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -505,6 +526,7 @@
 
 
                     <TextView
+                        android:id="@+id/oct_tv_19"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -518,6 +540,7 @@
 
 
                     <TextView
+                        android:id="@+id/oct_tv_20"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -531,6 +554,7 @@
 
 
                     <TextView
+                        android:id="@+id/oct_tv_21"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -543,6 +567,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/oct_tv_22"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -555,6 +580,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/oct_tv_23"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -574,6 +600,7 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/oct_tv_24"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -587,6 +614,7 @@
 
 
                     <TextView
+                        android:id="@+id/oct_tv_25"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -600,6 +628,7 @@
 
 
                     <TextView
+                        android:id="@+id/oct_tv_26"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -612,6 +641,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/oct_tv_27"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -624,6 +654,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/oct_tv_28"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -637,6 +668,7 @@
 
 
                     <TextView
+                        android:id="@+id/oct_tv_29"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -650,6 +682,7 @@
 
 
                     <TextView
+                        android:id="@+id/oct_tv_30"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -670,6 +703,7 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/oct_tv_31"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -760,7 +794,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                tools:visibility="gone">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -878,6 +913,7 @@
 
 
                     <TextView
+                        android:id="@+id/nov_tv_1"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -891,6 +927,7 @@
 
 
                     <TextView
+                        android:id="@+id/nov_tv_2"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -904,6 +941,7 @@
 
 
                     <TextView
+                        android:id="@+id/nov_tv_3"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -917,6 +955,7 @@
 
 
                     <TextView
+                        android:id="@+id/nov_tv_4"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -929,6 +968,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/nov_tv_5"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -941,6 +981,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/nov_tv_6"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -951,8 +992,8 @@
                         android:text="6"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
-                </LinearLayout>
 
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -961,6 +1002,7 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/nov_tv_7"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -973,6 +1015,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/nov_tv_8"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -985,6 +1028,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/nov_tv_9"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -997,6 +1041,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/nov_tv_10"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -1009,6 +1054,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/nov_tv_11"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -1021,6 +1067,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/nov_tv_12"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -1033,6 +1080,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/nov_tv_13"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -1053,6 +1101,7 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/nov_tv_14"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -1066,6 +1115,7 @@
 
 
                     <TextView
+                        android:id="@+id/nov_tv_15"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -1079,6 +1129,7 @@
 
 
                     <TextView
+                        android:id="@+id/nov_tv_16"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -1091,6 +1142,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/nov_tv_17"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -1103,6 +1155,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/nov_tv_18"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -1115,6 +1168,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/nov_tv_19"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -1127,6 +1181,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/nov_tv_20"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -1147,6 +1202,7 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/nov_tv_21"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -1159,6 +1215,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/nov_tv_22"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -1171,6 +1228,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/nov_tv_23"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -1183,6 +1241,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/nov_tv_24"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -1196,6 +1255,7 @@
 
 
                     <TextView
+                        android:id="@+id/nov_tv_25"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -1208,6 +1268,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/nov_tv_26"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -1220,6 +1281,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/nov_tv_27"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -1232,12 +1294,14 @@
                         android:textSize="16sp" />
 
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/nov_tv_28"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -1250,6 +1314,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/nov_tv_29"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -1263,12 +1328,13 @@
 
 
                     <TextView
+                        android:id="@+id/nov_tv_30"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
                         android:layout_weight="1"
-                        android:onClick="NovemberDatesClick"
                         android:gravity="center"
+                        android:onClick="NovemberDatesClick"
                         android:padding="8dp"
                         android:text="30"
                         android:textColor="@color/black"
@@ -1467,6 +1533,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/dec_tv_1"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -1479,6 +1546,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/dec_tv_2"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -1491,6 +1559,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/dec_tv_3"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -1504,6 +1573,7 @@
 
 
                     <TextView
+                        android:id="@+id/dec_tv_4"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -1524,18 +1594,20 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/dec_tv_5"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:padding="8dp"
                         android:onClick="DecemberDatesClick"
+                        android:padding="8dp"
                         android:text="5"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/dec_tv_6"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -1548,6 +1620,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/dec_tv_7"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -1560,6 +1633,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/dec_tv_8"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -1572,6 +1646,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/dec_tv_9"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -1584,6 +1659,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/dec_tv_10"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -1596,6 +1672,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/dec_tv_11"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -1617,6 +1694,7 @@
 
 
                     <TextView
+                        android:id="@+id/dec_tv_12"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -1629,6 +1707,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/dec_tv_13"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -1641,6 +1720,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/dec_tv_14"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -1654,6 +1734,7 @@
 
 
                     <TextView
+                        android:id="@+id/dec_tv_15"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -1667,6 +1748,7 @@
 
 
                     <TextView
+                        android:id="@+id/dec_tv_16"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -1679,6 +1761,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/dec_tv_17"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -1691,6 +1774,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/dec_tv_18"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -1712,6 +1796,7 @@
 
 
                     <TextView
+                        android:id="@+id/dec_tv_19"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -1724,6 +1809,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/dec_tv_20"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -1736,6 +1822,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/dec_tv_21"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -1748,6 +1835,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/dec_tv_22"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -1760,6 +1848,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/dec_tv_23"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -1772,6 +1861,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/dec_tv_24"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -1785,6 +1875,7 @@
 
 
                     <TextView
+                        android:id="@+id/dec_tv_25"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -1806,6 +1897,7 @@
 
 
                     <TextView
+                        android:id="@+id/dec_tv_26"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -1818,6 +1910,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/dec_tv_27"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -1830,6 +1923,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/dec_tv_28"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -1842,6 +1936,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/dec_tv_29"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -1855,6 +1950,7 @@
 
 
                     <TextView
+                        android:id="@+id/dec_tv_30"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
@@ -1867,6 +1963,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/dec_tv_31"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"

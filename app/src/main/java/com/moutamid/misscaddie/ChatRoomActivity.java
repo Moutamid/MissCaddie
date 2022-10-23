@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.google.firebase.auth.FirebaseAuth;
@@ -54,7 +55,18 @@ public class ChatRoomActivity extends AppCompatActivity {
         mChatReference = FirebaseDatabase.getInstance().getReference().child("chats");
         mConversationReference = FirebaseDatabase.getInstance().getReference().child("conversation");
         b.nameTxt.setText(name);
-        changeStatusBarColor(this,R.color.yellow);
+        if (mode.equals("caddie")){
+            changeStatusBarColor(this,R.color.yellow);
+            b.top1.setBackground(getDrawable(R.drawable.circle_yellow1));
+            b.top2.setBackground(getDrawable(R.drawable.circle_yellow1));
+            b.bottom.setBackground(getDrawable(R.drawable.message_back_yellow));
+        }else {
+            changeStatusBarColor(this,R.color.green);
+
+            b.top1.setBackground(getDrawable(R.drawable.circle_green1));
+            b.top2.setBackground(getDrawable(R.drawable.circle_green1));
+            b.bottom.setBackground(getDrawable(R.drawable.message_back_green));
+        }
         b.backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
