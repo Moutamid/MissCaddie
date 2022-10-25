@@ -17,6 +17,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -40,14 +41,17 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.moutamid.misscaddie.adapters.AddOnsListAdapter;
 import com.moutamid.misscaddie.adapters.ImageSliderCaddieAdapter;
 import com.moutamid.misscaddie.adapters.ImageSliderGolferAdapter;
 import com.moutamid.misscaddie.adapters.ManageImageAdapter;
 import com.moutamid.misscaddie.databinding.ActivityCaddieEditProfileBinding;
+import com.moutamid.misscaddie.models.Bonus;
 import com.moutamid.misscaddie.models.ManageImageModel;
 import com.moutamid.misscaddie.models.Model_Caddie;
 import com.moutamid.misscaddie.models.ServiceListModel;
@@ -81,10 +85,9 @@ public class CaddieEditProfileActivity extends AppCompatActivity {
     private Bitmap bitmap = null;
     private StorageReference mStorage;
     private ArrayAdapter<String> arrayAdapter;
+    private ArrayList<Bonus> bonusArrayList = new ArrayList<>();
     private static final int STORAGE_PERMISSION_CODE = 101;
-    private boolean range = false;
-    private boolean video = false;
-    private boolean travel = false;
+    private String description = "";
     private String[] states = {"Select State (New York)","Alabama","Alaska","Arizona","Arkansas",
     "California","Colorado", "Connecticut", "Delaware",
         "Florida",
@@ -189,41 +192,19 @@ public class CaddieEditProfileActivity extends AppCompatActivity {
             }
         });
 
-
-        b.range.setOnClickListener(new View.OnClickListener() {
+        b.addOnBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!range){
-                    range = true;
-                    b.range.setChecked(true);
-                }else {
-                    range = false;
-                    b.range.setChecked(false);
+                String bonus = b.addOnsTxt.getText().toString();
+                if(!TextUtils.isEmpty(bonus)){
+                    String key = db.child(currrentUser.getUid()).child("bonus").push().getKey();
+                    HashMap<String,Object> hashMap1 = new HashMap<>();
+                    hashMap1.put("id",key);
+                    hashMap1.put("bonus",bonus);
+                    db.child(currrentUser.getUid()).child("bonus").child(key).updateChildren(hashMap1);
+                    getAddOns();
                 }
-            }
-        });
-        b.video.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!video){
-                    video = true;
-                    b.video.setChecked(true);
-                }else {
-                    video = false;
-                    b.video.setChecked(false);
-                }
-            }
-        });
-        b.willing.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!travel){
-                    travel = true;
-                    b.willing.setChecked(true);
-                }else {
-                    travel = false;
-                    b.willing.setChecked(false);
-                }
+                b.addOnsTxt.setText("");
             }
         });
 
@@ -233,35 +214,47 @@ public class CaddieEditProfileActivity extends AppCompatActivity {
                 name = b.etName.getText().toString();
                 price = b.etPrice.getText().toString();
                 place = b.etLocation.getText().toString();
+                description = b.etAbout.getText().toString();
                 HashMap<String,Object> hashMap = new HashMap<>();
                 hashMap.put("name",name);
                 hashMap.put("place",place);
                 hashMap.put("state",state);
                 hashMap.put("image",image);
+                hashMap.put("about",description);
                 db.child(currrentUser.getUid()).updateChildren(hashMap);
                 getCaddieData();
-                if (range){
-                    String key = db.child(currrentUser.getUid()).child("bonus").push().getKey();
-                    HashMap<String,Object> hashMap1 = new HashMap<>();
-                    hashMap1.put("name",b.range.getText().toString());
-                    db.child(currrentUser.getUid()).child("bonus").child(key).updateChildren(hashMap1);
-                }
-                if (video){
-                    String key = db.child(currrentUser.getUid()).child("bonus").push().getKey();
-                    HashMap<String,Object> hashMap1 = new HashMap<>();
-                    hashMap1.put("name",b.video.getText().toString());
-                    db.child(currrentUser.getUid()).child("bonus").child(key).updateChildren(hashMap1);
-                }
-                if (travel){
-                    String key = db.child(currrentUser.getUid()).child("bonus").push().getKey();
-                    HashMap<String,Object> hashMap1 = new HashMap<>();
-                    hashMap1.put("name",b.willing.getText().toString());
-                    db.child(currrentUser.getUid()).child("bonus").child(key).updateChildren(hashMap1);
-                }
+
             }
         });
         getCaddieData();
+        getAddOns();
         changeStatusBarColor(this,R.color.yellow);
+    }
+
+    private void getAddOns() {
+        db.child(currrentUser.getUid()).child("bonus")
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()){
+                            bonusArrayList.clear();
+                            for (DataSnapshot ds : snapshot.getChildren()){
+                                Bonus model= ds.getValue(Bonus.class);
+                                bonusArrayList.add(model);
+                            }
+                            AddOnsListAdapter addOnsListAdapter = new AddOnsListAdapter(
+                                    CaddieEditProfileActivity.this, bonusArrayList);
+                            b.addonsRV.setAdapter(addOnsListAdapter);
+                            addOnsListAdapter.notifyDataSetChanged();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
     }
 
     public void changeStatusBarColor(Activity activity, int id) {
@@ -354,9 +347,11 @@ public class CaddieEditProfileActivity extends AppCompatActivity {
                             name = model.getName();
                             place = model.getPlace();
                             state = model.getState();
+                            description = model.getAbout();
                             b.caddieName.setText(name);
                             b.placeCaddie.setText(place);
                             b.etName.setText(name);
+                            b.etAbout.setText(description);
                             b.etLocation.setText(model.getPlace());
                             image = model.getImage();
                             Glide.with(CaddieEditProfileActivity.this)
@@ -371,7 +366,28 @@ public class CaddieEditProfileActivity extends AppCompatActivity {
                             }
 
 
-                            db.child(currrentUser.getUid()).child("services").addListenerForSingleValueEvent(new ValueEventListener() {
+                            Query query = db.child(currrentUser.getUid()).child("services")
+                                    .orderByChild("price").limitToFirst(1);
+
+                            query.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if (snapshot.exists()){
+                                        for (DataSnapshot ds : snapshot.getChildren()){
+                                            ServiceListModel model = ds.getValue(ServiceListModel.class);
+                                            b.priceGolfer.setText("USD$ "+ model.getPrice());
+                                            b.etPrice.setText("USD$ "+ model.getPrice());
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+
+/*                            db.child(currrentUser.getUid()).child("services").addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     if (snapshot.exists()){
@@ -388,32 +404,7 @@ public class CaddieEditProfileActivity extends AppCompatActivity {
                                 public void onCancelled(@NonNull DatabaseError error) {
 
                                 }
-                            });
-
-                            db.child(currrentUser.getUid()).child("bonus").addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    if (snapshot.exists()){
-                                        for (DataSnapshot ds : snapshot.getChildren()){
-                                            String name = ds.child("name").getValue().toString();
-                                            if (name.equals(b.range.getText())){
-                                                b.range.setChecked(true);
-                                            }
-                                            if (name.equals(b.video.getText())){
-                                                b.video.setChecked(true);
-                                            }
-                                            if (name.equals(b.willing.getText())){
-                                                b.willing.setChecked(true);
-                                            }
-                                        }
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-
-                                }
-                            });
+                            });*/
                         }
                     }
 

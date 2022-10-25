@@ -101,8 +101,22 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/circle"
                 android:layout_marginLeft="15dp"
-                android:layout_marginBottom="20dp"
-                android:text="5th Oct - 15th Oct" />
+                android:layout_marginBottom="20dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/circle"
+                android:layout_margin="15dp"
+                android:text="Booked Time:"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/circle"
+                android:layout_marginLeft="15dp"
+                android:layout_marginBottom="20dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -116,7 +130,7 @@
                 android:id="@+id/service_list"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="15dp"
                 android:layout_toEndOf="@id/img_golfer" />
 
             <TextView
@@ -128,12 +142,12 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/place"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/circle"
                 android:layout_marginLeft="15dp"
                 android:layout_marginBottom="20dp"
-                android:id="@+id/place"
                 android:text="Dean St, Brooklyn, NY, USA" />
 
             <TextView

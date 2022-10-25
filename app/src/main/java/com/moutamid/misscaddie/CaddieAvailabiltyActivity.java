@@ -59,6 +59,10 @@ public class CaddieAvailabiltyActivity extends AppCompatActivity{
             decTv20, decTv21, decTv22, decTv23, decTv24, decTv25, decTv26, decTv27, decTv28, decTv29,
             decTv30, decTv31;
 
+    ArrayList<String> octDates = new ArrayList<>();
+    ArrayList<String> novDates = new ArrayList<>();
+    ArrayList<String> decDates = new ArrayList<>();
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +75,7 @@ public class CaddieAvailabiltyActivity extends AppCompatActivity{
         mAuth = FirebaseAuth.getInstance();
         currrentUser = mAuth.getCurrentUser();
         db = FirebaseDatabase.getInstance().getReference().child("Caddie");
+
         checkAvailability();
 
         initOctTextViews();
@@ -114,6 +119,7 @@ public class CaddieAvailabiltyActivity extends AppCompatActivity{
 
     }
 
+
     private void checkAvailability() {
         db.child(currrentUser.getUid()).child("availability").addValueEventListener(new ValueEventListener() {
             @Override
@@ -125,16 +131,35 @@ public class CaddieAvailabiltyActivity extends AppCompatActivity{
                         String month = date.substring(last,date.length());
                         // Toast.makeText(getActivity(), lastname, Toast.LENGTH_SHORT).show();
                         if (month.equals(" Oct")) {
-                            String day = date.substring(0, 2);
-                            setOctDatesRound(day);
+                            if (date.length() == 5){
+                                String day = date.substring(0, 1);
+                                setOctDatesRound(day);
+                            }else {
+                                String day = date.substring(0, 2);
+                                setOctDatesRound(day);
+                            }
+
                         }else if (month.equals(" Nov")) {
-                            String day = date.substring(0, 2);
-                            setNovDatesRound(day);
+                            if (date.length() == 5){
+                                String day = date.substring(0, 1);
+                                setNovDatesRound(day);
+                            }else {
+                                String day = date.substring(0, 2);
+                                setNovDatesRound(day);
+                            }
                         }else if (month.equals(" Dec")) {
-                            String day = date.substring(0, 2);
-                            setDecDatesRound(day);
+                            if (date.length() == 5){
+                                String day = date.substring(0, 1);
+                                setDecDatesRound(day);
+                            }else {
+                                String day = date.substring(0, 2);
+                                setDecDatesRound(day);
+                            }
                         }
+
                     }
+                }else {
+                    storeAvailabilty();
                 }
             }
 
@@ -142,6 +167,30 @@ public class CaddieAvailabiltyActivity extends AppCompatActivity{
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
+    }
+
+    private void storeAvailabilty() {
+
+        for (int i = 1; i <=31; i++){
+            availabilty = i + " Oct";
+            HashMap<String, Object> hashMap = new HashMap<>();
+            hashMap.put("date", availabilty);
+            db.child(currrentUser.getUid()).child("availability").child(availabilty).updateChildren(hashMap);
+        }
+
+        for (int i = 1; i <=30; i++){
+            availabilty = i + " Nov";
+            HashMap<String, Object> hashMap = new HashMap<>();
+            hashMap.put("date", availabilty);
+            db.child(currrentUser.getUid()).child("availability").child(availabilty).updateChildren(hashMap);
+        }
+        for (int i = 1; i <=31; i++){
+            availabilty = i + " Dec";
+            HashMap<String, Object> hashMap = new HashMap<>();
+            hashMap.put("date", availabilty);
+            db.child(currrentUser.getUid()).child("availability").child(availabilty).updateChildren(hashMap);
+        }
+
     }
 
     private void setDecDatesRound(String day) {
@@ -524,8 +573,6 @@ public class CaddieAvailabiltyActivity extends AppCompatActivity{
 
     }
 
-
-
     public void changeStatusBarColor(Activity activity, int id) {
 
         // Changing the color of status bar
@@ -541,7 +588,7 @@ public class CaddieAvailabiltyActivity extends AppCompatActivity{
     }
 
 
-    boolean octClick = false;
+    boolean octClick = true;
     @SuppressLint("NewApi")
     public void OctoberDatesClick(View view) {
         //if (isAdded()) {
@@ -569,7 +616,7 @@ public class CaddieAvailabiltyActivity extends AppCompatActivity{
             }
         //}
     }
-    boolean novClick = false;
+    boolean novClick = true;
     public void NovemberDatesClick(View view) {
       //  if (isAdded()) {
             TextView t = (TextView) view;
@@ -595,7 +642,7 @@ public class CaddieAvailabiltyActivity extends AppCompatActivity{
             }
         //}
     }
-    boolean decClick = false;
+    boolean decClick = true;
     public void DecemberDatesClick(View view) {
      //   if (isAdded()) {
             TextView t = (TextView) view;

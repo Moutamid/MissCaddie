@@ -9,7 +9,7 @@ public class Model_Caddie {
     private String password;
     private String place;
     //private String availability;
-    private String state;
+    private String state,about;
     private String length , catagory , reviews , status;
 
     public Model_Caddie(){
@@ -28,6 +28,14 @@ public class Model_Caddie {
         this.length = length;
         this.catagory = catagory;
         this.status = status;
+    }
+
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
     }
 
     public String getLength() {

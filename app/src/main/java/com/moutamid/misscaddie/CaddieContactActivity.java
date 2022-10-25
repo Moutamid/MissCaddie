@@ -1,10 +1,15 @@
 package com.moutamid.misscaddie;
 
+import static com.google.android.material.timepicker.TimeFormat.CLOCK_12H;
+import static com.google.android.material.timepicker.TimeFormat.CLOCK_24H;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.util.Pair;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -20,6 +25,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -28,6 +34,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +43,7 @@ import android.widget.Toast;
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
+import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -55,7 +64,9 @@ import com.moutamid.misscaddie.Notifications.Data;
 import com.moutamid.misscaddie.Notifications.MyResponse;
 import com.moutamid.misscaddie.Notifications.Sender;
 import com.moutamid.misscaddie.Notifications.Token;
+import com.moutamid.misscaddie.adapters.ServiceListAdapter;
 import com.moutamid.misscaddie.listners.APIService;
+import com.moutamid.misscaddie.listners.ItemClickListener;
 import com.moutamid.misscaddie.models.Chat;
 import com.moutamid.misscaddie.models.Conversation;
 import com.moutamid.misscaddie.models.RequestsModel;
@@ -63,6 +74,7 @@ import com.moutamid.misscaddie.models.ServiceListModel;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
@@ -74,26 +86,30 @@ import retrofit2.Response;
 
 public class CaddieContactActivity extends AppCompatActivity {
     ImageView backBtn;
-    TextView booking_dates,sendBtn;
+    TextView booking_dates,sendBtn,booking_time;
     EditText et_location,messageTxt;
-    private Spinner serviceSpinner;
-    private ArrayAdapter<String> arrayAdapter;
+   // private Spinner serviceSpinner;
+    //private ArrayAdapter<String> arrayAdapter;
     private String uId;
     private DatabaseReference requestsDb,caddie_db,mConversationReference,mChatReference;
-    private ArrayList<String> serviceListModels;
+  //  private ArrayList<String> serviceListModels;
     private int unreadCount = 0;
     private String service = "";
     private String place = "";
     private String date = "";
     private String message = "";
     private String price = "";
+    private String time = "";
     private FirebaseAuth mAuth;
-    private LocationListener locationListener;
-    private double latitude = 0.0;
-    private double longitude = 0.0;
+    private RecyclerView listView;
+ //   private LocationListener locationListener;
+   // private double latitude = 0.0;
+    //private double longitude = 0.0;
     FirebaseUser user;
     private APIService apiService;
-    private LocationManager locationManager;
+   // private LocationManager locationManager;
+    private ArrayList<ServiceListModel> serviceListModelArrayList = new ArrayList<>();
+    private List<ServiceListModel> serviceListModels = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,9 +117,11 @@ public class CaddieContactActivity extends AppCompatActivity {
         setContentView(R.layout.activity_caddie_contact);
         backBtn = findViewById(R.id.back_btn);
         booking_dates = findViewById(R.id.booking_dates);
+        booking_time = findViewById(R.id.booking_time);
         et_location = findViewById(R.id.location);
         messageTxt = findViewById(R.id.message);
-        serviceSpinner = findViewById(R.id.spinner_booking);
+        listView = findViewById(R.id.service_listRC);
+        //serviceSpinner = findViewById(R.id.spinner_booking);
         sendBtn = findViewById(R.id.sendRequest);
         uId = getIntent().getStringExtra("userId");
         apiService = Client.getRetrofit("https://fcm.googleapis.com/").create(APIService.class);
@@ -111,10 +129,11 @@ public class CaddieContactActivity extends AppCompatActivity {
         mChatReference = FirebaseDatabase.getInstance().getReference().child("chats");
         mConversationReference = FirebaseDatabase.getInstance().getReference().child("conversation");
         caddie_db = FirebaseDatabase.getInstance().getReference().child("Caddie");
-        serviceListModels = new ArrayList<>();
+     //   serviceListModels = new ArrayList<>();
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
     //    changeStatusBarColor(this,R.color.yellow);
+
         MaterialDatePicker.Builder<Long> materialDateBuilder = MaterialDatePicker.Builder.datePicker();
         materialDateBuilder.setTitleText("SELECT A DATE");
 
@@ -135,23 +154,61 @@ public class CaddieContactActivity extends AppCompatActivity {
                     }
                 });
 
+        Calendar calendar = Calendar.getInstance();
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+
+        boolean isSystem24Hour = DateFormat.is24HourFormat(this);
+        int clockFormat = isSystem24Hour ? CLOCK_24H : CLOCK_12H;
+        MaterialTimePicker materialTimePicker = new MaterialTimePicker.Builder()
+                .setTimeFormat(clockFormat)
+                .setHour(hour)
+                .setMinute(minute)
+                .build();
+
+        booking_time.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                materialTimePicker.show(getSupportFragmentManager(), "MATERIAL_DATE_PICKER");
+            }
+        });
+
+        materialTimePicker.addOnPositiveButtonClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                time = materialTimePicker.getHour() + ":" + materialTimePicker.getMinute();
+                booking_time.setText("Selected Time("+time+")");
+            }
+        });
+
         backBtn.setOnClickListener(v -> {
             onBackPressed();
             Animatoo.animateSwipeLeft(CaddieContactActivity.this);
         });
         getServices();
-        if (permissions()){
+      /*  if (permissions()){
             getlocation();
         } else {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION},1001);
-        }
+        }*/
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 message = messageTxt.getText().toString();
                 place = et_location.getText().toString();
-                if (!service.equals("") && !date.equals("") && !place.equals("") && !message.equals("")){
+                if(date.equals("")){
+                    Toast.makeText(CaddieContactActivity.this, "Please Select a date", Toast.LENGTH_SHORT).show();
+                }
+                else if(message.equals("")){
+                    Toast.makeText(CaddieContactActivity.this, "Please type a message", Toast.LENGTH_SHORT).show();
+                }
+                else if(place.equals("")){
+                    Toast.makeText(CaddieContactActivity.this, "Please Enter your city or state", Toast.LENGTH_SHORT).show();
+                }else if(time.equals("")){
+                    Toast.makeText(CaddieContactActivity.this, "Please Select a time", Toast.LENGTH_SHORT).show();
+                }
+                else{
                     sendRequest();
                     sendMessage(message,"golfer");
                     startActivity(new Intent(CaddieContactActivity.this,CaddiesRequestsActivity.class));
@@ -178,8 +235,8 @@ public class CaddieContactActivity extends AppCompatActivity {
 
     private void sendRequest() {
         String key = requestsDb.push().getKey();
-        RequestsModel requestsModel = new RequestsModel(key,user.getUid(),price,"Pending",date,
-                place,message,service,uId);
+        RequestsModel requestsModel = new RequestsModel(key,user.getUid(),"Pending",date,time,
+                place,message,uId,serviceListModels);
         requestsDb.child(key).setValue(requestsModel);
 
         sendNotification(uId);
@@ -279,7 +336,7 @@ public class CaddieContactActivity extends AppCompatActivity {
     }
 
     private void getServices() {
-        caddie_db.child(uId)
+    /*    caddie_db.child(uId)
                 .child("services")
                 .addValueEventListener(new ValueEventListener() {
                     @Override
@@ -288,7 +345,7 @@ public class CaddieContactActivity extends AppCompatActivity {
                             serviceListModels.clear();
                             for (DataSnapshot ds : snapshot.getChildren()){
                                 ServiceListModel model = ds.getValue(ServiceListModel.class);
-                                serviceListModels.add(model.getTitle() + " " + model.getPrice());
+                                serviceListModels.add(model.getTitle() + "- USD$" + model.getPrice());
                             }
                             arrayAdapter = new ArrayAdapter<String>(CaddieContactActivity.this,
                                     androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
@@ -298,9 +355,9 @@ public class CaddieContactActivity extends AppCompatActivity {
                                 @Override
                                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                                     service = adapterView.getItemAtPosition(i).toString();
-                                    int last = service.lastIndexOf(" ");
+                                    int last = service.lastIndexOf("$");
                                     String lastname = service.substring(last,service.length());
-                                    price = lastname;
+                                    //price = lastname;
                                     //Toast.makeText(CaddieContactActivity.this,"" + lastname,Toast.LENGTH_LONG).show();
                                 }
 
@@ -316,10 +373,41 @@ public class CaddieContactActivity extends AppCompatActivity {
                     public void onCancelled(@NonNull DatabaseError error) {
 
                     }
+                });*/
+        caddie_db.child(uId).child("services")
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()){
+                            for (DataSnapshot ds : snapshot.getChildren()){
+                                ServiceListModel model = ds.getValue(ServiceListModel.class);
+                                serviceListModelArrayList.add(model);
+                            }
+                            ServiceListAdapter adapter = new ServiceListAdapter(CaddieContactActivity.this, serviceListModelArrayList,true);
+                            listView.setAdapter(adapter);
+                            adapter.setItemClickListener(new ItemClickListener() {
+                                @RequiresApi(api = Build.VERSION_CODES.M)
+                                @SuppressLint("ResourceType")
+                                @Override
+                                public void onItemClick(int position, View view) {
+                                    LinearLayout linearLayout = view.findViewById(R.id.linearLayout);
+                                    ServiceListModel model1 = serviceListModelArrayList.get(position);
+                                    serviceListModels.add(model1);
+                                    linearLayout.setBackgroundDrawable(getDrawable(R.drawable.edit_text_background));
+                                }
+                            });
+                            adapter.notifyDataSetChanged();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
                 });
     }
 
-    @SuppressLint("MissingPermission")
+    /*@SuppressLint("MissingPermission")
     private void getlocation() {
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         //manager = new SharedPreferencesManager(this);
@@ -403,6 +491,6 @@ public class CaddieContactActivity extends AppCompatActivity {
 
                     }
                 }).check();
-    }
+    }*/
 
 }

@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -78,14 +77,33 @@
             android:layout_marginTop="5dp"
             android:layout_toEndOf="@id/img_golfer"
             android:fontFamily="@font/roboto"
-            android:textColor="@color/grey" />
-
+            android:textColor="@color/grey"
+            android:layout_marginRight="12dp" />
+        <View
+            android:layout_width="6dp"
+            android:layout_height="6dp"
+            android:background="@drawable/circle_yellow1"
+            android:layout_below="@+id/name_golfer"
+            android:layout_toEndOf="@+id/date_golfer"
+            android:backgroundTint="@color/grey"
+            android:layout_marginTop="12dp"
+            android:id="@+id/view"/>
+        <TextView
+            android:id="@+id/time_golfer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/name_golfer"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@id/view"
+            android:fontFamily="@font/roboto"
+            android:textColor="@color/grey"/>
         <TextView
             android:id="@+id/service_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/date_golfer"
-            android:layout_marginLeft="20dp"
             android:layout_marginTop="5dp"
             android:layout_toEndOf="@id/img_golfer" />
 
@@ -95,7 +113,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/service_list"
             android:layout_marginLeft="12dp"
-            android:layout_marginTop="5dp"
             android:layout_toEndOf="@id/img_golfer"
             android:fontFamily="@font/roboto"
             android:textSize="14sp"

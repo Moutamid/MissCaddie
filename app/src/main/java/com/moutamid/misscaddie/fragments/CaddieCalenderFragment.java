@@ -85,16 +85,32 @@ public class CaddieCalenderFragment extends Fragment {
                             String date = ds.child("date").getValue().toString();
                             int last = date.lastIndexOf(" ");
                             String month = date.substring(last,date.length());
-                           // Toast.makeText(getActivity(), lastname, Toast.LENGTH_SHORT).show();
+
                             if (month.equals(" Oct")) {
-                                String day = date.substring(0, 2);
-                                setOctDatesRound(day);
+                                if (date.length() == 5){
+                                    String day = date.substring(0, 1);
+                                    setOctDatesRound(day);
+                                }else {
+                                    String day = date.substring(0, 2);
+                                    setOctDatesRound(day);
+                                }
+
                             }else if (month.equals(" Nov")) {
-                                String day = date.substring(0, 2);
-                                setNovDatesRound(day);
+                                if (date.length() == 5){
+                                    String day = date.substring(0, 1);
+                                    setNovDatesRound(day);
+                                }else {
+                                    String day = date.substring(0, 2);
+                                    setNovDatesRound(day);
+                                }
                             }else if (month.equals(" Dec")) {
-                                String day = date.substring(0, 2);
-                                setDecDatesRound(day);
+                                if (date.length() == 5){
+                                    String day = date.substring(0, 1);
+                                    setDecDatesRound(day);
+                                }else {
+                                    String day = date.substring(0, 2);
+                                    setDecDatesRound(day);
+                                }
                             }
                         }
                     }

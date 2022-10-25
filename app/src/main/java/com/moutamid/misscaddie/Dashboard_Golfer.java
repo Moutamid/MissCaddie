@@ -101,7 +101,50 @@ public class Dashboard_Golfer extends AppCompatActivity {
     }
 
     private void filterDate() {
-        db.addValueEventListener(new ValueEventListener() {
+        DatabaseReference mRequestReference = FirebaseDatabase.getInstance().getReference().child("Requests");
+        mRequestReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    for (DataSnapshot ds : snapshot.getChildren()){
+                        RequestsModel requestsModel = ds.getValue(RequestsModel.class);
+                        if (requestsModel.getDate().equals(date)){
+                            Query query = db.orderByChild("id").equalTo(requestsModel.getCaddieId());
+                            query.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot1) {
+                                    if (snapshot.exists()){
+                                        modelGolferArrayList.clear();
+                                        for (DataSnapshot dataSnapshot : snapshot1.getChildren()){
+                                            Model_Caddie caddie = dataSnapshot.getValue(Model_Caddie.class);
+                                            if (caddie.getState().equals(state) && caddie.getStatus().equals(status)){
+                                                modelGolferArrayList.add(caddie);
+                                            }
+                                        }
+
+                                        adapterGolfer = new Adapter_Golfer(Dashboard_Golfer.this,
+                                                modelGolferArrayList);
+                                        golfer_recycler.setAdapter(adapterGolfer);
+                                        adapterGolfer.notifyDataSetChanged();
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        /*db.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()){
@@ -142,7 +185,7 @@ public class Dashboard_Golfer extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        });
+        });*/
     }
 
     private void load_detail() {

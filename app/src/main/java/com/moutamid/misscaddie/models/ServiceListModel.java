@@ -1,6 +1,9 @@
 package com.moutamid.misscaddie.models;
 
+import android.os.Parcelable;
+
 public class ServiceListModel {
+    public static final Parcelable.Creator<ServiceListModel> CREATOR = null;
     String title, price;
 
 

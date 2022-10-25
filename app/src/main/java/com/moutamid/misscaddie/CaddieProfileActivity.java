@@ -23,6 +23,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.moutamid.misscaddie.adapters.CaddieProfileVPadapter;
 import com.moutamid.misscaddie.adapters.ImageSliderCaddieAdapter;
@@ -72,7 +73,7 @@ public class CaddieProfileActivity extends AppCompatActivity {
         placeCaddie = findViewById(R.id.place_caddie);
         price = findViewById(R.id.price_golfer);
         profileImg = findViewById(R.id.profile_img);
-        contactCaddie = findViewById(R.id.contact_caddie);
+///        contactCaddie = findViewById(R.id.contact_caddie);
         backBtn = findViewById(R.id.back_btn);
         sliderView = findViewById(R.id.image_slider);
         mAuth = FirebaseAuth.getInstance();
@@ -108,13 +109,6 @@ public class CaddieProfileActivity extends AppCompatActivity {
 
         viewPager.setAdapter(caddieProfileVPadapter);
         tabLayout.setupWithViewPager(viewPager);
-
-        contactCaddie.setOnClickListener(v -> {
-            Intent intent = new Intent(CaddieProfileActivity.this, CaddieContactActivity.class);
-            intent.putExtra("userId",userId);
-            startActivity(intent);
-            Animatoo.animateSwipeLeft(CaddieProfileActivity.this);
-        });
 
         backBtn.setOnClickListener(v -> {
             startActivity(new Intent(CaddieProfileActivity.this, Dashboard_Golfer.class));
@@ -187,15 +181,17 @@ public class CaddieProfileActivity extends AppCompatActivity {
                                     .load(model.getImage())
                                     .placeholder(R.drawable.bi_person_fill)
                                     .into(profileImg);
-                            db.child(model.getId()).child("services").addListenerForSingleValueEvent(new ValueEventListener() {
+                            Query query = db.child(model.getId()).child("services")
+                                    .orderByChild("price").limitToFirst(1);
+
+                            query.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     if (snapshot.exists()){
                                         for (DataSnapshot ds : snapshot.getChildren()){
                                             ServiceListModel model = ds.getValue(ServiceListModel.class);
-                                            serviceListModels.add(model);
+                                            price.setText("USD$ "+ model.getPrice());
                                         }
-                                        price.setText("US$ "+ serviceListModels.get(0).getPrice());
                                     }
                                 }
 

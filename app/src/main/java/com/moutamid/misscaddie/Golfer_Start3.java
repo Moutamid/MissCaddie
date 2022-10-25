@@ -13,7 +13,7 @@ import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 public class Golfer_Start3 extends AppCompatActivity {
 
     RelativeLayout gs1;
-    TextView skip;
+    TextView nextBtn,backBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,11 +29,21 @@ public class Golfer_Start3 extends AppCompatActivity {
                 Animatoo.animateSwipeLeft(Golfer_Start3.this);
             }
         });
-        skip = findViewById(R.id.text_skip3);
-        skip.setOnClickListener(new View.OnClickListener() {
+
+        nextBtn = findViewById(R.id.text_next);
+        backBtn = findViewById(R.id.text_back);
+        nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Golfer_Start3.this ,Golfer_Start4.class);
+                startActivity(intent);
+                Animatoo.animateSwipeLeft(Golfer_Start3.this);
+            }
+        });
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Golfer_Start3.this ,Golfer_Start2.class);
                 startActivity(intent);
                 Animatoo.animateSwipeLeft(Golfer_Start3.this);
             }

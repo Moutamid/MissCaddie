@@ -11,12 +11,9 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:background="@color/grey"
-        app:sliderAnimationDuration="600"
-        app:sliderAutoCycleDirection="back_and_forth"
-        app:sliderAutoCycleEnabled="true"
+        app:sliderAutoCycleEnabled="false"
         app:sliderIndicatorEnabled="false"
-        app:sliderScrollTimeInSec="1"
-        app:sliderStartAutoCycle="true" />
+        app:sliderStartAutoCycle="false" />
 
     <View
         android:layout_width="100dp"
@@ -43,17 +40,17 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="20dp"
         android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
         android:background="@drawable/shape_yellow"
         android:elevation="10dp"
         android:gravity="center"
         android:padding="10dp"
-        android:text="Manage"
+        android:text="Add Picture"
+        android:layout_below="@+id/image_slider"
         android:textAllCaps="true"
         android:textColor="@color/white"
         android:textSize="12sp"
+        android:layout_marginTop="-50dp"
         android:textStyle="bold" />
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -176,8 +173,25 @@
                 android:hint="Price per Round $"
                 android:inputType="textPersonName"
                 android:padding="15dp"
+                android:editable="false"
+                android:enabled="false"
                 android:textColorHint="@color/grey" />
 
+            <EditText
+                android:id="@+id/et_about"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/et_bg"
+                android:fontFamily="@font/roboto"
+                android:hint="Brief Description about yourself"
+                android:gravity="start"
+                android:inputType="textPersonName"
+                android:padding="15dp"
+                android:lineHeight="25dp"
+                android:textColorHint="@color/grey" />
 
             <TextView
                 android:id="@+id/label2"
@@ -241,44 +255,53 @@
                 android:textColor="@color/black"
                 android:textSize="22sp" />
 
-            <com.google.android.material.checkbox.MaterialCheckBox
-                android:id="@+id/range"
+            <EditText
+                android:id="@+id/add_ons_txt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:layout_marginLeft="20dp"
+                android:layout_below="@id/label"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="12dp"
                 android:layout_marginTop="10dp"
-                android:button="@drawable/checkbox_style"
-                android:buttonTint="@color/yellow"
+                android:background="@drawable/et_bg"
+                android:layout_weight="1"
                 android:fontFamily="@font/roboto"
-                android:text="\t\tRange Finder"
-                android:textSize="18sp" />
+                android:hint="Enter new add ons.."
+                android:inputType="textPersonName"
+                android:padding="15dp"
+                android:visibility="visible"
+                android:textColorHint="@color/grey" />
 
-            <com.google.android.material.checkbox.MaterialCheckBox
-                android:id="@+id/video"
+            <TextView
+                android:id="@+id/addOnBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:layout_marginLeft="20dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
-                android:button="@drawable/checkbox_style"
-                android:buttonTint="@color/yellow"
-                android:fontFamily="@font/roboto"
-                android:text="\t\tShort Video of Round"
-                android:textSize="18sp" />
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/shape_yellow"
+                android:elevation="10dp"
+                android:gravity="center"
+                android:textAllCaps="true"
+                android:drawableLeft="@drawable/ic_add"
+                android:drawableTint="@color/white"
+                android:padding="10dp"
+                android:text="Add New Add Ons"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/addonsRV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:orientation="vertical"
+                android:layout_marginBottom="20dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
-            <com.google.android.material.checkbox.MaterialCheckBox
-                android:id="@+id/willing"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
-                android:button="@drawable/checkbox_style"
-                android:buttonTint="@color/yellow"
-                android:fontFamily="@font/roboto"
-                android:text="\t\tAre you willing to Travel ?"
-                android:textSize="18sp" />
 
         </LinearLayout>
 
@@ -297,7 +320,7 @@
         android:elevation="10dp"
         android:gravity="center"
         android:padding="10dp"
-        android:text="Update"
+        android:text="Save Changes"
         android:textAllCaps="true"
         android:textColor="@color/white"
         android:textSize="20sp"

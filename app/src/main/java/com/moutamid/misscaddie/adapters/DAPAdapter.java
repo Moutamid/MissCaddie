@@ -3,7 +3,6 @@ package com.moutamid.misscaddie.adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +23,7 @@ import com.moutamid.misscaddie.R;
 import com.moutamid.misscaddie.models.Model_Golfer;
 import com.moutamid.misscaddie.models.RequestsModel;
 
+import java.io.Serializable;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -51,8 +51,9 @@ public class DAPAdapter extends RecyclerView.Adapter<DAPAdapter.VH> {
         RequestsModel model = itemList.get(position);
         String serviceList = "";
        // holder.name.setText(model.getName());
-        holder.price.setText("(US$" + model.getPrice() + ")");
+        holder.price.setText("(USD$" + model.getTableRows().get(0).getPrice() + ")");
         holder.address.setText(model.getAddress());
+        holder.time.setText(model.getTime());
         holder.date.setText(model.getDate());
 
         if (model.getStatus_title().equals("Accepted")){
@@ -63,15 +64,16 @@ public class DAPAdapter extends RecyclerView.Adapter<DAPAdapter.VH> {
             holder.butn.setBackgroundResource(R.drawable.arrow_right_yellow);
         }
 
-        /*for (int i=0; i < model.getTableRows().size(); i++){
-            String service = model.getTableRows().get(i).getTitle() + " ($" + model.getTableRows().get(i).getPrice() + ")";
+        for (int i=0; i < model.getTableRows().size(); i++){
+            String service = model.getTableRows().get(i).getTitle() +
+                    " (USD$" + model.getTableRows().get(i).getPrice() + ")";
             if (i==2){
-                serviceList = serviceList + bullet + "\t\t" + "more";
+                serviceList = serviceList + "\t\t" + "more";
                 break;
             }
-            serviceList = serviceList + bullet + "\t\t" + service +  "\n";
-        }*/
-        serviceList = model.getService();
+            serviceList = serviceList + "\t\t" + service +  "\n";
+        }
+        //serviceList = model.getService();
         holder.service_list.setText(serviceList);
         //Glide.with(context).load(model.getImage()).into(holder.image);
 
@@ -90,6 +92,7 @@ public class DAPAdapter extends RecyclerView.Adapter<DAPAdapter.VH> {
                         i.putExtra("personName", model_golfer.getName());
                         i.putExtra("personImage", model_golfer.getImage());
                         i.putExtra("requestModel",model);
+                      //  i.putExtra("serviceList", (Serializable) model.getTableRows());
 
                         context.startActivity(i);
                     });
@@ -111,7 +114,7 @@ public class DAPAdapter extends RecyclerView.Adapter<DAPAdapter.VH> {
 
     public class VH extends RecyclerView.ViewHolder{
         CircleImageView image;
-        TextView name, price, date, address;
+        TextView name, price, date, address,time;
         TextView service_list;
         ImageView butn;
 
@@ -121,6 +124,7 @@ public class DAPAdapter extends RecyclerView.Adapter<DAPAdapter.VH> {
             name = itemView.findViewById(R.id.name_golfer);
             price = itemView.findViewById(R.id.price_golfer);
             date = itemView.findViewById(R.id.date_golfer);
+            time = itemView.findViewById(R.id.time_golfer);
             address = itemView.findViewById(R.id.address_golfer);
             service_list = itemView.findViewById(R.id.service_list);
             butn = itemView.findViewById(R.id.checkBtn);

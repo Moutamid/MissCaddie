@@ -3,38 +3,57 @@ package com.moutamid.misscaddie.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RequestsModel implements Parcelable {
-    String id, userId, price, status_title, date, address, message,service,caddieId;
-  //  List<ServiceListModel> tableRows;
+    String id, userId, status_title, date, address, message,time,caddieId;
+    List<ServiceListModel> tableRows = new ArrayList<>();
 
     public RequestsModel() {
     }
 
-    public RequestsModel(String id, String userId, String price, String status_title,
-                         String date, String address, String message, String service, String caddieId) {
+    public RequestsModel(String id, String userId, String status_title, String date,
+                         String time,String address, String message, String caddieId,List<ServiceListModel> tableRows) {
         this.id = id;
         this.userId = userId;
-        this.price = price;
         this.status_title = status_title;
         this.date = date;
+        this.time = time;
         this.address = address;
         this.message = message;
-        this.service = service;
         this.caddieId = caddieId;
+        this.tableRows = tableRows;
     }
 
     protected RequestsModel(Parcel in) {
         id = in.readString();
         userId = in.readString();
-        price = in.readString();
         status_title = in.readString();
         date = in.readString();
         address = in.readString();
         message = in.readString();
-        service = in.readString();
+        time = in.readString();
         caddieId = in.readString();
+        tableRows = in.readArrayList(ServiceListModel.class.getClassLoader());
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(userId);
+        dest.writeString(status_title);
+        dest.writeString(date);
+        dest.writeString(address);
+        dest.writeString(message);
+        dest.writeString(time);
+        dest.writeString(caddieId);
+        dest.writeList(tableRows);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<RequestsModel> CREATOR = new Creator<RequestsModel>() {
@@ -49,6 +68,23 @@ public class RequestsModel implements Parcelable {
         }
     };
 
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public List<ServiceListModel> getTableRows() {
+        return tableRows;
+    }
+
+    public void setTableRows(List<ServiceListModel> tableRows) {
+        this.tableRows = tableRows;
+    }
+
+
     public String getCaddieId() {
         return caddieId;
     }
@@ -57,13 +93,6 @@ public class RequestsModel implements Parcelable {
         this.caddieId = caddieId;
     }
 
-    public String getService() {
-        return service;
-    }
-
-    public void setService(String service) {
-        this.service = service;
-    }
 
     public String getId() {
         return id;
@@ -89,13 +118,6 @@ public class RequestsModel implements Parcelable {
         this.message = message;
     }
 
-    public String getPrice() {
-        return price;
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
-    }
 
     public String getStatus_title() {
         return status_title;
@@ -121,21 +143,4 @@ public class RequestsModel implements Parcelable {
         this.address = address;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(id);
-        parcel.writeString(userId);
-        parcel.writeString(price);
-        parcel.writeString(status_title);
-        parcel.writeString(date);
-        parcel.writeString(address);
-        parcel.writeString(message);
-        parcel.writeString(service);
-        parcel.writeString(caddieId);
-    }
 }

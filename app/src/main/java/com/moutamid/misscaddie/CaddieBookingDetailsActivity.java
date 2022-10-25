@@ -46,6 +46,8 @@ public class CaddieBookingDetailsActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private APIService apiService;
     private FirebaseUser user;
+    private String serviceList = "";
+    private int price = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,10 +73,21 @@ public class CaddieBookingDetailsActivity extends AppCompatActivity {
                 .into(b.profileImg);
         
         b.date.setText(model.getDate());
-        b.serviceList.setText(model.getService());
+        b.time.setText(model.getTime());
+        for (int i=0; i < model.getTableRows().size(); i++){
+            String service = model.getTableRows().get(i).getTitle() +
+                    " (USD$" + model.getTableRows().get(i).getPrice() + ")";
+            price = price + Integer.parseInt(model.getTableRows().get(i).getPrice());
+            if (i==2){
+                serviceList = serviceList + "\t\t" + "more";
+                break;
+            }
+            serviceList = serviceList + "\t\t" + service +  "\n";
+        }
+        b.serviceList.setText(serviceList);
         b.place.setText(model.getAddress());
         b.message.setText(model.getMessage());
-        b.totalPrice.setText("Total : US$ " + model.getPrice());
+     //   b.totalPrice.setText("Total : US$ " + model.getPrice());
         b.acceptBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

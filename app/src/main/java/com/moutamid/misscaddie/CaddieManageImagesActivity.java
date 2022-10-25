@@ -14,12 +14,14 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -142,15 +144,16 @@ public class CaddieManageImagesActivity extends AppCompatActivity {
     private final ManageImageListner clickListner = new ManageImageListner() {
         @Override
         public void onClick(ManageImageModel Model) {
-           /* Intent intent = new Intent(Intent.ACTION_PICK,
-            MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-            startActivityForResult(Intent.createChooser(intent, "Choose Images"), 101);*/
 
-            Intent intent = new Intent();
+          /*  Intent intent = new Intent();
             intent.setType("image/*");
             intent.setAction(Intent.ACTION_GET_CONTENT);
-            startActivityForResult(Intent.createChooser(intent, "SELECT IMAGE"), 3);
+            startActivityForResult(Intent.createChooser(intent, "SELECT IMAGE"), 3);*/
+            ImagePicker.with(CaddieManageImagesActivity.this)
+                    .crop(600, 600)
+                    .compress(1024)
+                    .maxResultSize(1080, 1080)
+                    .start();
 
         }
     };
@@ -187,18 +190,21 @@ public class CaddieManageImagesActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK &&
-                data != null && data.getData() != null) {
-            if (requestCode == 3) {
-                uri = data.getData();
-             //   imageView.setImageURI(uri);
-                try {
+        try {
+            try{
+                if (resultCode == RESULT_OK && data != null) {
+                    uri = data.getData();
+
                     bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
                     saveImage();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                } else {
+                    Toast.makeText(this, "Please Select Images", Toast.LENGTH_SHORT).show();
                 }
+            }  catch (Exception e){
+                Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
             }
+        } catch (Exception e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -54,9 +54,10 @@ public class RequestesAdapter extends RecyclerView.Adapter<RequestesAdapter.VH> 
         String serviceList = "";
 
       //  holder.name.setText(model.getName());
-        holder.price.setText("(US$" + model.getPrice() + ")");
+        holder.price.setText("(USD$" + model.getTableRows().get(0).getPrice() + ")");
         holder.address.setText(model.getAddress());
         holder.date.setText(model.getDate());
+        holder.time.setText(model.getTime());
         holder.status_title.setText("(" + model.getStatus_title() + ")");
 
         if (model.getStatus_title().equals("Accepted")){
@@ -70,15 +71,15 @@ public class RequestesAdapter extends RecyclerView.Adapter<RequestesAdapter.VH> 
             holder.butn.setBackgroundResource(0);
         }
 
-       /* for (int i=0; i < model.getTableRows().size(); i++){
-            String service = model.getTableRows().get(i).getTitle() + " ($" + model.getTableRows().get(i).getPrice() + ")";
+        for (int i=0; i < model.getTableRows().size(); i++){
+            String service = model.getTableRows().get(i).getTitle() + " (USD$" + model.getTableRows().get(i).getPrice() + ")";
             if (i==2){
-                serviceList = serviceList + bullet + "\t\t" + "more";
+                serviceList = serviceList + "\t\t" + "more";
                 break;
             }
-            serviceList = serviceList + bullet + "\t\t" + service +  "\n";
-        }*/
-        serviceList = model.getService();
+            serviceList = serviceList + "\t\t" + service +  "\n";
+        }
+        //serviceList = model.getService();
         holder.service_list.setText(serviceList);
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -113,7 +114,7 @@ public class RequestesAdapter extends RecyclerView.Adapter<RequestesAdapter.VH> 
 
     public class VH extends RecyclerView.ViewHolder{
         CircleImageView image;
-        TextView name, price, status_title, date, address;
+        TextView name, price, status_title, date, address,time;
         TextView service_list;
         ImageView butn;
 
@@ -124,6 +125,7 @@ public class RequestesAdapter extends RecyclerView.Adapter<RequestesAdapter.VH> 
             price = itemView.findViewById(R.id.price_golfer);
             status_title = itemView.findViewById(R.id.status_golfer);
             date = itemView.findViewById(R.id.date_golfer);
+            time = itemView.findViewById(R.id.time_golfer);
             address = itemView.findViewById(R.id.address_golfer);
             service_list = itemView.findViewById(R.id.service_list);
             butn = itemView.findViewById(R.id.checkBtn);

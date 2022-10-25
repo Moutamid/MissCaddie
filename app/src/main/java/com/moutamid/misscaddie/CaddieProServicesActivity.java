@@ -76,6 +76,8 @@ public class CaddieProServicesActivity extends AppCompatActivity {
                 adapter.notifyItemInserted(list.size() - 1);
                 addRecyclerRC.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
+                serviceTxt.setText("");
+                priceTxt.setText("");
           //      adapter.notifyDataSetChanged();
             }
         });
@@ -95,7 +97,8 @@ public class CaddieProServicesActivity extends AppCompatActivity {
                 ServiceListModel model = list.get(i);
                 db.child(String.valueOf(i)).setValue(model);
             }
-
+            serviceTxt.setText("");
+            priceTxt.setText("");
         });
 
         getServices();

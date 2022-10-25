@@ -15,6 +15,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.moutamid.misscaddie.CaddieProfileActivity;
 import com.moutamid.misscaddie.models.Model_Caddie;
@@ -58,7 +59,7 @@ public class Adapter_Golfer extends RecyclerView.Adapter<Adapter_Golfer.HolderAn
 
         holder.name.setText(name_tv);
        // holder.price.setText(price_tv);
-        holder.length.setText(length_tv + " cm");
+        holder.length.setText(length_tv);
         holder.place.setText(place_tv);
         holder.catagory.setText(cat_tv);
         //holder.price.setText(price_tv);
@@ -77,15 +78,17 @@ public class Adapter_Golfer extends RecyclerView.Adapter<Adapter_Golfer.HolderAn
                 .placeholder(R.drawable.bi_person_fill)
                         .into(holder.image);
         DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("Caddie");
-        db.child(modelAndroid.getId()).child("services").addListenerForSingleValueEvent(new ValueEventListener() {
+        Query query = db.child(modelAndroid.getId()).child("services")
+                .orderByChild("price").limitToFirst(1);
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()){
                     for (DataSnapshot ds : snapshot.getChildren()){
                         ServiceListModel model = ds.getValue(ServiceListModel.class);
-                        serviceListModels.add(model);
+                        holder.price.setText("USD$ "+ model.getPrice());
                     }
-                    holder.price.setText("US$ "+ serviceListModels.get(0).getPrice());
                 }
             }
 

@@ -10,12 +10,9 @@
         android:id="@+id/image_slider"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        app:sliderAnimationDuration="600"
-        app:sliderAutoCycleDirection="back_and_forth"
-        app:sliderAutoCycleEnabled="true"
+        app:sliderAutoCycleEnabled="false"
         app:sliderIndicatorEnabled="false"
-        app:sliderScrollTimeInSec="1"
-        app:sliderStartAutoCycle="true" />
+        app:sliderStartAutoCycle="false" />
 
     <!--<com.denzcoskun.imageslider.ImageSlider
         android:id="@+id/image_slider"
@@ -181,23 +178,5 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/tabsLayout" />
 
-    <TextView
-        android:id="@+id/contact_caddie"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/shape_green"
-        android:elevation="10dp"
-        android:gravity="center"
-        android:padding="10dp"
-        android:text="Contact Caddie"
-        android:textAllCaps="true"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:textStyle="bold" />
 
 </RelativeLayout>

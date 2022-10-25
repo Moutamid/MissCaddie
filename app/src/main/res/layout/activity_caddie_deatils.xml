@@ -171,20 +171,71 @@
                 android:entries="@array/status"
                 android:gravity="start" />
 
-            <EditText
-                android:id="@+id/height"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="12dp"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/et_bg"
-                android:fontFamily="@font/roboto"
-                android:hint="Height in cm"
-                android:inputType="number"
-                android:padding="15dp"
-                android:textColorHint="@color/grey" />
+                android:layout_gravity="center_horizontal" >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Height:   "
+                    android:fontFamily="@font/roboto"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"/>
+                <EditText
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:background="@drawable/et_bg"
+                    android:id="@+id/feet"
+                    android:fontFamily="@font/roboto"
+                    android:inputType="number"
+                    android:padding="8dp"
+                    android:textColorHint="@color/grey" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="  feet  "
+                    android:fontFamily="@font/roboto"
+                    android:textSize="16sp"/>
+                <EditText
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:background="@drawable/et_bg"
+                    android:id="@+id/inches"
+                    android:fontFamily="@font/roboto"
+                    android:inputType="number"
+                    android:padding="8dp"
+                    android:textColorHint="@color/grey" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="  inches"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/roboto"/>
+            </LinearLayout>
+
+            <!-- <EditText
+                 android:id="@+id/height"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_marginStart="20dp"
+                 android:layout_marginEnd="20dp"
+                 android:layout_marginBottom="12dp"
+                 android:layout_marginTop="5dp"
+                 android:background="@drawable/et_bg"
+                 android:fontFamily="@font/roboto"
+                 android:hint="Height in cm"
+                 android:inputType="number"
+                 android:padding="15dp"
+                 android:textColorHint="@color/grey" />-->
 
             <TextView
                 android:id="@+id/label"
@@ -288,11 +339,6 @@
 
             </LinearLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/addServiceRV"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
             <TextView
                 android:id="@+id/addNewService"
                 android:layout_width="match_parent"
@@ -314,6 +360,12 @@
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/addServiceRV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"/>
+
             <TextView
                 android:id="@+id/label3"
                 android:layout_width="match_parent"
@@ -324,43 +376,56 @@
                 android:textSize="22sp"
                 android:fontFamily="@font/roboto"
                 android:textColor="@color/black" />
+            <EditText
+                android:id="@+id/add_ons_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/label"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="12dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/et_bg"
+                android:layout_weight="1"
+                android:fontFamily="@font/roboto"
+                android:hint="Enter new add ons.."
+                android:inputType="textPersonName"
+                android:padding="15dp"
+                android:visibility="visible"
+                android:textColorHint="@color/grey" />
 
-            <com.google.android.material.checkbox.MaterialCheckBox
+            <TextView
+                android:id="@+id/addOnBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:text="\t\tRange Finder"
-                android:fontFamily="@font/roboto"
-                android:textSize="18sp"
-                android:id="@+id/range"
-                android:buttonTint="@color/yellow"
-                android:button="@drawable/checkbox_style"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp" />
-            <com.google.android.material.checkbox.MaterialCheckBox
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/shape_yellow"
+                android:elevation="10dp"
+                android:gravity="center"
+                android:textAllCaps="true"
+                android:drawableLeft="@drawable/ic_add"
+                android:drawableTint="@color/white"
+                android:padding="10dp"
+                android:text="Add New Add Ons"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/addonsRV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:text="\t\tShort Video of Round"
-                android:buttonTint="@color/yellow"
-                android:button="@drawable/checkbox_style"
-                android:fontFamily="@font/roboto"
-                android:textSize="18sp"
-                android:id="@+id/video"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp" />
-            <com.google.android.material.checkbox.MaterialCheckBox
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:button="@drawable/checkbox_style"
-                android:layout_gravity="start"
-                android:buttonTint="@color/yellow"
-                android:text="\t\tAre you willing to Travel ?"
-                android:textSize="18sp"
-                android:id="@+id/travel"
-                android:fontFamily="@font/roboto"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp" />
+                android:visibility="visible"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="12dp"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
 
         </LinearLayout>
         

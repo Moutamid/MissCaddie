@@ -1,154 +1,209 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".CaddieContactActivity">
 
-    <View
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="-40dp"
-        android:layout_marginTop="-31dp"
-        android:background="@drawable/circle_green1" />
 
-    <ImageView
-        android:id="@+id/back_btn"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:src="@drawable/ic_back" />
-
-    <TextView
-        android:id="@+id/text_heading"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="10dp"
-        android:fontFamily="@font/montserrat_bold"
-        android:gravity="center"
-        android:letterSpacing="0.08"
-        android:text="Contact"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/bookingDatesTV"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/text_heading"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="35dp"
-        android:layout_marginRight="20dp"
-        android:fontFamily="@font/roboto"
-        android:text="List of Services"
-        android:textColor="@color/black"
-        android:textSize="14sp"
-        android:textStyle="bold" />
+        <View
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="-40dp"
+            android:layout_marginTop="-31dp"
+            android:background="@drawable/circle_green1" />
 
-    <Spinner
-        android:id="@+id/spinner_booking"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/bookingDatesTV"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginRight="20dp"
-        android:gravity="start" />
+        <ImageView
+            android:id="@+id/back_btn"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/ic_back" />
 
-    <TextView
-        android:id="@+id/golfCourse"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/spinner_booking"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginRight="20dp"
-        android:fontFamily="@font/roboto"
-        android:text="Booking Dates"
-        android:textColor="@color/black"
-        android:textSize="14sp"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/text_heading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/montserrat_bold"
+            android:gravity="center"
+            android:letterSpacing="0.08"
+            android:text="Contact"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/booking_dates"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/golfCourse"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginRight="20dp"
-        android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24"
-        android:entries="@array/usa_states"
-        android:gravity="start"
-        android:text="Select Date (5 Oct)" />
+        <TextView
+            android:id="@+id/bookingDatesTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_heading"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="35dp"
+            android:layout_marginRight="20dp"
+            android:fontFamily="@font/roboto"
+            android:text="List of Services"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/location"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_below="@id/booking_dates"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginRight="20dp"
-        android:background="@drawable/et_bg"
-        android:gravity="top"
-        android:hint="Type Complete Location"
-        android:inputType="textMultiLine"
-        android:padding="12dp" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/service_listRC"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bookingDatesTV"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="vertical"
+            android:layout_marginRight="20dp"/>
+     <!--   <Spinner
+            android:id="@+id/spinner_booking"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/bookingDatesTV"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="20dp"
+            android:gravity="start" />
 
-    <TextView
-        android:id="@+id/labelMessage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/location"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="35dp"
-        android:textColor="@color/black"
-        android:fontFamily="@font/roboto"
-        android:textStyle="bold"
-        android:layout_marginRight="20dp"
-        android:text="Message" />
+        <ListView
+            android:id="@+id/listView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/spinner_booking"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="20dp" />-->
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_below="@id/labelMessage"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginRight="20dp"
-        android:background="@drawable/et_bg"
-        android:gravity="top"
-        android:id="@+id/message"
-        android:hint="Hello, $Caddie Name$. I have a question for you..."
-        android:inputType="textMultiLine"
-        android:padding="12dp" />
+        <TextView
+            android:id="@+id/golfCourse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/service_listRC"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginRight="20dp"
+            android:fontFamily="@font/roboto"
+            android:text="Booking Dates"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/sendRequest"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/shape_green"
-        android:elevation="10dp"
-        android:gravity="center"
-        android:padding="10dp"
-        android:text="Send Booking Request"
-        android:textAllCaps="true"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/booking_dates"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/golfCourse"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="20dp"
+            android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24"
+            android:entries="@array/usa_states"
+            android:gravity="start"
+            android:text="Select Date (5 Oct)" />
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/booking_dates"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginRight="20dp"
+            android:fontFamily="@font/roboto"
+            android:text="Booking Time"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/booking_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/time"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="20dp"
+            android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24"
+            android:entries="@array/usa_states"
+            android:gravity="start"
+            android:text="Select Time (8:30)" />
+
+        <EditText
+            android:id="@+id/location"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_below="@id/booking_time"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/et_bg"
+            android:gravity="top"
+            android:hint="City,or State"
+            android:inputType="textMultiLine"
+            android:padding="12dp" />
+
+
+
+        <TextView
+            android:id="@+id/labelMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/location"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="35dp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/roboto"
+            android:textStyle="bold"
+            android:layout_marginRight="20dp"
+            android:text="Message" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_below="@id/labelMessage"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/et_bg"
+            android:gravity="top"
+            android:id="@+id/message"
+            android:hint="Hello, $Caddie Name$. I have a question for you..."
+            android:inputType="textMultiLine"
+            android:padding="12dp" />
+
+        <TextView
+            android:id="@+id/sendRequest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_below="@+id/message"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/shape_green"
+            android:elevation="10dp"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Send Booking Request"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+</ScrollView>

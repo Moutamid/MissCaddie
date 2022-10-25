@@ -18,7 +18,7 @@ public class Caddie_Start2 extends AppCompatActivity {
 
 
     RelativeLayout gs1;
-    TextView skip;
+    TextView nextBtn,backBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +38,20 @@ public class Caddie_Start2 extends AppCompatActivity {
                 Animatoo.animateSwipeLeft(Caddie_Start2.this);
             }
         });
-        skip = findViewById(R.id.text_skip5);
-        skip.setOnClickListener(new View.OnClickListener() {
+        nextBtn = findViewById(R.id.text_next);
+        backBtn = findViewById(R.id.text_back);
+        nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Caddie_Start2.this ,Caddie_Start4.class);
+                Intent intent = new Intent(Caddie_Start2.this ,Caddie_Start3.class);
+                startActivity(intent);
+                Animatoo.animateSwipeLeft(Caddie_Start2.this);
+            }
+        });
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Caddie_Start2.this ,Caddie_Start1.class);
                 startActivity(intent);
                 Animatoo.animateSwipeLeft(Caddie_Start2.this);
             }

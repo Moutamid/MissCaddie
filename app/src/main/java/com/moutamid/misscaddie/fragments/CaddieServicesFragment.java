@@ -1,5 +1,6 @@
 package com.moutamid.misscaddie.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,13 +13,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.moutamid.misscaddie.CaddieContactActivity;
 import com.moutamid.misscaddie.R;
 import com.moutamid.misscaddie.databinding.FragmentCaddieServicesBinding;
+import com.moutamid.misscaddie.models.Bonus;
 import com.moutamid.misscaddie.models.ServiceListModel;
 import com.moutamid.misscaddie.adapters.ServiceListAdapter;
 
@@ -57,7 +61,15 @@ public class CaddieServicesFragment extends Fragment {
         list.add(model3);
         list.add(model4);*/
         getServices();
-
+        b.contactCaddie.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), CaddieContactActivity.class);
+                intent.putExtra("userId",userId);
+                startActivity(intent);
+                Animatoo.animateSwipeLeft(getActivity());
+            }
+        });
         b.serviceListRC.setHasFixedSize(false);
         b.serviceListRC.setLayoutManager(new LinearLayoutManager(getActivity()));
         db.child(userId).child("bonus").addValueEventListener(new ValueEventListener() {
@@ -66,8 +78,8 @@ public class CaddieServicesFragment extends Fragment {
                 if (snapshot.exists()){
                     bonusList.clear();
                     for (DataSnapshot ds : snapshot.getChildren()){
-                        String name = ds.child("name").getValue().toString();
-                        bonusList.add(name);
+                        Bonus model = ds.getValue(Bonus.class);
+                        bonusList.add(model.getBonus());
                     }
                     ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getActivity(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,bonusList);
                     b.listView.setAdapter(arrayAdapter);
@@ -92,7 +104,7 @@ public class CaddieServicesFragment extends Fragment {
                                 ServiceListModel model = ds.getValue(ServiceListModel.class);
                                 list.add(model);
                             }
-                            adapter = new ServiceListAdapter(getActivity(), list);
+                            adapter = new ServiceListAdapter(getActivity(), list,false);
                             b.serviceListRC.setAdapter(adapter);
                             adapter.notifyDataSetChanged();
                         }

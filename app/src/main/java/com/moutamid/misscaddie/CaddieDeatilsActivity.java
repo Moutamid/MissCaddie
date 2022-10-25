@@ -28,8 +28,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.moutamid.misscaddie.adapters.AddOnsListAdapter;
 import com.moutamid.misscaddie.adapters.AddServiceAdapter;
 import com.moutamid.misscaddie.databinding.ActivityCaddieDeatilsBinding;
+import com.moutamid.misscaddie.models.Bonus;
 import com.moutamid.misscaddie.models.ServiceListModel;
 
 import java.util.ArrayList;
@@ -42,6 +44,7 @@ public class CaddieDeatilsActivity extends AppCompatActivity {
     TextView addService;
     AddServiceAdapter adapter;
     ArrayList<ServiceListModel> list;
+    ArrayList<Bonus> bonusArrayList = new ArrayList<>();
     private ActivityCaddieDeatilsBinding b;
     FirebaseAuth mAuth;
     FirebaseUser currrentUser;
@@ -72,7 +75,6 @@ public class CaddieDeatilsActivity extends AppCompatActivity {
         addService = findViewById(R.id.addNewService);
         willingTv = findViewById(R.id.willing_tv);
         notWillingTv = findViewById(R.id.notwilling_tv);
-
 
         list = new ArrayList<>();
 
@@ -155,42 +157,22 @@ public class CaddieDeatilsActivity extends AppCompatActivity {
                 status = "not willing";
             }
         });
-        b.range.setOnClickListener(new View.OnClickListener() {
+        b.addOnBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!range){
-                    range = true;
-                    b.range.setChecked(true);
-                }else {
-                    range = false;
-                    b.range.setChecked(false);
+                String bonus = b.addOnsTxt.getText().toString();
+                if(!TextUtils.isEmpty(bonus)){
+                    String key = db.child(currrentUser.getUid()).child("bonus").push().getKey();
+                    HashMap<String,Object> hashMap1 = new HashMap<>();
+                    hashMap1.put("id",key);
+                    hashMap1.put("bonus",bonus);
+                    db.child(currrentUser.getUid()).child("bonus").child(key).updateChildren(hashMap1);
+                    getAddOns();
                 }
+                b.addOnsTxt.setText("");
             }
         });
-        b.video.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!video){
-                    video = true;
-                    b.video.setChecked(true);
-                }else {
-                    video = false;
-                    b.video.setChecked(false);
-                }
-            }
-        });
-        b.travel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!travel){
-                    travel = true;
-                    b.travel.setChecked(true);
-                }else {
-                    travel = false;
-                    b.travel.setChecked(false);
-                }
-            }
-        });
+
 
         almostFinished.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -198,10 +180,12 @@ public class CaddieDeatilsActivity extends AppCompatActivity {
                 String location = b.etLocation.getText().toString();
                 String service = b.etService.getText().toString();
                 String price = b.etPrice.getText().toString();
-                String height = b.height.getText().toString();
-                if (!TextUtils.isEmpty(location) && !TextUtils.isEmpty(service) &&
-                        !TextUtils.isEmpty(price) && !TextUtils.isEmpty(height) && list.size() > 0) {
-                    saveData(location, service, price,height);
+                String feet = b.feet.getText().toString();
+                String inches = b.inches.getText().toString();
+                if (!TextUtils.isEmpty(location) && !TextUtils.isEmpty(price)
+                        && !TextUtils.isEmpty(feet) && !TextUtils.isEmpty(inches)) {
+                    saveData(location, service, price,feet,inches);
+
                     for (int i = 0; i < list.size(); i++){
                         ServiceListModel model = list.get(i);
                         db.child(currrentUser.getUid()).child("services").child(String.valueOf(i)).setValue(model);
@@ -231,9 +215,12 @@ public class CaddieDeatilsActivity extends AppCompatActivity {
                 adapter.notifyItemInserted(list.size() - 1);
                 addRecyclerRC.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
+                b.etService.setText("");
+                b.etPrice.setText("");
             }
         });
         getServices();
+        getAddOns();
         changeStatusBarColor(this,R.color.yellow);
     }
 
@@ -276,7 +263,34 @@ public class CaddieDeatilsActivity extends AppCompatActivity {
                 });
     }
 
-    private void saveData(String location, String service, String price,String height) {
+    private void getAddOns() {
+        db.child(currrentUser.getUid()).child("bonus")
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if(snapshot.exists()){
+                            bonusArrayList.clear();
+                            for (DataSnapshot ds : snapshot.getChildren()){
+                                Bonus model= ds.getValue(Bonus.class);
+                                bonusArrayList.add(model);
+                            }
+                            AddOnsListAdapter addOnsListAdapter = new AddOnsListAdapter(
+                                    CaddieDeatilsActivity.this, bonusArrayList);
+                           // addOnsListAdapter.notifyItemInserted(bonusArrayList.size() - 1);
+                            b.addonsRV.setAdapter(addOnsListAdapter);
+                            addOnsListAdapter.notifyDataSetChanged();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+    }
+
+    private void saveData(String location, String service, String price,String feet,String inches) {
+        String height = feet +"'" + inches+"''";
         HashMap<String,Object> hashMap = new HashMap<>();
         hashMap.put("state",state);
         hashMap.put("place",location);
@@ -284,7 +298,7 @@ public class CaddieDeatilsActivity extends AppCompatActivity {
         hashMap.put("catagory",category);
         hashMap.put("status",status);
         db.child(currrentUser.getUid()).updateChildren(hashMap);
-        if (range){
+       /* if (range){
             String key = db.child(currrentUser.getUid()).child("bonus").push().getKey();
             HashMap<String,Object> hashMap1 = new HashMap<>();
             hashMap1.put("name",b.range.getText().toString());
@@ -301,7 +315,7 @@ public class CaddieDeatilsActivity extends AppCompatActivity {
             HashMap<String,Object> hashMap1 = new HashMap<>();
             hashMap1.put("name",b.travel.getText().toString());
             db.child(currrentUser.getUid()).child("bonus").child(key).updateChildren(hashMap1);
-        }
+        }*/
      /*   String key = db.push().getKey();
         ServiceListModel model = new ServiceListModel(service, price);
         db.child(currrentUser.getUid()).child("services").child(key).setValue(model);*/
@@ -309,7 +323,5 @@ public class CaddieDeatilsActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
         Animatoo.animateZoom(CaddieDeatilsActivity.this);
-        b.etService.setText("");
-        b.etPrice.setText("");
     }
 }

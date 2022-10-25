@@ -26,7 +26,7 @@ public class GolferFilterActivity extends AppCompatActivity {
     ImageView iconsNot, iconWill;
     boolean willingState = true, notWillingState = false;
     CardView willingCard, notWillingCard;
-    TextView booking_dates,resetBtn;
+    TextView booking_dates,saveBtn;
     private ImageView cancelBtn,filterBtn;
     private String status = "";
     private String date = "";
@@ -53,7 +53,7 @@ public class GolferFilterActivity extends AppCompatActivity {
         booking_dates = findViewById(R.id.booking_dates);
         spinner = findViewById(R.id.spinner_golfCourse);
         save_btn = findViewById(R.id.save);
-        resetBtn = findViewById(R.id.reset_filters);
+        saveBtn = findViewById(R.id.save_filter);
 
         close_btn.setOnClickListener(v -> {
             Intent intent = new Intent(GolferFilterActivity.this , Dashboard_Golfer.class);
@@ -136,7 +136,7 @@ public class GolferFilterActivity extends AppCompatActivity {
             }
             status = "willing";
         });
-        save_btn.setOnClickListener(new View.OnClickListener() {
+        saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!status.equals("") && !state.equals("") && !date.equals("")){
@@ -148,14 +148,16 @@ public class GolferFilterActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                     Animatoo.animateZoom(GolferFilterActivity.this);
+                }else {
+                    Toast.makeText(GolferFilterActivity.this, "Please Select all the given fields", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-        resetBtn.setOnClickListener(new View.OnClickListener() {
+      /*  resetBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(GolferFilterActivity.this, "Reset Filter", Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
     }
 }
