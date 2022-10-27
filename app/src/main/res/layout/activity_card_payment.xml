@@ -286,7 +286,7 @@
             android:id="@+id/submit"
             android:layout_width="match_parent"
             android:layout_height="55dp"
-            android:background="@color/yellow"
+            android:background="@color/green"
             android:text="Submit"
             android:textAllCaps="false"
             android:gravity="center"

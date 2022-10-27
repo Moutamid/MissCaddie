@@ -3,6 +3,8 @@ package com.moutamid.misscaddie;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -11,7 +13,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,6 +24,12 @@ import android.widget.Toast;
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.bumptech.glide.Glide;
 import com.github.dhaval2404.imagepicker.ImagePicker;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -45,61 +55,112 @@ import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class GolferProfileEditActivity extends AppCompatActivity {
-    ImageView back_btn;
+public class GolferProfileEditActivity extends Fragment {
     CircleImageView logo;
     Uri imageURI;
     private Bitmap bitmap = null;
     private StorageReference mStorage;
     private String name,email,password;
     private String image = "";
+    CardView privacybtn, termsbtn;
     private ProgressDialog dialog;
     FirebaseAuth mAuth;
     FirebaseUser currrentUser;
     private DatabaseReference db;
     private EditText nameTxt,passwordTxt;
-    private TextView saveBtn,emailTxt;
+    private TextView saveBtn,emailTxt,logout;
+    private GoogleApiClient mGoogleSignInClient;
+    private SharedPreferencesManager manager;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_golfer_profile_edit);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_golfer_profile_edit, container, false);
+        if (isAdded()) {
+            logo = view.findViewById(R.id.logo);
+            manager = new SharedPreferencesManager(getActivity());
+            nameTxt = view.findViewById(R.id.personName);
+            emailTxt = view.findViewById(R.id.email);
+            passwordTxt = view.findViewById(R.id.password);
+            saveBtn = view.findViewById(R.id.save_btn);
+            termsbtn = view.findViewById(R.id.termsbtn);
+            privacybtn = view.findViewById(R.id.privacybtn);
+            logout = view.findViewById(R.id.logout);
+            mAuth = FirebaseAuth.getInstance();
+            currrentUser = mAuth.getCurrentUser();
+            db = FirebaseDatabase.getInstance().getReference().child("Golfer");
+            mStorage = FirebaseStorage.getInstance().getReference();
+            logo.setOnClickListener(v -> {
+                ImagePicker.with(GolferProfileEditActivity.this)
+                        .crop(600, 600)
+                        .compress(1024)
+                        .maxResultSize(1080, 1080)
+                        .start();
+                // getImageFromGallery();
+            });
 
-        back_btn = findViewById(R.id.back_btn);
-        logo = findViewById(R.id.logo);
-        nameTxt = findViewById(R.id.personName);
-        emailTxt = findViewById(R.id.email);
-        passwordTxt = findViewById(R.id.password);
-        saveBtn = findViewById(R.id.save_btn);
-        mAuth = FirebaseAuth.getInstance();
-        currrentUser = mAuth.getCurrentUser();
-        db = FirebaseDatabase.getInstance().getReference().child("Golfer");
-        mStorage = FirebaseStorage.getInstance().getReference();
-        logo.setOnClickListener(v -> {
-            ImagePicker.with(GolferProfileEditActivity.this)
-                    .crop(600, 600)
-                    .compress(1024)
-                    .maxResultSize(1080, 1080)
-                    .start();
-            // getImageFromGallery();
-        });
+            GoogleSignInOptions gso = new GoogleSignInOptions.Builder(
+                    GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    .requestIdToken(getString(R.string.default_web_client_id))
+                    .requestEmail()
+                    .build();
+            mGoogleSignInClient = new GoogleApiClient.Builder(requireActivity())
+                    .enableAutoManage(requireActivity(), new GoogleApiClient.OnConnectionFailedListener() {
+                        @Override
+                        public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+                            Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_LONG).show();
+                        }
+                    }).addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                    .build();
 
-        back_btn.setOnClickListener(v -> {
-            Intent intent = new Intent(GolferProfileEditActivity.this , CaddiesRequestsActivity.class);
-            startActivity(intent);
-            Animatoo.animateSlideRight(GolferProfileEditActivity.this);
-        });
+            getUserDetails();
+            saveBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    name = nameTxt.getText().toString();
+                    password = passwordTxt.getText().toString();
+                    updateUser();
+                }
+            });
+            logout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    manager.storeString("module", "");
+                    mAuth.signOut();
+                    Auth.GoogleSignInApi.signOut(mGoogleSignInClient).setResultCallback(new ResultCallback<Status>() {
+                        @Override
+                        public void onResult(@NonNull Status status) {
 
-        getUserDetails();
-        saveBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                name = nameTxt.getText().toString();
-                password = passwordTxt.getText().toString();
-                updateUser();
-            }
-        });
+                        }
+                    });
+                    mGoogleSignInClient.disconnect();
+                    startActivity(new Intent(getActivity(), MainActivity.class));
+                    getActivity().finish();
+                }
+            });
+            termsbtn.setOnClickListener(v -> {
+                Uri webpage = Uri.parse("https://www.google.com");
+                Intent webIntent = new Intent(Intent.ACTION_VIEW, webpage);
+                try {
+                    startActivity(webIntent);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+
+            privacybtn.setOnClickListener(v -> {
+                Uri webpage = Uri.parse("https://www.google.com");
+                Intent webIntent = new Intent(Intent.ACTION_VIEW, webpage);
+                try {
+                    startActivity(webIntent);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+        }
+        return view;
     }
+
 
     private void updateUser() {
         HashMap<String,Object> hashMap = new HashMap<>();
@@ -107,9 +168,6 @@ public class GolferProfileEditActivity extends AppCompatActivity {
         hashMap.put("password",password);
         hashMap.put("image",image);
         db.child(currrentUser.getUid()).updateChildren(hashMap);
-        startActivity(new Intent(GolferProfileEditActivity.this,MessagesActivity.class));
-        finish();
-        Animatoo.animateSlideRight(GolferProfileEditActivity.this);
     }
 
     private void getUserDetails() {
@@ -148,28 +206,28 @@ public class GolferProfileEditActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         try {
             try{
-                if (resultCode == RESULT_OK && data != null) {
+                if (resultCode == getActivity().RESULT_OK && data != null) {
                     imageURI = data.getData();
                     logo.setImageURI(data.getData());
-                    bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageURI);
+                    bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), imageURI);
                     saveInformation();
                 } else {
-                    Toast.makeText(this, "Please Select An Images", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Please Select An Images", Toast.LENGTH_SHORT).show();
                 }
             }  catch (Exception e){
-                Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
     private void saveInformation() {
-        dialog = new ProgressDialog(GolferProfileEditActivity.this);
+        dialog = new ProgressDialog(getActivity());
         dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         dialog.setCancelable(false);
         dialog.setMessage("Uploading your profile....");
@@ -213,8 +271,26 @@ public class GolferProfileEditActivity extends AppCompatActivity {
                 }
             });
         }else {
-            Toast.makeText(getApplicationContext(), "Please Select Image ", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "Please Select Image ", Toast.LENGTH_LONG).show();
 
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mGoogleSignInClient != null && mGoogleSignInClient.isConnected()) {
+            mGoogleSignInClient.stopAutoManage(requireActivity());
+            mGoogleSignInClient.disconnect();
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (mGoogleSignInClient != null && mGoogleSignInClient.isConnected()) {
+            mGoogleSignInClient.stopAutoManage(requireActivity());
+            mGoogleSignInClient.disconnect();
         }
     }
 }

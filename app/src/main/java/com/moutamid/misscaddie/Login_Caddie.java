@@ -20,10 +20,14 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.moutamid.misscaddie.databinding.ActivityLoginCaddieBinding;
 import com.moutamid.misscaddie.databinding.ActivityLoginGolferBinding;
+import com.moutamid.misscaddie.models.Model_Caddie;
 
 public class Login_Caddie extends AppCompatActivity {
     TextView signInBtn;
@@ -78,16 +82,46 @@ public class Login_Caddie extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
-                            manager.storeString("module","caddie");
-                            Intent intent = new Intent(Login_Caddie.this , CaddieDeatilsActivity.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            startActivity(intent);
-                            finish();
-                            Animatoo.animateZoom(Login_Caddie.this);
-                            dialog.dismiss();
+                            checkInfoExists();
                         }else {
-                            Toast.makeText(Login_Caddie.this,"Wrong Password",Toast.LENGTH_LONG).show();
+                            Toast.makeText(Login_Caddie.this,"Wrong Password! Please try again...",Toast.LENGTH_LONG).show();
+                            dialog.dismiss();
                         }
+                    }
+                });
+    }
+
+    private void checkInfoExists() {
+        db.child(mAuth.getCurrentUser().getUid())
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()){
+                            Model_Caddie caddie = snapshot.getValue(Model_Caddie.class);
+                            if (!caddie.getState().equals("") && !caddie.getCatagory().equals("") &&
+                                    !caddie.getStatus().equals("") && !caddie.getPlace().equals("")){
+                                manager.storeString("module","caddie");
+                                Intent intent = new Intent(Login_Caddie.this , CaddieDashboardActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
+                                finish();
+                                Animatoo.animateZoom(Login_Caddie.this);
+                                dialog.dismiss();
+                            }else {
+                                manager.storeString("module","caddie");
+                                Intent intent = new Intent(Login_Caddie.this , CaddieDeatilsActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
+                                finish();
+                                Animatoo.animateZoom(Login_Caddie.this);
+                                dialog.dismiss();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
                     }
                 });
     }

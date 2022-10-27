@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".fragments.CaddiesRequestsActivity">
+    android:layout_height="match_parent">
 
     <View
         android:layout_width="100dp"
@@ -23,7 +22,8 @@
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:src="@drawable/ic_back" />
+        android:src="@drawable/ic_back"
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/text_heading"
@@ -34,22 +34,55 @@
         android:layout_marginBottom="10dp"
         android:fontFamily="@font/montserrat_bold"
         android:gravity="center"
-        android:letterSpacing="0.08"
         android:text="Requests"
+        android:letterSpacing="0.08"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold" />
 
-    <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView_golfer"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:nestedScrollingEnabled="false"
-                android:orientation="vertical"
-                android:scrollbars="vertical"
-                android:layout_marginTop="30dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                android:layout_below="@+id/text_heading"
-                tools:listitem="@layout/requestes_card" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_below="@id/text_heading"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bottomborder"
+        app:tabIndicatorColor="@color/black"
+        app:tabSelectedTextColor="@color/black"
+        app:tabTextColor="@color/grey">
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/my_request"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="My Requests" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/payment_request"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Payment Request" />
+
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/ProfileViewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tabsLayout" />
+
+   <!-- <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView_golfer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:nestedScrollingEnabled="false"
+        android:orientation="vertical"
+        android:scrollbars="vertical"
+        android:layout_marginTop="30dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:layout_below="@+id/text_heading"
+        tools:listitem="@layout/requestes_card" />-->
 
 </RelativeLayout>

@@ -46,6 +46,7 @@ public class CaddieListFragment extends Fragment {
     private FirebaseAuth mAuth;
     private FirebaseUser user;
     private ArrayList<String> availableList = new ArrayList<>();
+    private Bundle savedState = null;
 
     public CaddieListFragment() {
         // Required empty public constructor
@@ -81,17 +82,33 @@ public class CaddieListFragment extends Fragment {
         requestsDb = FirebaseDatabase.getInstance().getReference().child("Requests");
         db = FirebaseDatabase.getInstance().getReference().child("Caddie")
                 .child(user.getUid()).child("availability");
-        CaddieProfileVPadapter caddieProfileVPadapter = new CaddieProfileVPadapter(getActivity().getSupportFragmentManager());
-        caddieProfileVPadapter.addFragment(new PendingFragment(), "Pending");
-        caddieProfileVPadapter.addFragment(new AcceptedFragment(), "Accepted");
-        caddieProfileVPadapter.addFragment(new DeclinedFragment(), "Declined");
 
-        viewPager.setAdapter(caddieProfileVPadapter);
-        tabLayout.setupWithViewPager(viewPager);
-        greetingMessage();
-        getWeeksDate();
-        checkWeekUpdates();
+        if(savedInstanceState != null && savedState == null) {
+            savedState = savedInstanceState.getBundle("state");
+        }
+        if(savedState != null) {
+            refresh();
+        }
+        savedState = null;
+        if (isAdded()) {
+            greetingMessage();
+            getWeeksDate();
+            checkWeekUpdates();
+        }
         return view;
+    }
+
+    private void refresh() {
+        if (isAdded()) {
+            CaddieProfileVPadapter caddieProfileVPadapter = new CaddieProfileVPadapter(getActivity().getSupportFragmentManager());
+            caddieProfileVPadapter.addFragment(new PendingFragment(), "Pending");
+            caddieProfileVPadapter.addFragment(new AcceptedFragment(), "Accepted");
+            caddieProfileVPadapter.addFragment(new DeclinedFragment(), "Declined");
+            caddieProfileVPadapter.addFragment(new CaddiePaymentRequestFragment(), "Payment Requests");
+
+            viewPager.setAdapter(caddieProfileVPadapter);
+            tabLayout.setupWithViewPager(viewPager);
+        }
     }
 
     private void checkWeekUpdates() {
@@ -246,4 +263,23 @@ public class CaddieListFragment extends Fragment {
             welcomeText.setText("Good Night");
         }
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        refresh();
+    }
+
+    private Bundle saveState() { /* called either from onDestroyView() or onSaveInstanceState() */
+        Bundle state = new Bundle();
+        state.putCharSequence("state", "fragment");
+        return state;
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBundle("state", (savedState != null) ? savedState : saveState());
+    }
+
 }

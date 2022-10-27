@@ -33,6 +33,7 @@ public class AcceptedFragment extends Fragment {
     private FirebaseAuth mAuth;
     private FirebaseUser user;
     List<RequestsModel> itemList = new ArrayList<>();
+    private Bundle savedState = null;
 
     public AcceptedFragment() {
         // Required empty public constructor
@@ -49,7 +50,15 @@ public class AcceptedFragment extends Fragment {
         db = FirebaseDatabase.getInstance().getReference().child("Requests");
         requestRC.setLayoutManager(new LinearLayoutManager(view.getContext()));
         requestRC.setHasFixedSize(false);
-        getRequests();
+        if (isAdded()){
+            if(savedInstanceState != null && savedState == null) {
+                savedState = savedInstanceState.getBundle("state");
+            }
+            if(savedState != null) {
+                getRequests();
+            }
+            savedState = null;
+        }
         return view;
     }
 
@@ -82,5 +91,21 @@ public class AcceptedFragment extends Fragment {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getRequests();
+    }
 
+    private Bundle saveState() { /* called either from onDestroyView() or onSaveInstanceState() */
+        Bundle state = new Bundle();
+        state.putCharSequence("state", "fragment");
+        return state;
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBundle("state", (savedState != null) ? savedState : saveState());
+    }
 }

@@ -50,8 +50,8 @@ public class DAPAdapter extends RecyclerView.Adapter<DAPAdapter.VH> {
     public void onBindViewHolder(@NonNull VH holder, int position) {
         RequestsModel model = itemList.get(position);
         String serviceList = "";
+        int price = 0;
        // holder.name.setText(model.getName());
-        holder.price.setText("(USD$" + model.getTableRows().get(0).getPrice() + ")");
         holder.address.setText(model.getAddress());
         holder.time.setText(model.getTime());
         holder.date.setText(model.getDate());
@@ -67,12 +67,14 @@ public class DAPAdapter extends RecyclerView.Adapter<DAPAdapter.VH> {
         for (int i=0; i < model.getTableRows().size(); i++){
             String service = model.getTableRows().get(i).getTitle() +
                     " (USD$" + model.getTableRows().get(i).getPrice() + ")";
+            price = price + Integer.parseInt(model.getTableRows().get(i).getPrice());
             if (i==2){
                 serviceList = serviceList + "\t\t" + "more";
                 break;
             }
             serviceList = serviceList + "\t\t" + service +  "\n";
         }
+        holder.price.setText("(USD$" + price + ")");
         //serviceList = model.getService();
         holder.service_list.setText(serviceList);
         //Glide.with(context).load(model.getImage()).into(holder.image);
@@ -87,8 +89,8 @@ public class DAPAdapter extends RecyclerView.Adapter<DAPAdapter.VH> {
                     holder.name.setText(model_golfer.getName());
                     Glide.with(context).load(model_golfer.getImage()).placeholder(R.drawable.bi_person_fill).into(holder.image);
 
-                    holder.itemView.setOnClickListener(v -> {
-                        Intent i = new Intent(context.getApplicationContext(), CaddieBookingDetailsActivity.class);
+                    holder.butn.setOnClickListener(v -> {
+                        Intent i = new Intent(context, CaddieBookingDetailsActivity.class);
                         i.putExtra("personName", model_golfer.getName());
                         i.putExtra("personImage", model_golfer.getImage());
                         i.putExtra("requestModel",model);

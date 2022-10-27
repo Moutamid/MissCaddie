@@ -4,89 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     tools:context=".Dashboard_Golfer">
 
-    <View
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="-40dp"
-        android:layout_marginTop="-31dp"
-        android:background="@drawable/circle_green1" />
-
-    <ImageView
-        android:id="@+id/mssage_btn"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:src="@drawable/ic_message_square" />
-
-    <View
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="-40dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="-31dp"
-        android:background="@drawable/circle_green1"
-        />
-
-    <ImageView
-        android:id="@+id/filters"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:src="@drawable/ic_filter" />
-
-    <TextView
-        android:id="@+id/text_heading"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="10dp"
-        android:fontFamily="@font/montserrat_bold"
-        android:gravity="center"
-        android:letterSpacing="0.08"
-        android:text="You Caddies"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:textStyle="bold" />
-
-    <androidx.core.widget.NestedScrollView
+    <FrameLayout
+        android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="15dp"
-        android:layout_below="@+id/text_heading">
+        android:layout_above="@id/bottomNavigation" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView_golfer"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:nestedScrollingEnabled="false"
-                android:orientation="vertical"
-                android:scrollbars="vertical"
-                android:layout_marginTop="15dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/row_golfer" />
-
-        </LinearLayout>
-
-    </androidx.core.widget.NestedScrollView>
-
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        app:menu="@menu/bottom_golfer_menu" />
 
 </RelativeLayout>

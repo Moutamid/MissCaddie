@@ -2,8 +2,6 @@ package com.moutamid.misscaddie.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +19,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.moutamid.misscaddie.CaddieBookingDetailsActivity;
 import com.moutamid.misscaddie.R;
 import com.moutamid.misscaddie.listners.ItemClickListener;
 import com.moutamid.misscaddie.models.Model_Golfer;
@@ -31,13 +28,12 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class RequestesAdapter extends RecyclerView.Adapter<RequestesAdapter.VH> {
+public class CaddiePaymentRequestesAdapter extends RecyclerView.Adapter<CaddiePaymentRequestesAdapter.VH> {
     RecyclerView.RecycledViewPool viewPool = new RecyclerView.RecycledViewPool();
     List<RequestsModel> itemList;
     Context context;
-    private ItemClickListener itemClickListener;
 
-    public RequestesAdapter(List<RequestsModel> itemList, Context context) {
+    public CaddiePaymentRequestesAdapter(List<RequestsModel> itemList, Context context) {
         this.itemList = itemList;
         this.context = context;
     }
@@ -60,23 +56,19 @@ public class RequestesAdapter extends RecyclerView.Adapter<RequestesAdapter.VH> 
         holder.address.setText(model.getAddress());
         holder.date.setText(model.getDate());
         holder.time.setText(model.getTime());
-        holder.status_title.setText("(" + model.getStatus_title() + ")");
 
-        if (model.getStatus_title().equals("Accepted")){
+        if (model.isPayment()){
+            holder.status_title.setText("(Accepted)");
             holder.status_title.setTextColor(context.getResources().getColor(R.color.green));
             holder.butn.setBackgroundResource(R.drawable.ic_charm_tick1);
-        } else if (model.getStatus_title().equals("Declined")){
-            holder.status_title.setTextColor(context.getResources().getColor(R.color.red));
-            holder.butn.setBackgroundResource(R.drawable.ic_charm_cross);
-        } else {
+        }else {
+            holder.status_title.setText("(Pending)");
             holder.status_title.setTextColor(context.getResources().getColor(R.color.black_light));
             holder.butn.setBackgroundResource(0);
         }
 
-
         for (int i=0; i < model.getTableRows().size(); i++){
-            String service = model.getTableRows().get(i).getTitle() +
-                    " (USD$" + model.getTableRows().get(i).getPrice() + ")";
+            String service = model.getTableRows().get(i).getTitle() + " (USD$" + model.getTableRows().get(i).getPrice() + ")";
             price = price + Integer.parseInt(model.getTableRows().get(i).getPrice());
             if (i==2){
                 serviceList = serviceList + "\t\t" + "more";
@@ -84,7 +76,8 @@ public class RequestesAdapter extends RecyclerView.Adapter<RequestesAdapter.VH> 
             }
             serviceList = serviceList + "\t\t" + service +  "\n";
         }
-        holder.price.setText("(USD$" + price + ")"); //serviceList = model.getService();
+        holder.price.setText("(USD$" + price + ")");
+        //serviceList = model.getService();
         holder.service_list.setText(serviceList);
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -134,7 +127,7 @@ public class RequestesAdapter extends RecyclerView.Adapter<RequestesAdapter.VH> 
             address = itemView.findViewById(R.id.address_golfer);
             service_list = itemView.findViewById(R.id.service_list);
             butn = itemView.findViewById(R.id.checkBtn);
-
         }
     }
+
 }

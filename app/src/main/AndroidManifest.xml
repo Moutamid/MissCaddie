@@ -37,9 +37,6 @@
             android:name=".ConversationActivity"
             android:exported="false" />
         <activity
-            android:name=".MessagesActivity"
-            android:exported="false" />
-        <activity
             android:name=".CaddieEditProfileActivity"
             android:exported="false" />
         <activity
@@ -64,13 +61,7 @@
             android:name=".CaddieProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".GolferProfileEditActivity"
-            android:exported="false" />
-        <activity
             android:name=".CaddieContactActivity"
-            android:exported="false" />
-        <activity
-            android:name=".CaddiesRequestsActivity"
             android:exported="false" />
         <activity
             android:name=".GolferFilterActivity"

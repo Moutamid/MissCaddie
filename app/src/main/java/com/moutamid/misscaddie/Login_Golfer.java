@@ -71,7 +71,8 @@ public class Login_Golfer extends AppCompatActivity {
                             Animatoo.animateZoom(Login_Golfer.this);
                             dialog.dismiss();
                         }else {
-                            Toast.makeText(Login_Golfer.this,"Wrong Password",Toast.LENGTH_LONG).show();
+                            Toast.makeText(Login_Golfer.this,"Wrong Password! Please try again...",Toast.LENGTH_LONG).show();
+                            dialog.dismiss();
                         }
                     }
                 });

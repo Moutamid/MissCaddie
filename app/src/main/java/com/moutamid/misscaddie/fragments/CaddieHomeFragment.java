@@ -99,12 +99,14 @@ public class CaddieHomeFragment extends Fragment {
                 .child(user.getUid()).child("availability");
         viewCalender.setOnClickListener(v -> {
             navigationView.setSelectedItemId(R.id.calender_menu);
-            FragmentManager.findFragment(view).getParentFragmentManager().beginTransaction().replace(R.id.fragment_container, new CaddieCalenderFragment()).commit();
+          //  FragmentManager.findFragment(view).getParentFragmentManager().beginTransaction().replace(R.id.fragment_container, new CaddieCalenderFragment()).commit();
         });
-        getWeeksDate();
-        greetingMessage();
-        getMessages();
-        checkWeekUpdates();
+        if (isAdded()) {
+            getWeeksDate();
+            greetingMessage();
+            getMessages();
+            checkWeekUpdates();
+        }
         return view;
     }
 
@@ -305,6 +307,6 @@ public class CaddieHomeFragment extends Fragment {
         }else if(timeOfDay >= 21 && timeOfDay < 24){
             welcomeText.setText("Good Night");
         }
-
     }
+
 }

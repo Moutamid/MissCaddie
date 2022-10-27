@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.bumptech.glide.Glide;
@@ -30,6 +31,7 @@ import com.moutamid.misscaddie.Notifications.Token;
 import com.moutamid.misscaddie.databinding.ActivityCaddieBookingDetailsBinding;
 import com.moutamid.misscaddie.listners.APIService;
 import com.moutamid.misscaddie.models.RequestsModel;
+import com.moutamid.misscaddie.models.ServiceListModel;
 
 import java.util.HashMap;
 
@@ -74,7 +76,9 @@ public class CaddieBookingDetailsActivity extends AppCompatActivity {
         
         b.date.setText(model.getDate());
         b.time.setText(model.getTime());
-        for (int i=0; i < model.getTableRows().size(); i++){
+        getServices();
+
+        /*for (int i=0; i < model.getTableRows().size(); i++){
             String service = model.getTableRows().get(i).getTitle() +
                     " (USD$" + model.getTableRows().get(i).getPrice() + ")";
             price = price + Integer.parseInt(model.getTableRows().get(i).getPrice());
@@ -83,11 +87,9 @@ public class CaddieBookingDetailsActivity extends AppCompatActivity {
                 break;
             }
             serviceList = serviceList + "\t\t" + service +  "\n";
-        }
-        b.serviceList.setText(serviceList);
+        }*/
         b.place.setText(model.getAddress());
         b.message.setText(model.getMessage());
-     //   b.totalPrice.setText("Total : US$ " + model.getPrice());
         b.acceptBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,6 +104,34 @@ public class CaddieBookingDetailsActivity extends AppCompatActivity {
         });
         changeStatusBarColor(this,R.color.yellow);
     }
+
+    private void getServices() {
+        requestsDb.child(model.getId()).child("tableRows")
+                .addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    for (DataSnapshot ds : snapshot.getChildren()){
+                        ServiceListModel serviceListModel  = ds.getValue(ServiceListModel.class);
+                        String service = serviceListModel.getTitle() +
+                                " (USD$" + serviceListModel.getPrice() + ")";
+                        price = price + Integer.parseInt(serviceListModel.getPrice());
+                        serviceList = serviceList + "\t\t" + service +  "\n";
+                    }
+
+                    b.serviceList.setText(serviceList);
+                    b.totalPrice.setText("Total : US$ " + price);
+                 //   Toast.makeText(CaddieBookingDetailsActivity.this, "Exists", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
     public void changeStatusBarColor(Activity activity, int id) {
 
         // Changing the color of status bar
@@ -130,9 +160,10 @@ public class CaddieBookingDetailsActivity extends AppCompatActivity {
     private void acceptBooking() {
         HashMap<String,Object> hashMap = new HashMap<>();
         hashMap.put("status_title","Accepted");
-      //  hashMap.put("caddieId",user.getUid());
+        hashMap.put("payment",false);
         requestsDb.child(model.getId()).updateChildren(hashMap);
-        startActivity(new Intent(CaddieBookingDetailsActivity.this,CardPaymentActivity.class));
+
+        startActivity(new Intent(CaddieBookingDetailsActivity.this,CaddieDashboardActivity.class));
         finish();
         Animatoo.animateZoom(CaddieBookingDetailsActivity.this);
         sendNotification(model.getUserId(),"Your request has been accepted!");

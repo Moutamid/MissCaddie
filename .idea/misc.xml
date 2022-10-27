@@ -3,10 +3,26 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/drawable/arrow_right_green.xml" value="0.171" />
         <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/drawable/edit_text_background.xml" value="0.1" />
+        <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/drawable/golfer_home_icon.xml" value="0.171" />
+        <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/drawable/golfer_message_icon.xml" value="0.171" />
+        <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/drawable/golfer_profile_icon.xml" value="0.171" />
+        <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/drawable/golfer_request_icon.xml" value="0.1" />
+        <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/drawable/home_icon.xml" value="0.171" />
         <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/drawable/ic_baseline_add_circle_24.xml" value="0.171" />
+        <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/drawable/ic_golfer_profile_selected.xml" value="0.171" />
+        <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/drawable/ic_home_golfer_selected.xml" value="0.171" />
+        <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/drawable/ic_home_selected.xml" value="0.171" />
+        <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/drawable/ic_home_unselected.xml" value="0.171" />
+        <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/drawable/ic_message_selected.xml" value="0.171" />
+        <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/drawable/ic_message_square.xml" value="0.171" />
+        <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/drawable/ic_profile_circled.xml" value="0.171" />
+        <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/drawable/ic_request_de_selected.xml" value="0.1" />
+        <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/drawable/ic_request_selected.xml" value="0.1" />
         <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/layout/activity_caddie_booking_details.xml" value="0.1272644927536232" />
         <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/layout/activity_caddie_contact.xml" value="0.1" />
+        <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/layout/activity_caddie_dashboard.xml" value="0.1272644927536232" />
         <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/layout/activity_caddie_deatils.xml" value="0.14447463768115942" />
         <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/layout/activity_caddie_edit_profile.xml" value="0.1272644927536232" />
         <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/layout/activity_caddie_pro_services.xml" value="0.14447463768115942" />
@@ -16,11 +32,16 @@
         <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/layout/activity_caddie_start3.xml" value="0.1272644927536232" />
         <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/layout/activity_caddie_start4.xml" value="0.1272644927536232" />
         <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/layout/activity_caddies_requests.xml" value="0.1" />
+        <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/layout/activity_card_payment.xml" value="0.1" />
+        <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/layout/activity_dashboard_golfer.xml" value="0.14447463768115942" />
         <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/layout/activity_golfer_filter.xml" value="0.14447463768115942" />
+        <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/layout/activity_golfer_profile_edit.xml" value="0.14447463768115942" />
         <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/layout/activity_golfer_start1.xml" value="0.1272644927536232" />
         <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/layout/activity_golfer_start2.xml" value="0.1272644927536232" />
         <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/layout/activity_golfer_start3.xml" value="0.1272644927536232" />
         <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/layout/activity_golfer_start4.xml" value="0.1272644927536232" />
+        <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/layout/activity_messages.xml" value="0.14447463768115942" />
+        <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/layout/activity_register_golfer.xml" value="0.1272644927536232" />
         <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/layout/add_ons_custom_layout.xml" value="0.14447463768115942" />
         <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/layout/add_service.xml" value="0.1272644927536232" />
         <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/layout/dap_card.xml" value="0.1272644927536232" />
@@ -28,10 +49,16 @@
         <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/layout/fragment_caddie_home.xml" value="0.1272644927536232" />
         <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/layout/fragment_caddie_info.xml" value="0.1272644927536232" />
         <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/layout/fragment_caddie_list.xml" value="0.14447463768115942" />
+        <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/layout/fragment_caddie_profile.xml" value="0.1272644927536232" />
         <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/layout/fragment_caddie_services.xml" value="0.14447463768115942" />
+        <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/layout/fragment_golfer_home.xml" value="0.1272644927536232" />
+        <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/layout/fragment_my_request.xml" value="0.1272644927536232" />
+        <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/layout/fragment_payment_request.xml" value="0.1272644927536232" />
+        <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/layout/pending_requestes_card.xml" value="0.1" />
         <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/layout/requestes_card.xml" value="0.25" />
         <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/layout/row_golfer.xml" value="0.1" />
         <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/layout/servicelistcard.xml" value="0.1272644927536232" />
+        <entry key="..\:/New folder/Bridgetlinx/MissCaddie/app/src/main/res/menu/bottom_golfer_menu.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Azan Comp/AndroidStudioProjects/MissCaddie/app/src/main/res/layout/activity_caddie_start1.xml" value="0.2" />
         <entry key="..\:/Users/Azan Comp/AndroidStudioProjects/MissCaddie/app/src/main/res/layout/fragment_caddie_calender.xml" value="0.2" />
         <entry key="..\:/Users/Azan Comp/AndroidStudioProjects/MissCaddie/app/src/main/res/layout/fragment_caddie_home.xml" value="0.2" />
@@ -136,7 +163,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

@@ -8,7 +8,8 @@ import java.util.List;
 
 public class RequestsModel implements Parcelable {
     String id, userId, status_title, date, address, message,time,caddieId;
-    List<ServiceListModel> tableRows = new ArrayList<>();
+    boolean payment;
+    List<ServiceListModel> tableRows;
 
     public RequestsModel() {
     }
@@ -35,25 +36,7 @@ public class RequestsModel implements Parcelable {
         message = in.readString();
         time = in.readString();
         caddieId = in.readString();
-        tableRows = in.readArrayList(ServiceListModel.class.getClassLoader());
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
-        dest.writeString(userId);
-        dest.writeString(status_title);
-        dest.writeString(date);
-        dest.writeString(address);
-        dest.writeString(message);
-        dest.writeString(time);
-        dest.writeString(caddieId);
-        dest.writeList(tableRows);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
+        payment = in.readByte() != 0;
     }
 
     public static final Creator<RequestsModel> CREATOR = new Creator<RequestsModel>() {
@@ -67,6 +50,16 @@ public class RequestsModel implements Parcelable {
             return new RequestsModel[size];
         }
     };
+
+    public boolean isPayment() {
+        return payment;
+    }
+
+    public void setPayment(boolean payment) {
+        this.payment = payment;
+    }
+
+
 
     public String getTime() {
         return time;
@@ -143,4 +136,21 @@ public class RequestsModel implements Parcelable {
         this.address = address;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(id);
+        parcel.writeString(userId);
+        parcel.writeString(status_title);
+        parcel.writeString(date);
+        parcel.writeString(address);
+        parcel.writeString(message);
+        parcel.writeString(time);
+        parcel.writeString(caddieId);
+        parcel.writeByte((byte) (payment ? 1 : 0));
+    }
 }

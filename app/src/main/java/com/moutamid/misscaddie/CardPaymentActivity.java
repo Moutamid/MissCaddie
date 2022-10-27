@@ -3,6 +3,7 @@ package com.moutamid.misscaddie;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -13,12 +14,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.google.android.material.textfield.TextInputEditText;
 import com.moutamid.misscaddie.models.CreditCard;
 import com.stripe.android.Stripe;
 import com.stripe.android.TokenCallback;
 import com.stripe.android.model.Card;
 import com.stripe.android.model.Token;
+import com.stripe.exception.StripeException;
+import com.stripe.model.PaymentIntent;
+import com.stripe.model.Transfer;
+import com.stripe.param.PaymentIntentCreateParams;
+import com.stripe.param.TransferCreateParams;
 
 
 public class CardPaymentActivity extends AppCompatActivity {
@@ -37,8 +44,8 @@ public class CardPaymentActivity extends AppCompatActivity {
     private TextInputEditText et_expire;
     private TextInputEditText et_cvv;
     private TextInputEditText et_name;
-
     private boolean findFlag = false;
+    int amount = 0;
 
 
     @Override
@@ -49,7 +56,7 @@ public class CardPaymentActivity extends AppCompatActivity {
         card_expire = findViewById(R.id.card_expire);
         card_cvv = findViewById(R.id.card_cvv);
         card_name = findViewById(R.id.card_name);
-
+        amount = getIntent().getIntExtra("price",0);
         card_logo = findViewById(R.id.card_logo);
         dialog = new ProgressDialog(CardPaymentActivity.this);
         et_card_number = findViewById(R.id.et_card_number);
@@ -167,7 +174,7 @@ public class CardPaymentActivity extends AppCompatActivity {
                             Integer.parseInt(cardMonth),
                             Integer.parseInt(cardYear),
                             et_cvv.getText().toString());
-                    addCard(card);
+                  //  addCard(card);
                 }
 
             }
@@ -227,19 +234,52 @@ public class CardPaymentActivity extends AppCompatActivity {
         return builder.toString();
     }
 
+
     private void addCard(CreditCard card) {
 
         dialog.setTitle("Adding Card Information");
         dialog.setMessage("Please wait, while adding your card info.....");
         dialog.setCanceledOnTouchOutside(true);
         dialog.show();
-
+        long total = (long) amount;
         Stripe stripe = new Stripe(this, "");
         stripe.createToken(card, new TokenCallback() {
                     public void onSuccess(Token token) {
                         Log.d("CARD:", " " + token.getId());
                         Log.d("CARD:", " " + token.getCard().getLast4());
                         String stripeToken = token.getId();
+                        PaymentIntentCreateParams params =
+                                PaymentIntentCreateParams.builder()
+                                        .addPaymentMethodType("card")
+                                        .setAmount(total)
+                                        .setCurrency("usd")
+                                        .setTransferGroup("{ORDER10}")
+                                        .build();
+
+                        try {
+                            PaymentIntent paymentIntent = PaymentIntent.create(params);
+                            TransferCreateParams transferParams =
+                                    TransferCreateParams.builder()
+                                            .setAmount(7000L)
+                                            .setCurrency("usd")
+                                            .setDestination("{{CONNECTED_STRIPE_ACCOUNT_ID}}")
+                                            .setTransferGroup("{ORDER10}")
+                                            .build();
+
+                            Transfer transfer = Transfer.create(transferParams);
+
+                            TransferCreateParams secondTransferParams =
+                                    TransferCreateParams.builder()
+                                            .setAmount(2000L)
+                                            .setCurrency("usd")
+                                            .setDestination("{{OTHER_CONNECTED_STRIPE_ACCOUNT_ID}}")
+                                            .setTransferGroup("{ORDER10}")
+                                            .build();
+
+                            Transfer secondTransfer = Transfer.create(secondTransferParams);
+                        } catch (StripeException e) {
+                            e.printStackTrace();
+                        }
                         dialog.dismiss();
                         Toast.makeText(CardPaymentActivity.this, "Card Added Successfully!", Toast.LENGTH_SHORT).show();
                     }
@@ -254,8 +294,14 @@ public class CardPaymentActivity extends AppCompatActivity {
                     }
                 }
         );
-
-
     }
 
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(CardPaymentActivity.this,Dashboard_Golfer.class));
+        finish();
+        Animatoo.animateZoom(CardPaymentActivity.this);
+    }
 }

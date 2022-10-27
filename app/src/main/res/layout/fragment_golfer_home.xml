@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <View
         android:layout_width="100dp"
@@ -14,38 +15,38 @@
         android:layout_marginTop="-31dp"
         android:background="@drawable/circle_green1" />
 
+    <ImageView
+        android:id="@+id/mssage_btn"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:visibility="gone"
+        android:src="@drawable/ic_message_square" />
+
     <View
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
         android:layout_marginRight="-40dp"
+        android:layout_alignParentTop="true"
         android:layout_marginTop="-31dp"
-        android:background="@drawable/circle_green1" />
+        android:background="@drawable/circle_green1"
+        />
 
     <ImageView
-        android:id="@+id/profiles"
+        android:id="@+id/filters"
         android:layout_width="28dp"
         android:layout_height="28dp"
         android:layout_alignParentRight="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        app:tint="@color/white"
-        android:visibility="gone"
-        android:src="@drawable/ic_profile_circled" />
-
-    <ImageView
-        android:id="@+id/back_btn"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:visibility="gone"
-        android:src="@drawable/ic_back" />
+        android:src="@drawable/ic_filter" />
 
     <TextView
         android:id="@+id/text_heading"
@@ -57,23 +58,46 @@
         android:fontFamily="@font/montserrat_bold"
         android:gravity="center"
         android:letterSpacing="0.08"
-        android:text="Messages"
+        android:text="You Caddies"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold" />
 
+
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/messges_golfer"
+        android:id="@+id/recyclerView_golfer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/text_heading"
-        android:layout_marginTop="30dp"
         android:nestedScrollingEnabled="false"
         android:orientation="vertical"
         android:scrollbars="vertical"
+        android:layout_below="@+id/text_heading"
+        android:layout_marginTop="15dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/incoming_message_layout" />
+        tools:listitem="@layout/row_golfer" />
 
+    <TextView
+        android:id="@+id/filter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="25dp"
+        android:background="@drawable/shape_green"
+        android:elevation="10dp"
+        android:gravity="center"
+        android:paddingLeft="25dp"
+        android:paddingTop="15dp"
+        android:paddingRight="25dp"
+        android:paddingBottom="15dp"
+        android:text="Filter"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
 
 </RelativeLayout>
