@@ -1,9 +1,6 @@
 package com.moutamid.misscaddie.models;
 
-import com.google.gson.annotations.SerializedName;
-import com.stripe.android.model.Card;
-
-public class CreditCard extends Card {
+public class CreditCard {
 
     private String holderName;
     private String number;
@@ -11,8 +8,11 @@ public class CreditCard extends Card {
     private String expiryYear;
     private String ccv;
 
-    public CreditCard(String number, Integer expMonth, Integer expYear, String cvc) {
-        super(number, expMonth, expYear, cvc);
+    public CreditCard(String number, String expiryMonth, String expiryYear, String ccv) {
+        this.number = number;
+        this.expiryMonth = expiryMonth;
+        this.expiryYear = expiryYear;
+        this.ccv = ccv;
     }
 
     public String getHolderName() {

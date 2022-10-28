@@ -1,10 +1,12 @@
 package com.moutamid.misscaddie;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
@@ -16,16 +18,22 @@ import android.widget.Toast;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.moutamid.misscaddie.models.CreditCard;
-import com.stripe.android.Stripe;
-import com.stripe.android.TokenCallback;
-import com.stripe.android.model.Card;
-import com.stripe.android.model.Token;
+import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;
+import com.stripe.model.Token;
 import com.stripe.model.Transfer;
 import com.stripe.param.PaymentIntentCreateParams;
 import com.stripe.param.TransferCreateParams;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class CardPaymentActivity extends AppCompatActivity {
@@ -46,17 +54,24 @@ public class CardPaymentActivity extends AppCompatActivity {
     private TextInputEditText et_name;
     private boolean findFlag = false;
     int amount = 0;
+    private String id;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
         setContentView(R.layout.activity_card_payment);
         card_number = findViewById(R.id.card_number);
         card_expire = findViewById(R.id.card_expire);
         card_cvv = findViewById(R.id.card_cvv);
         card_name = findViewById(R.id.card_name);
         amount = getIntent().getIntExtra("price",0);
+        id = getIntent().getStringExtra("id");
+
         card_logo = findViewById(R.id.card_logo);
         dialog = new ProgressDialog(CardPaymentActivity.this);
         et_card_number = findViewById(R.id.et_card_number);
@@ -64,7 +79,6 @@ public class CardPaymentActivity extends AppCompatActivity {
         et_cvv = findViewById(R.id.et_cvv);
         et_name = findViewById(R.id.et_name);
         submit = findViewById(R.id.submit);
-
         et_name.setFilters(new InputFilter[] {new InputFilter.AllCaps()});
 
         et_expire.addTextChangedListener(MaskEditUtil.mask(et_expire, MaskEditUtil.FORMAT_DATE_CARD));
@@ -121,6 +135,7 @@ public class CardPaymentActivity extends AppCompatActivity {
             }
         });
 
+
         et_cvv.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -141,7 +156,6 @@ public class CardPaymentActivity extends AppCompatActivity {
 
             }
         });
-
         et_name.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -171,15 +185,21 @@ public class CardPaymentActivity extends AppCompatActivity {
                     String cardMonth = et_expire.getText().toString().substring(0,2);
                     String cardYear = et_expire.getText().toString().substring(3,5);
                     CreditCard card = new CreditCard(et_card_number.getText().toString(),
-                            Integer.parseInt(cardMonth),
-                            Integer.parseInt(cardYear),
+                            cardMonth,
+                            cardYear,
                             et_cvv.getText().toString());
-                  //  addCard(card);
+
+                    addCard(card);
                 }
 
             }
         });
     }
+
+    private void startCheckout() {
+
+    }
+
     public boolean validate(){
 
         if(et_card_number.getText().toString().equals("") ||
@@ -235,66 +255,85 @@ public class CardPaymentActivity extends AppCompatActivity {
     }
 
 
-    private void addCard(CreditCard card) {
+    private void addCard(CreditCard creditCard) {
 
         dialog.setTitle("Adding Card Information");
         dialog.setMessage("Please wait, while adding your card info.....");
         dialog.setCanceledOnTouchOutside(true);
         dialog.show();
-        long total = (long) amount;
-        Stripe stripe = new Stripe(this, "");
-        stripe.createToken(card, new TokenCallback() {
-                    public void onSuccess(Token token) {
-                        Log.d("CARD:", " " + token.getId());
-                        Log.d("CARD:", " " + token.getCard().getLast4());
-                        String stripeToken = token.getId();
-                        PaymentIntentCreateParams params =
-                                PaymentIntentCreateParams.builder()
-                                        .addPaymentMethodType("card")
-                                        .setAmount(total)
+        long total = amount * 100;
+        String clientId = "cus_MhKFyY6eUDXTYd";
+      //  String caddieToken = getCaddieToken();
+        //Stripe.apiKey = "sk_test_51LxZuNLymI2iQWRAajXZzf99LstDowO1MAQYH9KEO3Dna899Gknv2vUcuVY3l1mNL0WgfFdpkZLiXbbK4bXP65JY006NYVTs8y";
+        Stripe.apiKey = "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";
+
+        Map<String, Object> card = new HashMap<>();
+        card.put("number", creditCard.getNumber());
+        card.put("exp_month", creditCard.getExpiryMonth());
+        card.put("exp_year", creditCard.getExpiryYear());
+        card.put("cvc", creditCard.getCcv());
+        Map<String, Object> params = new HashMap<>();
+        params.put("card", card);
+
+        try {
+            Token token = Token.create(params);
+            Log.d("Token",token.getId());
+            PaymentIntentCreateParams params1 =
+                    PaymentIntentCreateParams.builder()
+                            .addPaymentMethodType("card")
+                            .setAmount(total)
+                            .setCurrency("usd")
+                            .setTransferGroup("{ORDER10}")
+                            .build();
+            PaymentIntent paymentIntent = PaymentIntent.create(params1);
+            Log.d("payment","" + paymentIntent.getAmount());
+            DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("BankAccounts");
+            db.child(id).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()){
+                        String key = snapshot.child("token").getValue().toString();
+                        TransferCreateParams transferParams =
+                                TransferCreateParams.builder()
+                                        .setAmount(7000L)
                                         .setCurrency("usd")
+                                        .setDestination(key)
                                         .setTransferGroup("{ORDER10}")
                                         .build();
 
                         try {
-                            PaymentIntent paymentIntent = PaymentIntent.create(params);
-                            TransferCreateParams transferParams =
-                                    TransferCreateParams.builder()
-                                            .setAmount(7000L)
-                                            .setCurrency("usd")
-                                            .setDestination("{{CONNECTED_STRIPE_ACCOUNT_ID}}")
-                                            .setTransferGroup("{ORDER10}")
-                                            .build();
-
                             Transfer transfer = Transfer.create(transferParams);
-
-                            TransferCreateParams secondTransferParams =
-                                    TransferCreateParams.builder()
-                                            .setAmount(2000L)
-                                            .setCurrency("usd")
-                                            .setDestination("{{OTHER_CONNECTED_STRIPE_ACCOUNT_ID}}")
-                                            .setTransferGroup("{ORDER10}")
-                                            .build();
-
-                            Transfer secondTransfer = Transfer.create(secondTransferParams);
+                            Log.d("Transfer1",transfer.getId());
                         } catch (StripeException e) {
                             e.printStackTrace();
                         }
-                        dialog.dismiss();
-                        Toast.makeText(CardPaymentActivity.this, "Card Added Successfully!", Toast.LENGTH_SHORT).show();
-                    }
 
-                    public void onError(Exception error) {
-                        try {
-                            dialog.dismiss();
-                        } catch (Exception e1) {
-                            e1.printStackTrace();
-                        }
-                        Toast.makeText(getApplicationContext(), error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
-        );
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+            TransferCreateParams secondTransferParams =
+                    TransferCreateParams.builder()
+                            .setAmount(2000L)
+                            .setCurrency("usd")
+                            .setDestination(clientId)
+                            .setTransferGroup("{ORDER10}")
+                            .build();
+            Transfer secondTransfer = Transfer.create(secondTransferParams);
+            Log.d("Transfer2",secondTransfer.getId());
+
+            dialog.dismiss();
+        } catch (StripeException e) {
+            e.printStackTrace();
+            Log.d("Error",e.getMessage());
+        }
+
     }
+
 
 
     @Override

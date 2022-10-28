@@ -22,6 +22,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.firebase.auth.FirebaseAuth;
+import com.moutamid.misscaddie.CaddieBankDetailsActivity;
 import com.moutamid.misscaddie.CaddieEditProfileActivity;
 import com.moutamid.misscaddie.CaddieProServicesActivity;
 import com.moutamid.misscaddie.MainActivity;
@@ -32,7 +33,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class CaddieProfileFragment extends Fragment {
-    CardView profileBtn, serviceBtn, privacybtn, termsbtn,logoutBtn;
+    CardView profileBtn, paymentBtn,serviceBtn, privacybtn, termsbtn,logoutBtn;
     TextView welcomeText, datetext;
     private FirebaseAuth mAuth;
     private GoogleApiClient mGoogleSignInClient;
@@ -53,6 +54,7 @@ public class CaddieProfileFragment extends Fragment {
             serviceBtn = view.findViewById(R.id.servicebtn);
             termsbtn = view.findViewById(R.id.termsbtn);
             privacybtn = view.findViewById(R.id.privacybtn);
+            paymentBtn = view.findViewById(R.id.paymentbtn);
             welcomeText = view.findViewById(R.id.text_heading);
             datetext = view.findViewById(R.id.date);
             logoutBtn = view.findViewById(R.id.logoutbtn);
@@ -67,6 +69,10 @@ public class CaddieProfileFragment extends Fragment {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            });
+
+            paymentBtn.setOnClickListener(v -> {
+              startActivity(new Intent(getActivity(), CaddieBankDetailsActivity.class));
             });
 
             privacybtn.setOnClickListener(v -> {

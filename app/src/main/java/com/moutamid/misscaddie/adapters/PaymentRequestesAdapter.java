@@ -85,6 +85,7 @@ public class PaymentRequestesAdapter extends RecyclerView.Adapter<PaymentRequest
                 public void onClick(View view) {
                     Intent intent = new Intent(context, CardPaymentActivity.class);
                     intent.putExtra("price", finalPrice);
+                    intent.putExtra("id",model.getCaddieId());
                     context.startActivity(intent);
                     Animatoo.animateZoom(context);
                 }
