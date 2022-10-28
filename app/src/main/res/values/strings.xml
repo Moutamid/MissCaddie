@@ -7,8 +7,7 @@
 
     <string name="bullet">\u2022</string>
     <string name="publisher_key">pk_live_51LxZuNLymI2iQWRA43dW0hGoBNLYYqlpsSNLQhCRt8I4ulsY5kWdMKLwmwvOOf0SAqfHXLzCxm3Z2XWXt4DRaM99005aDs3caT</string>
-    <string name="api_key">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</string>
-
+   
     <string-array name="bank_type">
     <item>Select Type (Individual)</item>
         <item>Individual</item>
