@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,7 +15,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.CompoundButton;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -32,9 +32,11 @@ import com.moutamid.misscaddie.adapters.AddOnsListAdapter;
 import com.moutamid.misscaddie.adapters.AddServiceAdapter;
 import com.moutamid.misscaddie.databinding.ActivityCaddieDeatilsBinding;
 import com.moutamid.misscaddie.models.Bonus;
+import com.moutamid.misscaddie.models.Model_Caddie;
 import com.moutamid.misscaddie.models.ServiceListModel;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 
 public class CaddieDeatilsActivity extends AppCompatActivity {
@@ -48,8 +50,9 @@ public class CaddieDeatilsActivity extends AppCompatActivity {
     private ActivityCaddieDeatilsBinding b;
     FirebaseAuth mAuth;
     FirebaseUser currrentUser;
-    ProgressDialog dialog;
     private String state ="";
+    private String dob;
+    private String day,month,year = "";
     private String status = "willing";
     private String category = "";
     private DatabaseReference db;
@@ -57,9 +60,53 @@ public class CaddieDeatilsActivity extends AppCompatActivity {
     LinearLayout notWillingLayout, WillingLayout;
     TextView willingTv, notWillingTv;
     ImageView iconsNot, iconWill;
-    private boolean range = false;
-    private boolean video = false;
-    private boolean travel = false;
+    private String[] states = {"Select State (New York)","Alabama","Alaska","Arizona","Arkansas",
+            "California","Colorado", "Connecticut", "Delaware",
+            "Florida",
+            "Georgia",
+            "Hawaii",
+            "Idaho",
+            "Illinois",
+            "Indiana",
+            "Iowa",
+            "Kansas",
+            "Kentucky",
+            "Louisiana",
+            "Maine",
+            "Maryland",
+            "Massachusetts",
+            "Michigan",
+            "Minnesota",
+            "Mississippi",
+            "Missouri",
+            "Montana",
+            "Nebraska",
+            "Nevada",
+            "New Hampshire",
+            "New Jersey",
+            "New Mexico",
+            "New York",
+            "North Carolina",
+            "North Dakota",
+            "Ohio",
+            "Oklahoma",
+            "Oregon",
+            "Pennsylvania",
+            "Rhode Island",
+            "South Carolina",
+            "South Dakota",
+            "Tennessee",
+            "Texas",
+            "Utah",
+            "Vermont",
+            "Virginia",
+            "Washington",
+            "West Virginia",
+            "Wisconsin",
+            "Wyoming",
+    };
+    private String[] categoryString = {"Select Status (Beginner)","Beginner","Intermediate","Experienced"};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -173,38 +220,61 @@ public class CaddieDeatilsActivity extends AppCompatActivity {
             }
         });
 
+        b.dob.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Calendar calendar = Calendar.getInstance();
+                int yy = calendar.get(Calendar.YEAR);
+                int mm = calendar.get(Calendar.MONTH);
+                int dd = calendar.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog datePicker = new DatePickerDialog(CaddieDeatilsActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int thisyear, int monthOfYear, int dayOfMonth) {
+                        dob = dayOfMonth + "/" + (monthOfYear+1) + "/" + thisyear;
+                        day = String.valueOf(dayOfMonth);
+                        month = String.valueOf(monthOfYear+1);
+                        year = String.valueOf(thisyear);
+                        b.dob.setText(dob);
+                    }
+                }, yy, mm, dd);
+                datePicker.show();
+
+            }
+        });
+
 
         almostFinished.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String location = b.etLocation.getText().toString();
-                String service = b.etService.getText().toString();
                 String price = b.etPrice.getText().toString();
                 String feet = b.feet.getText().toString();
                 String inches = b.inches.getText().toString();
-                if (!TextUtils.isEmpty(location) && !TextUtils.isEmpty(price)
+                String phone = b.phone.getText().toString();
+                if (!TextUtils.isEmpty(location) && !TextUtils.isEmpty(phone)
                         && !TextUtils.isEmpty(feet) && !TextUtils.isEmpty(inches)) {
-                    saveData(location, service, price,feet,inches);
+                    saveData(location,feet,inches,phone);
 
-                    for (int i = 0; i < list.size(); i++){
+                    /*for (int i = 0; i < list.size(); i++){
                         ServiceListModel model = list.get(i);
                         db.child(currrentUser.getUid()).child("services").child(String.valueOf(i)).setValue(model);
-                    }
+                    }*/
                 }
             }
         });
 
         addService.setOnClickListener(v -> {
-          /*  String serviceName = b.etService.getText().toString();
+            String serviceName = b.etService.getText().toString();
             String servicePrice = b.etPrice.getText().toString();
             if (!TextUtils.isEmpty(serviceName) && !TextUtils.isEmpty(servicePrice)) {
-                String key = db.push().getKey();
+                String key = db.child(currrentUser.getUid()).child("services").push().getKey();
                 ServiceListModel model = new ServiceListModel(key,serviceName, servicePrice);
                 db.child(currrentUser.getUid()).child("services").child(key).setValue(model);
+                getServices();
             }
             b.etService.setText("");
-            b.etPrice.setText("");*/
-            String title = b.etService.getText().toString();
+            b.etPrice.setText("");
+         /*   String title = b.etService.getText().toString();
             String price = b.etPrice.getText().toString();
             if (!TextUtils.isEmpty(title) && !TextUtils.isEmpty(price)) {
                 //String key = db.push().getKey();
@@ -216,12 +286,87 @@ public class CaddieDeatilsActivity extends AppCompatActivity {
                 addRecyclerRC.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
                 b.etService.setText("");
-                b.etPrice.setText("");
-            }
+                b.etPrice.setText("");*/
         });
         getServices();
         getAddOns();
+        getDob();
+        checkIfExists();
         changeStatusBarColor(this,R.color.yellow);
+    }
+
+    private void checkIfExists() {
+        db.child(currrentUser.getUid())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()){
+                            Model_Caddie caddie = snapshot.getValue(Model_Caddie.class);
+                            b.feet.setText(String.valueOf(caddie.getFeet()));
+                            b.inches.setText(String.valueOf(caddie.getInches()));
+                            b.etLocation.setText(caddie.getPlace());
+                            b.phone.setText(caddie.getPhone());
+
+                            for (int i = 0; i < states.length; i++){
+                                if(states[i].equals(caddie.getState())){
+                                    b.spinnerStates.setSelection(i);
+                                }
+                            }
+
+                            for (int i = 0; i < categoryString.length; i++){
+
+                                if(categoryString[i].equals(caddie.getCatagory())){
+                                    b.spinnerStatus.setSelection(i);
+                                }
+                            }
+
+                            if (caddie.getStatus().equals("willing")) {
+                                WillingLayout.setBackground(getDrawable(R.drawable.selected_box));
+                                //iconWill.setBackground(getDrawable(R.drawable.ic_charm_tick1));
+                                notWillingLayout.setBackground(getDrawable(R.drawable.unselected_box));
+                                //iconsNot.setBackground(getDrawable(R.drawable.ic_charm_cross2));
+                                willingState = true;
+                                willingTv.setTextColor(getResources().getColor(R.color.black));
+                                notWillingTv.setTextColor(getResources().getColor(R.color.black_light));
+                                notWillingState = false;
+                            } else {
+                                notWillingLayout.setBackground(getDrawable(R.drawable.selected_box));
+                                //iconsNot.setBackground(getDrawable(R.drawable.ic_charm_cross));
+                                notWillingState = true;
+                                WillingLayout.setBackground(getDrawable(R.drawable.unselected_box));
+                                //iconWill.setBackground(getDrawable(R.drawable.ic_charm_tick));
+                                willingTv.setTextColor(getResources().getColor(R.color.black_light));
+                                notWillingTv.setTextColor(getResources().getColor(R.color.black));
+                                willingState = false;
+                            }
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+    }
+
+    private void getDob() {
+        db.child(currrentUser.getUid()).child("dob")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()){
+                            day = snapshot.child("day").getValue().toString();
+                            month = snapshot.child("month").getValue().toString();
+                            year = snapshot.child("year").getValue().toString();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
     }
 
     public void changeStatusBarColor(Activity activity, int id) {
@@ -289,37 +434,25 @@ public class CaddieDeatilsActivity extends AppCompatActivity {
                 });
     }
 
-    private void saveData(String location, String service, String price,String feet,String inches) {
-        String height = feet +"'" + inches+"''";
+    private void saveData(String location, String feet, String inches, String phone) {
         HashMap<String,Object> hashMap = new HashMap<>();
         hashMap.put("state",state);
         hashMap.put("place",location);
-        hashMap.put("length",height);
+        hashMap.put("feet",Integer.parseInt(feet));
+        hashMap.put("inches",Integer.parseInt(inches));
         hashMap.put("catagory",category);
+        hashMap.put("phone",phone);
         hashMap.put("status",status);
         db.child(currrentUser.getUid()).updateChildren(hashMap);
-       /* if (range){
-            String key = db.child(currrentUser.getUid()).child("bonus").push().getKey();
-            HashMap<String,Object> hashMap1 = new HashMap<>();
-            hashMap1.put("name",b.range.getText().toString());
-            db.child(currrentUser.getUid()).child("bonus").child(key).updateChildren(hashMap1);
-        }
-        if (video){
-            String key = db.child(currrentUser.getUid()).child("bonus").push().getKey();
-            HashMap<String,Object> hashMap1 = new HashMap<>();
-            hashMap1.put("name",b.video.getText().toString());
-            db.child(currrentUser.getUid()).child("bonus").child(key).updateChildren(hashMap1);
-        }
-        if (travel){
-            String key = db.child(currrentUser.getUid()).child("bonus").push().getKey();
-            HashMap<String,Object> hashMap1 = new HashMap<>();
-            hashMap1.put("name",b.travel.getText().toString());
-            db.child(currrentUser.getUid()).child("bonus").child(key).updateChildren(hashMap1);
-        }*/
-     /*   String key = db.push().getKey();
-        ServiceListModel model = new ServiceListModel(service, price);
-        db.child(currrentUser.getUid()).child("services").child(key).setValue(model);*/
-        Intent intent = new Intent(CaddieDeatilsActivity.this , CaddieAvailabiltyActivity.class);
+
+        HashMap<String,Object> hashMap1 = new HashMap<>();
+
+        hashMap1.put("day",day);
+        hashMap1.put("month",month);
+        hashMap1.put("year",year);
+        db.child(currrentUser.getUid()).child("dob").updateChildren(hashMap1);
+
+       Intent intent = new Intent(CaddieDeatilsActivity.this , CaddieAvailabiltyActivity.class);
         startActivity(intent);
         finish();
         Animatoo.animateZoom(CaddieDeatilsActivity.this);

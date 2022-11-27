@@ -69,7 +69,7 @@ public class GolferHomeFragment extends Fragment {
         }
         else {
             load_detail();
-            filterBtn.setText("Filter");
+            filterBtn.setText("Filter Your Search");
         }
         filterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,7 +77,7 @@ public class GolferHomeFragment extends Fragment {
                 if (filter){
                     filter = false;
                     load_detail();
-                    filterBtn.setText("Filter");
+                    filterBtn.setText("Filter Your Search");
                 }else {
                     startActivity(new Intent(getActivity(), GolferFilterActivity.class));
                     getActivity().finish();

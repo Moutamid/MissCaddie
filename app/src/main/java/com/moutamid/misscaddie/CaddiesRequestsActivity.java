@@ -69,7 +69,7 @@ public class CaddiesRequestsActivity extends Fragment {
 
     private void refresh() {
         if (isAdded()) {
-            CaddieProfileVPadapter caddieProfileVPadapter = new CaddieProfileVPadapter(getActivity().getSupportFragmentManager());
+            CaddieProfileVPadapter caddieProfileVPadapter = new CaddieProfileVPadapter(getChildFragmentManager());
             caddieProfileVPadapter.addFragment(new MyRequestsFragment(), "My Requests");
             caddieProfileVPadapter.addFragment(new PaymentRequestFragment(), "Payment Requests");
 

@@ -5,10 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -23,22 +25,27 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.moutamid.misscaddie.adapters.AddOnsListAdapter;
 import com.moutamid.misscaddie.adapters.AddServiceAdapter;
+import com.moutamid.misscaddie.models.Bonus;
 import com.moutamid.misscaddie.models.ServiceListModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class CaddieProServicesActivity extends AppCompatActivity {
     ImageView backBtn;
-    RecyclerView addRecyclerRC;
-    TextView addService,updateService;
+    RecyclerView addRecyclerRC,addOnRecyclerView;
+    TextView addService,updateService,addOnBtn;
     AddServiceAdapter adapter;
-    private EditText serviceTxt,priceTxt;
+    private EditText serviceTxt,priceTxt,bonusTxt;
     ArrayList<ServiceListModel> list;
     FirebaseAuth mAuth;
+    private ArrayList<Bonus> bonusArrayList = new ArrayList<>();
     FirebaseUser currrentUser;
     private DatabaseReference db;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,12 +57,14 @@ public class CaddieProServicesActivity extends AppCompatActivity {
         updateService = findViewById(R.id.updateBtn);
         serviceTxt = findViewById(R.id.et_service);
         priceTxt = findViewById(R.id.et_price);
+        addOnRecyclerView = findViewById(R.id.addonsRV);
+        bonusTxt = findViewById(R.id.add_ons_txt);
+        addOnBtn = findViewById(R.id.addOnBtn);
 
         mAuth = FirebaseAuth.getInstance();
         currrentUser = mAuth.getCurrentUser();
         list = new ArrayList<>();
-        db = FirebaseDatabase.getInstance().getReference().child("Caddie")
-                .child(currrentUser.getUid()).child("services");
+        db = FirebaseDatabase.getInstance().getReference().child("Caddie");
         addRecyclerRC.setLayoutManager(new LinearLayoutManager(this));
         addRecyclerRC.setHasFixedSize(false);
 
@@ -64,22 +73,33 @@ public class CaddieProServicesActivity extends AppCompatActivity {
             Animatoo.animateSwipeLeft(CaddieProServicesActivity.this);
         });
 
-        addService.setOnClickListener(v -> {
-            String title = serviceTxt.getText().toString();
-            String price = priceTxt.getText().toString();
-            if (!TextUtils.isEmpty(title) && !TextUtils.isEmpty(price)) {
-                //String key = db.push().getKey();
-                ServiceListModel model = new ServiceListModel(title, price);
-                list.add(model);
-
-                adapter = new AddServiceAdapter(CaddieProServicesActivity.this, list);
-                adapter.notifyItemInserted(list.size() - 1);
-                addRecyclerRC.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
-                serviceTxt.setText("");
-                priceTxt.setText("");
-          //      adapter.notifyDataSetChanged();
+        addOnBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String bonus = bonusTxt.getText().toString();
+                if(!TextUtils.isEmpty(bonus)){
+                    String key = db.child(currrentUser.getUid()).child("bonus").push().getKey();
+                    HashMap<String,Object> hashMap1 = new HashMap<>();
+                    hashMap1.put("id",key);
+                    hashMap1.put("bonus",bonus);
+                    db.child(currrentUser.getUid()).child("bonus").child(key).updateChildren(hashMap1);
+                    getAddOns();
+                }
+                bonusTxt.setText("");
             }
+        });
+
+        addService.setOnClickListener(v -> {
+            String serviceName = serviceTxt.getText().toString();
+            String servicePrice = priceTxt.getText().toString();
+            if (!TextUtils.isEmpty(serviceName) && !TextUtils.isEmpty(servicePrice)) {
+                String key = db.child(currrentUser.getUid()).child("services").push().getKey();
+                ServiceListModel model = new ServiceListModel(key,serviceName, servicePrice);
+                db.child(currrentUser.getUid()).child("services").child(key).setValue(model);
+                getServices();
+            }
+            serviceTxt.setText("");
+            priceTxt.setText("");
         });
 
         updateService.setOnClickListener(v -> {
@@ -102,7 +122,35 @@ public class CaddieProServicesActivity extends AppCompatActivity {
         });
 
         getServices();
+        getAddOns();
         changeStatusBarColor(this,R.color.yellow);
+    }
+
+
+    private void getAddOns() {
+        db.child(currrentUser.getUid()).child("bonus")
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()){
+                            bonusArrayList.clear();
+                            for (DataSnapshot ds : snapshot.getChildren()){
+                                Bonus model= ds.getValue(Bonus.class);
+                                bonusArrayList.add(model);
+                            }
+                            AddOnsListAdapter addOnsListAdapter = new AddOnsListAdapter(
+                                    CaddieProServicesActivity.this, bonusArrayList);
+                            addOnRecyclerView.setAdapter(addOnsListAdapter);
+                            addOnsListAdapter.notifyDataSetChanged();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
     }
 
     public void changeStatusBarColor(Activity activity, int id) {
@@ -120,7 +168,7 @@ public class CaddieProServicesActivity extends AppCompatActivity {
     }
 
     private void getServices() {
-        db.addValueEventListener(new ValueEventListener() {
+        db.child(currrentUser.getUid()).child("services").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if(snapshot.exists()){

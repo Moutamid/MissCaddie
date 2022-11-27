@@ -35,6 +35,8 @@ public class Dashboard_Golfer extends AppCompatActivity {
     FrameLayout fragmentLayouts;
     private String state,status,date;
     private boolean filter = false;
+    private DatabaseReference db;
+    private SharedPreferencesManager manager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +49,8 @@ public class Dashboard_Golfer extends AppCompatActivity {
         status = getIntent().getStringExtra("status");
         date = getIntent().getStringExtra("date");
         filter = getIntent().getBooleanExtra("filter",false);
-
+        manager = new SharedPreferencesManager(Dashboard_Golfer.this);
+        db = FirebaseDatabase.getInstance().getReference().child("Stripe");
         if (filter){
             GolferHomeFragment fragment = new GolferHomeFragment();
             Bundle b = new Bundle();
@@ -105,6 +108,27 @@ public class Dashboard_Golfer extends AppCompatActivity {
             }
         });
 
+        getStripeDetails();
+
+    }
+
+    private void getStripeDetails() {
+        db.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    String apiKey = snapshot.child("api_key").getValue().toString();
+                    String pubKey = snapshot.child("publisher_key").getValue().toString();
+                    manager.storeString("apiKey",apiKey);
+                    manager.storeString("publisherKey",pubKey);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void updatetoken(String token) {

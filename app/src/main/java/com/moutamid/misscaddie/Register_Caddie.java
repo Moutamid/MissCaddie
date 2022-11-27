@@ -198,7 +198,7 @@ public class Register_Caddie extends AppCompatActivity {
                     manager.storeString("module","caddie");
                     Model_Caddie model_caddie = new Model_Caddie(firebaseUser.getUid(),
                             account.getDisplayName(),account.getEmail(),"",
-                            account.getPhotoUrl().toString(),"","","","","");
+                            account.getPhotoUrl().toString(),"","","",0,0,"","");
                     db.child(firebaseUser.getUid()).setValue(model_caddie);
                     sendActivityToSignUp();
                     dialog.dismiss();

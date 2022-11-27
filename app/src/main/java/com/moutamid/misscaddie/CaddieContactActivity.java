@@ -211,7 +211,7 @@ public class CaddieContactActivity extends AppCompatActivity {
                 else{
                     sendRequest();
                     sendMessage(message,"golfer");
-                    startActivity(new Intent(CaddieContactActivity.this,CaddiesRequestsActivity.class));
+                    startActivity(new Intent(CaddieContactActivity.this,Dashboard_Golfer.class));
                     finish();
                     Animatoo.animateZoom(CaddieContactActivity.this);
                 }
@@ -392,8 +392,15 @@ public class CaddieContactActivity extends AppCompatActivity {
                                 public void onItemClick(int position, View view) {
                                     LinearLayout linearLayout = view.findViewById(R.id.linearLayout);
                                     ServiceListModel model1 = serviceListModelArrayList.get(position);
-                                    serviceListModels.add(model1);
-                                    linearLayout.setBackgroundDrawable(getDrawable(R.drawable.edit_text_background));
+                                    if (!model1.isSelected()) {
+                                        serviceListModels.add(model1);
+                                        linearLayout.setBackgroundDrawable(getDrawable(R.drawable.edit_text_background));
+                                        model1.setSelected(true);
+                                    }else {
+                                        model1.setSelected(false);
+                                        serviceListModels.remove(position);
+                                        linearLayout.setBackgroundDrawable(getDrawable(R.drawable.edit_text_white_background));
+                                    }
                                 }
                             });
                             adapter.notifyDataSetChanged();

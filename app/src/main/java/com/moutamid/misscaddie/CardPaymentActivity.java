@@ -263,9 +263,8 @@ public class CardPaymentActivity extends AppCompatActivity {
         dialog.show();
         long total = amount * 100;
         String clientId = "cus_MhKFyY6eUDXTYd";
-      //  String caddieToken = getCaddieToken();
-        //Stripe.apiKey = "sk_test_51LxZuNLymI2iQWRAajXZzf99LstDowO1MAQYH9KEO3Dna899Gknv2vUcuVY3l1mNL0WgfFdpkZLiXbbK4bXP65JY006NYVTs8y";
-        Stripe.apiKey = "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";
+
+        Stripe.apiKey = "";
 
         Map<String, Object> card = new HashMap<>();
         card.put("number", creditCard.getNumber());

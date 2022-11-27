@@ -100,8 +100,7 @@ public class SignUp_Caddie extends AppCompatActivity {
                 if (task.isSuccessful()){
                     currrentUser = mAuth.getCurrentUser();
                     Model_Caddie model_caddie = new Model_Caddie(currrentUser.getUid(),
-                            fname + " " + lname,email,password,"","","","",
-                            "","");
+                            fname + " " + lname,email,password,"","","","",0,0,"","");
                     db.child(currrentUser.getUid()).setValue(model_caddie);
                     sendActivityToLogin();
                     dialog.dismiss();

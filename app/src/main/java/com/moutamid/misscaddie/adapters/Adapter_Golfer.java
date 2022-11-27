@@ -49,7 +49,7 @@ public class Adapter_Golfer extends RecyclerView.Adapter<Adapter_Golfer.HolderAn
 
         String name_tv= modelAndroid.getName();
         //String price_tv = modelAndroid.getPrice();
-        String length_tv = modelAndroid.getLength();
+        String length_tv = modelAndroid.getFeet() + "'"+ modelAndroid.getInches() + "''";
         String cat_tv = modelAndroid.getCatagory();
         String place_tv = modelAndroid.getState();
         String reviews_tv = modelAndroid.getReviews();

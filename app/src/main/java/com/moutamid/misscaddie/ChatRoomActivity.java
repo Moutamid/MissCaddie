@@ -75,7 +75,7 @@ public class ChatRoomActivity extends AppCompatActivity {
                     Animatoo.animateSlideLeft(ChatRoomActivity.this);
                     finish();
                 }else {
-                    startActivity(new Intent(ChatRoomActivity.this,MessagesActivity.class));
+                    startActivity(new Intent(ChatRoomActivity.this,Dashboard_Golfer.class));
                     finish();
                     Animatoo.animateSlideLeft(ChatRoomActivity.this);
                 }

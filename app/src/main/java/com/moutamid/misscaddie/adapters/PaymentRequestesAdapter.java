@@ -32,9 +32,10 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PaymentRequestesAdapter extends RecyclerView.Adapter<PaymentRequestesAdapter.VH> {
-    RecyclerView.RecycledViewPool viewPool = new RecyclerView.RecycledViewPool();
+
     List<RequestsModel> itemList;
     Context context;
+    private ItemClickListener itemClickListener;
 
     public PaymentRequestesAdapter(List<RequestsModel> itemList, Context context) {
         this.itemList = itemList;
@@ -80,7 +81,7 @@ public class PaymentRequestesAdapter extends RecyclerView.Adapter<PaymentRequest
             holder.status_title.setTextColor(context.getResources().getColor(R.color.black_light));
             holder.butn.setBackgroundResource(R.drawable.arrow_right_green);
             int finalPrice = price;
-            holder.butn.setOnClickListener(new View.OnClickListener() {
+          /*  holder.butn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, CardPaymentActivity.class);
@@ -89,7 +90,7 @@ public class PaymentRequestesAdapter extends RecyclerView.Adapter<PaymentRequest
                     context.startActivity(intent);
                     Animatoo.animateZoom(context);
                 }
-            });
+            });*/
         }
 
 
@@ -140,8 +141,18 @@ public class PaymentRequestesAdapter extends RecyclerView.Adapter<PaymentRequest
             address = itemView.findViewById(R.id.address_golfer);
             service_list = itemView.findViewById(R.id.service_list);
             butn = itemView.findViewById(R.id.checkBtn);
-
+            butn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (itemClickListener != null){
+                        itemClickListener.onItemClick(getAdapterPosition(),view);
+                    }
+                }
+            });
         }
     }
 
+    public void setItemClickListener(ItemClickListener itemClickListener){
+        this.itemClickListener = itemClickListener;
+    }
 }

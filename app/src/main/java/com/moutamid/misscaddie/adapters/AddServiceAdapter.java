@@ -42,20 +42,23 @@ public class AddServiceAdapter extends RecyclerView.Adapter<AddServiceAdapter.Se
         holder.price.setText(model.getPrice());
 
         holder.deleteBtn.setOnClickListener(v -> {
-         //   removeItem(model.getId());
-            list.remove(position);
-            notifyItemRemoved(position);
-            notifyDataSetChanged();
+            removeItem(model.getId(),position);
+          //  list.remove(position);
+            //notifyItemRemoved(position);
+            //notifyDataSetChanged();
         });
     }
 
-    private void removeItem(String id) {
+    private void removeItem(String id, int position) {
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         FirebaseDatabase.getInstance().getReference().child("Caddie")
                 .child(currentUser.getUid())
                 .child("services").child(id).removeValue();
+        list.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeRemoved(position,list.size());
     }
 
     @Override

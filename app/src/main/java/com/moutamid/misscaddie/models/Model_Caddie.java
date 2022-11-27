@@ -10,14 +10,17 @@ public class Model_Caddie {
     private String place;
     //private String availability;
     private String state,about;
-    private String length , catagory , reviews , status;
+    private String catagory , reviews , status;
+    private int feet;
+    private int inches;
+    private String phone;
 
     public Model_Caddie(){
 
     }
 
-    public Model_Caddie(String id, String name, String email,String password,
-                        String image,String state,String place,String length,String catagory,String status) {
+    public Model_Caddie(String id, String name, String email,String password, String image,String state,
+                        String place,String phone,int feet,int inches,String catagory,String status) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -25,9 +28,35 @@ public class Model_Caddie {
         this.image = image;
         this.state = state;
         this.place = place;
-        this.length = length;
+        this.phone = phone;
+        this.feet = feet;
+        this.inches = inches;
         this.catagory = catagory;
         this.status = status;
+    }
+
+    public int getFeet() {
+        return feet;
+    }
+
+    public void setFeet(int feet) {
+        this.feet = feet;
+    }
+
+    public int getInches() {
+        return inches;
+    }
+
+    public void setInches(int inches) {
+        this.inches = inches;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getAbout() {
@@ -38,13 +67,6 @@ public class Model_Caddie {
         this.about = about;
     }
 
-    public String getLength() {
-        return length;
-    }
-
-    public void setLength(String length) {
-        this.length = length;
-    }
 
     public String getCatagory() {
         return catagory;

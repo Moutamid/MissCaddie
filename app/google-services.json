@@ -15,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "926633363249-25qtrge0qoce1rvfg3ou0jh8hgangvq2.apps.googleusercontent.com",
+          "client_id": "926633363249-6anjmmljg8m28pneb5kb5b7gq891l734.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.moutamid.misscaddie",
-            "certificate_hash": "309bc07aea5fffbbbf69c8b8435d380078ec8eba"
+            "certificate_hash": "3e01b2fe667dcec477574358b764ea6ad0ea714c"
           }
         },
         {

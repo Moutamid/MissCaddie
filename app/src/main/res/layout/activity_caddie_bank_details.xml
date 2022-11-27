@@ -152,6 +152,32 @@
 
             </LinearLayout>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/montserrat_bold"
+                android:gravity="start"
+                android:text="Last 4 digits of SSN "
+                android:letterSpacing="0.08"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+            <EditText
+                android:id="@+id/ssn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/et_bg"
+                android:fontFamily="@font/roboto"
+                android:hint="1234"
+                android:inputType="number"
+                android:maxLength="4"
+                android:padding="15dp"
+                android:textColorHint="@color/grey" />
+
+
 
 
         </LinearLayout>

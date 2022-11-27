@@ -222,6 +222,49 @@
                     android:fontFamily="@font/roboto"/>
             </LinearLayout>
 
+            <EditText
+                android:id="@+id/phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="12dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/et_bg"
+                android:fontFamily="@font/roboto"
+                android:hint="+16045678990"
+                android:inputType="phone"
+                android:padding="15dp"
+                android:textColorHint="@color/grey" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Date Of Birth "
+                    android:textColor="@color/black"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/dob"
+                    android:drawableRight="@drawable/ic_baseline_calendar_month_24"
+                    android:drawablePadding="8dp"
+                    android:padding="8dp"
+                    android:text="1/2/2022"
+                    android:layout_marginLeft="10dp"/>
+
+            </LinearLayout>
+
             <!-- <EditText
                  android:id="@+id/height"
                  android:layout_width="match_parent"
@@ -283,7 +326,7 @@
                 android:layout_marginTop="5dp"
                 android:background="@drawable/et_bg"
                 android:fontFamily="@font/roboto"
-                android:hint="Complete Location"
+                android:hint="State,City"
                 android:inputType="textPersonName"
                 android:padding="15dp"
                 android:textColorHint="@color/grey" />

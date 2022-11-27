@@ -93,7 +93,7 @@
         android:paddingTop="15dp"
         android:paddingRight="25dp"
         android:paddingBottom="15dp"
-        android:text="Filter"
+        android:text="Filter Your Search"
         android:textAllCaps="true"
         android:textColor="@color/white"
         android:textSize="18sp"

@@ -6,8 +6,7 @@
     <string name="long_lorem">Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</string>
 
     <string name="bullet">\u2022</string>
-    <string name="publisher_key">pk_live_51LxZuNLymI2iQWRA43dW0hGoBNLYYqlpsSNLQhCRt8I4ulsY5kWdMKLwmwvOOf0SAqfHXLzCxm3Z2XWXt4DRaM99005aDs3caT</string>
-   
+
     <string-array name="bank_type">
     <item>Select Type (Individual)</item>
         <item>Individual</item>

@@ -61,7 +61,8 @@ public class CaddieInfoFragment extends Fragment {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (snapshot.exists()){
                             Model_Caddie model = snapshot.getValue(Model_Caddie.class);
-                            b.height.setText(model.getLength() + " cm");
+                            String length_tv = model.getFeet() + "'"+ model.getInches() + "''";
+                            b.height.setText(length_tv);
                             b.location.setText(model.getPlace());
                             if (snapshot.child("about").exists()) {
                                 b.aboutMessage.setText(model.getAbout());
