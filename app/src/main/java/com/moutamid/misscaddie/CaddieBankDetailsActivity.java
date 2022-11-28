@@ -3,6 +3,7 @@ package com.moutamid.misscaddie;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -36,7 +37,7 @@ public class CaddieBankDetailsActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser user;
     private SharedPreferencesManager manager;
-    private String apiKey;
+    private String apiKey = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -178,10 +179,8 @@ public class CaddieBankDetailsActivity extends AppCompatActivity {
                                             hashMap.put("accountId",account.getId());
                                             db.child(user.getUid()).updateChildren(hashMap);
                                             Toast.makeText(CaddieBankDetailsActivity.this,"Account Created Successfully!",Toast.LENGTH_SHORT).show();
-                                            b.name.setText("");
-                                            b.number.setText("");
-                                            b.routingNumber.setText("");
-                                            b.ssn.setText("");
+                                            startActivity(new Intent(CaddieBankDetailsActivity.this,CaddieDashboardActivity.class));
+                                            finish();
                                         } catch (StripeException e) {
                                             e.printStackTrace();
                                             Toast.makeText(CaddieBankDetailsActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();

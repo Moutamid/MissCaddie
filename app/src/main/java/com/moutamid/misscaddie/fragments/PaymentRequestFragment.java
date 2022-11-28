@@ -67,8 +67,8 @@ public class PaymentRequestFragment extends Fragment {
     private FirebaseUser user;
     private ArrayList<RequestsModel> itemList;
     private SharedPreferencesManager manager;
-    private String apiKey;
-    private String pubKey;
+    private String apiKey = "";
+    private String pubKey = "";
     private String customerID,emphericalKey,clientSecret;
     private int amount = 0;
     private PaymentSheet paymentSheet;
@@ -299,13 +299,13 @@ public class PaymentRequestFragment extends Fragment {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             clientSecret = jsonObject.getString("client_secret");
-                            Toast.makeText(getActivity(), clientSecret, Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getActivity(), clientSecret, Toast.LENGTH_SHORT).show();
 
                             paymentFlow();
 
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                         //   Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
 
                     }
@@ -328,7 +328,7 @@ public class PaymentRequestFragment extends Fragment {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<>();
                 params.put("customer",customerID);
-                params.put("amount","100");
+                params.put("amount",amount + "00");
                 params.put("currency","usd");
                 params.put("automatic_payment_methods[enabled]","true");
                 params.put("transfer_group",group);

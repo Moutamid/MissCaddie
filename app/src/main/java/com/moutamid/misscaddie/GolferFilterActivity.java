@@ -32,7 +32,52 @@ public class GolferFilterActivity extends AppCompatActivity {
     private String date = "";
     private String state = "";
     private Spinner spinner;
-
+    private SharedPreferencesManager manager;
+    private String[] states = {"Select State (New York)","Alabama","Alaska","Arizona","Arkansas",
+            "California","Colorado", "Connecticut", "Delaware",
+            "Florida",
+            "Georgia",
+            "Hawaii",
+            "Idaho",
+            "Illinois",
+            "Indiana",
+            "Iowa",
+            "Kansas",
+            "Kentucky",
+            "Louisiana",
+            "Maine",
+            "Maryland",
+            "Massachusetts",
+            "Michigan",
+            "Minnesota",
+            "Mississippi",
+            "Missouri",
+            "Montana",
+            "Nebraska",
+            "Nevada",
+            "New Hampshire",
+            "New Jersey",
+            "New Mexico",
+            "New York",
+            "North Carolina",
+            "North Dakota",
+            "Ohio",
+            "Oklahoma",
+            "Oregon",
+            "Pennsylvania",
+            "Rhode Island",
+            "South Carolina",
+            "South Dakota",
+            "Tennessee",
+            "Texas",
+            "Utah",
+            "Vermont",
+            "Virginia",
+            "Washington",
+            "West Virginia",
+            "Wisconsin",
+            "Wyoming",
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +85,10 @@ public class GolferFilterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_golfer_filter);
 
         close_btn = findViewById(R.id.close);
+        manager = new SharedPreferencesManager(this);
+        state = manager.retrieveString("state","");
+        date = manager.retrieveString("date","Selected Date is(2 Dec)");
+        status = manager.retrieveString("status","");
         notWillingLayout = findViewById(R.id.notWilling);
         WillingLayout = findViewById(R.id.willing);
         iconsNot = findViewById(R.id.notWilling_icon);
@@ -60,6 +109,9 @@ public class GolferFilterActivity extends AppCompatActivity {
             startActivity(intent);
             Animatoo.animateZoom(GolferFilterActivity.this);
         });
+
+        getSavedData();
+
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -148,6 +200,9 @@ public class GolferFilterActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                     Animatoo.animateZoom(GolferFilterActivity.this);
+                    manager.storeString("state",state);
+                    manager.storeString("date",date);
+                    manager.storeString("status",status);
                 }else {
                     Toast.makeText(GolferFilterActivity.this, "Please Select all the given fields", Toast.LENGTH_SHORT).show();
                 }
@@ -159,5 +214,33 @@ public class GolferFilterActivity extends AppCompatActivity {
                 Toast.makeText(GolferFilterActivity.this, "Reset Filter", Toast.LENGTH_SHORT).show();
             }
         });*/
+    }
+
+    private void getSavedData() {
+        for (int i = 0; i < states.length; i++){
+
+            if(states[i].equals(state)){
+                spinner.setSelection(i);
+            }
+        }
+
+        booking_dates.setText("Selected Date is (" + date + ")");
+        if (status.equals("willing")) {
+            WillingLayout.setBackground(getDrawable(R.drawable.selected_box));
+            //iconWill.setBackground(getDrawable(R.drawable.ic_charm_tick1));
+            notWillingLayout.setBackground(getDrawable(R.drawable.unselected_box));
+            //iconsNot.setBackground(getDrawable(R.drawable.ic_charm_cross2));
+            willingTv.setTextColor(getResources().getColor(R.color.black));
+            notWillingTv.setTextColor(getResources().getColor(R.color.black_light));
+
+        } else {
+            notWillingLayout.setBackground(getDrawable(R.drawable.selected_box));
+            //iconsNot.setBackground(getDrawable(R.drawable.ic_charm_cross));
+            WillingLayout.setBackground(getDrawable(R.drawable.unselected_box));
+            //iconWill.setBackground(getDrawable(R.drawable.ic_charm_tick));
+            willingTv.setTextColor(getResources().getColor(R.color.black_light));
+            notWillingTv.setTextColor(getResources().getColor(R.color.black));
+        }
+
     }
 }

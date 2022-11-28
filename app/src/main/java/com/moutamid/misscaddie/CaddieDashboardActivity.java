@@ -108,7 +108,7 @@ public class CaddieDashboardActivity extends AppCompatActivity {
     }
 
     private void getStripeDetails() {
-        db.addValueEventListener(new ValueEventListener() {
+        db1.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()){
