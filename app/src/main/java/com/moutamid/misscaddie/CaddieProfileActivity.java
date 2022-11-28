@@ -165,7 +165,7 @@ public class CaddieProfileActivity extends AppCompatActivity {
     }
 
 
-    private ArrayList<ServiceListModel> serviceListModels = new ArrayList<>();
+
     private void getCaddieData() {
         db.child(userId)
                 .addListenerForSingleValueEvent(new ValueEventListener() {

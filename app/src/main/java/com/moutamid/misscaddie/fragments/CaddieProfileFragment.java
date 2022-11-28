@@ -146,6 +146,22 @@ public class CaddieProfileFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (!mGoogleSignInClient.isConnected()) {
+            mGoogleSignInClient.connect();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (mGoogleSignInClient != null && mGoogleSignInClient.isConnected()) {
+            mGoogleSignInClient.stopAutoManage(requireActivity());
+            mGoogleSignInClient.disconnect();
+        }
+    }
 
     @Override
     public void onStop() {

@@ -168,6 +168,9 @@ public class GolferProfileEditActivity extends Fragment {
         hashMap.put("password",password);
         hashMap.put("image",image);
         db.child(currrentUser.getUid()).updateChildren(hashMap);
+        getUserDetails();
+        Toast.makeText(getActivity(), "Updated!", Toast.LENGTH_SHORT).show();
+
     }
 
     private void getUserDetails() {

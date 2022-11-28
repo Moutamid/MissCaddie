@@ -208,6 +208,9 @@ public class CaddieContactActivity extends AppCompatActivity {
                 }else if(time.equals("")){
                     Toast.makeText(CaddieContactActivity.this, "Please Select a time", Toast.LENGTH_SHORT).show();
                 }
+                else if(serviceListModels.isEmpty()){
+                    Toast.makeText(CaddieContactActivity.this, "Please Select atleast one service", Toast.LENGTH_SHORT).show();
+                }
                 else{
                     sendRequest();
                     sendMessage(message,"golfer");
@@ -398,7 +401,11 @@ public class CaddieContactActivity extends AppCompatActivity {
                                         model1.setSelected(true);
                                     }else {
                                         model1.setSelected(false);
-                                        serviceListModels.remove(position);
+                                        try {
+                                            serviceListModels.remove(position);
+                                        }catch (Exception e){
+                                            e.printStackTrace();
+                                        }
                                         linearLayout.setBackgroundDrawable(getDrawable(R.drawable.edit_text_white_background));
                                     }
                                 }

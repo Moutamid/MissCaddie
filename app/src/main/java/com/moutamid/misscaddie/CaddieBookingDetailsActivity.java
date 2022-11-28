@@ -159,8 +159,8 @@ public class CaddieBookingDetailsActivity extends AppCompatActivity {
 
     private void acceptBooking() {
         HashMap<String,Object> hashMap = new HashMap<>();
-        hashMap.put("status_title","Accepted");
-        hashMap.put("payment",false);
+        hashMap.put("status_title","payment_request");
+        //hashMap.put("payment",false);
         requestsDb.child(model.getId()).updateChildren(hashMap);
 
         startActivity(new Intent(CaddieBookingDetailsActivity.this,CaddieDashboardActivity.class));

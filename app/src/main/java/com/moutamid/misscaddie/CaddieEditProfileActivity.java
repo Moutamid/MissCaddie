@@ -206,9 +206,10 @@ public class CaddieEditProfileActivity extends AppCompatActivity {
                 hashMap.put("image",image);
                 hashMap.put("about",description);
                 db.child(currrentUser.getUid()).updateChildren(hashMap);
-                //getCaddieData();
-                startActivity(new Intent(CaddieEditProfileActivity.this, CaddieDashboardActivity.class));
-                finish();
+                getCaddieData();
+                Toast.makeText(CaddieEditProfileActivity.this, "Updated!", Toast.LENGTH_SHORT).show();
+                //startActivity(new Intent(CaddieEditProfileActivity.this, CaddieDashboardActivity.class));
+                //finish();
             }
         });
         getCaddieData();

@@ -33,6 +33,7 @@ public class CaddiePaymentRequestFragment extends Fragment {
     private FirebaseAuth mAuth;
     private FirebaseUser user;
     private ArrayList<RequestsModel> itemList;
+    private Bundle savedState = null;
 
     @Nullable
     @Override
@@ -44,14 +45,22 @@ public class CaddiePaymentRequestFragment extends Fragment {
         user = mAuth.getCurrentUser();
         db = FirebaseDatabase.getInstance().getReference().child("Requests");
         itemList = new ArrayList<>();
-        getRequests();
         requestRC.setLayoutManager(new LinearLayoutManager(getActivity()));
         requestRC.setHasFixedSize(false);
+        if (isAdded()){
+            if(savedInstanceState != null && savedState == null) {
+                savedState = savedInstanceState.getBundle("state");
+            }
+            if(savedState != null) {
+                getRequests();
+            }
+            savedState = null;
+        }
         return view;
     }
 
     private void getRequests() {
-        Query query = db.orderByChild("payment").equalTo(false);
+        Query query = db.orderByChild("status_title").equalTo("payment_request");
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -59,7 +68,9 @@ public class CaddiePaymentRequestFragment extends Fragment {
                     itemList.clear();
                     for (DataSnapshot ds : snapshot.getChildren()){
                         RequestsModel model = ds.getValue(RequestsModel.class);
-                        itemList.add(model);
+                        if(model.getCaddieId().equals(user.getUid())) {
+                            itemList.add(model);
+                        }
                     }
 
                     CaddiePaymentRequestesAdapter adapter = new CaddiePaymentRequestesAdapter(itemList, getActivity());
@@ -76,5 +87,22 @@ public class CaddiePaymentRequestFragment extends Fragment {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getRequests();
+    }
+
+    private Bundle saveState() { /* called either from onDestroyView() or onSaveInstanceState() */
+        Bundle state = new Bundle();
+        state.putCharSequence("state", "fragment");
+        return state;
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBundle("state", (savedState != null) ? savedState : saveState());
+    }
 
 }

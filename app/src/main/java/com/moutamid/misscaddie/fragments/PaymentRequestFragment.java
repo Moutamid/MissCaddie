@@ -1,5 +1,6 @@
 package com.moutamid.misscaddie.fragments;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -73,7 +74,8 @@ public class PaymentRequestFragment extends Fragment {
     private int amount = 0;
     private PaymentSheet paymentSheet;
     private String group;
-    private String caddieKey = "";
+    private String key = "";
+    private ProgressDialog progressDialog;
 
     @Nullable
     @Override
@@ -87,6 +89,7 @@ public class PaymentRequestFragment extends Fragment {
         db = FirebaseDatabase.getInstance().getReference().child("Requests");
         db1 = FirebaseDatabase.getInstance().getReference().child("BankAccounts");
         manager = new SharedPreferencesManager(getActivity());
+        progressDialog = new ProgressDialog(requireContext());
         apiKey = manager.retrieveString("apiKey","");
         pubKey = manager.retrieveString("publisherKey","");
         itemList = new ArrayList<>();
@@ -113,6 +116,11 @@ public class PaymentRequestFragment extends Fragment {
         if (paymentSheetResult instanceof PaymentSheetResult.Completed){
             Toast.makeText(getActivity(), "Payment Successful", Toast.LENGTH_SHORT).show();
             transfers();
+
+            HashMap<String,Object> hashMap = new HashMap<>();
+            hashMap.put("status_title","Accepted");
+            //hashMap.put("payment",false);
+            db.child(key).updateChildren(hashMap);
         }
     }
 
@@ -171,7 +179,8 @@ public class PaymentRequestFragment extends Fragment {
     }
 
     private void getRequests() {
-        Query query = db.orderByChild("payment").equalTo(false);
+        //Query query = db.orderByChild("payment").equalTo(false);
+        Query query = db.orderByChild("status_title").equalTo("payment_request");
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -179,7 +188,9 @@ public class PaymentRequestFragment extends Fragment {
                     itemList.clear();
                     for (DataSnapshot ds : snapshot.getChildren()){
                         RequestsModel model = ds.getValue(RequestsModel.class);
-                        itemList.add(model);
+                        if(model.getUserId().equals(user.getUid())) {
+                            itemList.add(model);
+                        }
                     }
 
                     PaymentRequestesAdapter adapter = new PaymentRequestesAdapter(itemList, getActivity());
@@ -188,7 +199,10 @@ public class PaymentRequestFragment extends Fragment {
                         @Override
                         public void onItemClick(int position, View view) {
                             RequestsModel requestsModel = itemList.get(position);
+                            progressDialog.setMessage("Please Wait.....");
+                            progressDialog.show();
                             group = requestsModel.getCaddieId();
+                            key = requestsModel.getId();
                             for (ServiceListModel services : requestsModel.getTableRows()){
                                 amount += Integer.parseInt(services.getPrice());
                             }
@@ -300,7 +314,6 @@ public class PaymentRequestFragment extends Fragment {
                             JSONObject jsonObject = new JSONObject(response);
                             clientSecret = jsonObject.getString("client_secret");
 //                            Toast.makeText(getActivity(), clientSecret, Toast.LENGTH_SHORT).show();
-
                             paymentFlow();
 
                         } catch (JSONException e) {
@@ -346,6 +359,7 @@ public class PaymentRequestFragment extends Fragment {
                 new PaymentSheet.CustomerConfiguration(
                         customerID,emphericalKey
                 )));
+        progressDialog.dismiss();
     }
 
 
