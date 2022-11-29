@@ -45,8 +45,9 @@ public class Register_Golfer extends AppCompatActivity {
     GoogleApiClient mGoogleSignInClient;
     FirebaseAuth mAuth;
     ProgressDialog dialog;
-    private DatabaseReference db;
+    private DatabaseReference db,db1;
     private SharedPreferencesManager manager;
+    boolean caddieEmail,golferEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +60,7 @@ public class Register_Golfer extends AppCompatActivity {
         manager = new SharedPreferencesManager(Register_Golfer.this);
         dialog = new ProgressDialog(Register_Golfer.this);
         db = FirebaseDatabase.getInstance().getReference().child("Golfer");
+        db1 = FirebaseDatabase.getInstance().getReference().child("Caddie");
         //cont_btn = findViewById(R.id.cont_btn2);
         b.contBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,11 +113,27 @@ public class Register_Golfer extends AppCompatActivity {
                     Animatoo.animateZoom(Register_Golfer.this);
                     dialog.dismiss();
                 }else {
-                    Intent intent = new Intent(Register_Golfer.this, SignUp_Golfer.class);
-                    intent.putExtra("email",email);
-                    startActivity(intent);
-                    Animatoo.animateZoom(Register_Golfer.this);
-                    dialog.dismiss();
+                    Query query1 = db1.orderByChild("email").equalTo(email);
+                    query1.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if(snapshot.exists()){
+                                Toast.makeText(Register_Golfer.this, "Email already taken!", Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
+                            }else {
+                                Intent intent = new Intent(Register_Golfer.this, SignUp_Golfer.class);
+                                intent.putExtra("email",email);
+                                startActivity(intent);
+                                Animatoo.animateZoom(Register_Golfer.this);
+                                dialog.dismiss();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
                 }
             }
 
@@ -177,6 +195,7 @@ public class Register_Golfer extends AppCompatActivity {
 
     }
 
+
     private void checkUserExists(String email, GoogleSignInAccount account) {
         FirebaseUser firebaseUser = mAuth.getCurrentUser();
         Query query = db.orderByChild("email").equalTo(email);
@@ -191,14 +210,31 @@ public class Register_Golfer extends AppCompatActivity {
                     Animatoo.animateZoom(Register_Golfer.this);
                     dialog.dismiss();
                 }else {
-                    manager.storeString("module","golfer");
-                    FirebaseUser firebaseUser = mAuth.getCurrentUser();
-                    Model_Golfer model_caddie = new Model_Golfer(firebaseUser.getUid()
-                            ,account.getDisplayName(),account.getEmail(),"",
-                            account.getPhotoUrl().toString());
-                    db.child(firebaseUser.getUid()).setValue(model_caddie);
-                    sendActivityToSignUp();
-                    dialog.dismiss();
+
+                    Query query1 = db1.orderByChild("email").equalTo(email);
+                    query1.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if(snapshot.exists()){
+                                Toast.makeText(Register_Golfer.this, "Email already taken!", Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
+                            }else {
+                                manager.storeString("module","golfer");
+                                FirebaseUser firebaseUser = mAuth.getCurrentUser();
+                                Model_Golfer model_caddie = new Model_Golfer(firebaseUser.getUid()
+                                        ,account.getDisplayName(),account.getEmail(),"",
+                                        account.getPhotoUrl().toString());
+                                db.child(firebaseUser.getUid()).setValue(model_caddie);
+                                sendActivityToSignUp();
+                                dialog.dismiss();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
                 }
             }
 

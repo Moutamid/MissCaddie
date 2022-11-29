@@ -50,7 +50,8 @@ public class Register_Caddie extends AppCompatActivity {
     FirebaseUser currrentUser;
     ProgressDialog dialog;
     private SharedPreferencesManager manager;
-    private DatabaseReference db;
+    private DatabaseReference db,db1;
+    boolean caddieEmail,golferEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +63,7 @@ public class Register_Caddie extends AppCompatActivity {
         currrentUser = mAuth.getCurrentUser();
         manager = new SharedPreferencesManager(Register_Caddie.this);
         db = FirebaseDatabase.getInstance().getReference().child("Caddie");
+        db1 = FirebaseDatabase.getInstance().getReference().child("Golfer");
         dialog = new ProgressDialog(Register_Caddie.this);
         //cont_btn = findViewById(R.id.cont_btn2);
         b.contBtn2.setOnClickListener(new View.OnClickListener() {
@@ -116,11 +118,27 @@ public class Register_Caddie extends AppCompatActivity {
                     Animatoo.animateZoom(Register_Caddie.this);
                     dialog.dismiss();
                 }else {
-                    Intent intent = new Intent(Register_Caddie.this, SignUp_Caddie.class);
-                    intent.putExtra("email",email);
-                    startActivity(intent);
-                    Animatoo.animateZoom(Register_Caddie.this);
-                    dialog.dismiss();
+                    Query query1 = db1.orderByChild("email").equalTo(email);
+                    query1.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if(snapshot.exists()){
+                                Toast.makeText(Register_Caddie.this, "Email already taken!", Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
+                            }else {
+                                Intent intent = new Intent(Register_Caddie.this, SignUp_Caddie.class);
+                                intent.putExtra("email",email);
+                                startActivity(intent);
+                                Animatoo.animateZoom(Register_Caddie.this);
+                                dialog.dismiss();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
                 }
             }
 
@@ -129,6 +147,7 @@ public class Register_Caddie extends AppCompatActivity {
 
             }
         });
+
     }
 
     private void signIn() {
@@ -195,13 +214,30 @@ public class Register_Caddie extends AppCompatActivity {
                     Animatoo.animateZoom(Register_Caddie.this);
                     dialog.dismiss();
                 }else {
-                    manager.storeString("module","caddie");
-                    Model_Caddie model_caddie = new Model_Caddie(firebaseUser.getUid(),
-                            account.getDisplayName(),account.getEmail(),"",
-                            account.getPhotoUrl().toString(),"","","",0,0,"","");
-                    db.child(firebaseUser.getUid()).setValue(model_caddie);
-                    sendActivityToSignUp();
-                    dialog.dismiss();
+
+                    Query query1 = db1.orderByChild("email").equalTo(email);
+                    query1.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if(snapshot.exists()){
+                                Toast.makeText(Register_Caddie.this, "Email already taken!", Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
+                            }else {
+                                manager.storeString("module","caddie");
+                                Model_Caddie model_caddie = new Model_Caddie(firebaseUser.getUid(),
+                                        account.getDisplayName(),account.getEmail(),"",
+                                        account.getPhotoUrl().toString(),"","","",0,0,"","");
+                                db.child(firebaseUser.getUid()).setValue(model_caddie);
+                                sendActivityToSignUp();
+                                dialog.dismiss();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
                 }
             }
 
