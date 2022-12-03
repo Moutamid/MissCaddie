@@ -1,11 +1,15 @@
 package com.moutamid.misscaddie.fragments;
 
+import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
 import android.text.format.DateFormat;
@@ -22,28 +26,33 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.moutamid.misscaddie.CaddieBankDetailsActivity;
 import com.moutamid.misscaddie.CaddieEditProfileActivity;
 import com.moutamid.misscaddie.CaddieProServicesActivity;
 import com.moutamid.misscaddie.MainActivity;
 import com.moutamid.misscaddie.R;
 import com.moutamid.misscaddie.SharedPreferencesManager;
+import com.moutamid.misscaddie.Splash;
 
 import java.util.Calendar;
 import java.util.Date;
 
 public class CaddieProfileFragment extends Fragment {
-    CardView profileBtn, paymentBtn,serviceBtn, privacybtn, termsbtn,logoutBtn;
+    CardView profileBtn, paymentBtn,serviceBtn, privacybtn, termsbtn,logoutBtn,deleteBtn;
     TextView welcomeText, datetext;
     private FirebaseAuth mAuth;
     private GoogleApiClient mGoogleSignInClient;
     private SharedPreferencesManager manager;
+    private DatabaseReference db;
 
     public CaddieProfileFragment() {
         // Required empty public constructor
     }
 
 
+    @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -58,7 +67,9 @@ public class CaddieProfileFragment extends Fragment {
             welcomeText = view.findViewById(R.id.text_heading);
             datetext = view.findViewById(R.id.date);
             logoutBtn = view.findViewById(R.id.logoutbtn);
+            deleteBtn = view.findViewById(R.id.deleteBtn);
             greetingMessage();
+            db = FirebaseDatabase.getInstance().getReference().child("Caddie");
             manager = new SharedPreferencesManager(getActivity());
             mAuth = FirebaseAuth.getInstance();
             termsbtn.setOnClickListener(v -> {
@@ -73,6 +84,10 @@ public class CaddieProfileFragment extends Fragment {
 
             paymentBtn.setOnClickListener(v -> {
               startActivity(new Intent(getActivity(), CaddieBankDetailsActivity.class));
+            });
+
+            deleteBtn.setOnClickListener(v -> {
+                showDeleteDialog();
             });
 
             privacybtn.setOnClickListener(v -> {
@@ -124,6 +139,36 @@ public class CaddieProfileFragment extends Fragment {
             });
         }
         return view;
+    }
+
+    private void showDeleteDialog() {
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(requireActivity());
+        LayoutInflater inflater = requireActivity().getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.delete_account_layout, null);
+        dialogBuilder.setView(dialogView);
+
+        TextView yesBtn = (TextView) dialogView.findViewById(R.id.yes);
+        yesBtn.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(),R.drawable.shape_yellow,null));
+        TextView noBtn = (TextView) dialogView.findViewById(R.id.no);
+        noBtn.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(),R.drawable.shape_red,null));
+        AlertDialog alertDialog = dialogBuilder.create();
+        yesBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                db.child(mAuth.getCurrentUser().getUid()).removeValue();
+                startActivity(new Intent(getActivity(), MainActivity.class));
+                alertDialog.dismiss();
+            }
+        });
+        noBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
+        alertDialog.show();
     }
 
     private void greetingMessage() {

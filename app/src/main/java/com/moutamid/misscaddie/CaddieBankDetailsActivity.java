@@ -3,14 +3,15 @@ package com.moutamid.misscaddie;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -38,6 +39,8 @@ public class CaddieBankDetailsActivity extends AppCompatActivity {
     private FirebaseUser user;
     private SharedPreferencesManager manager;
     private String apiKey = "";
+    ImageView backBtn;
+    private String[] typeList = {"Select Type (Individual)","Individual","Company"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +55,32 @@ public class CaddieBankDetailsActivity extends AppCompatActivity {
         user = mAuth.getCurrentUser();
         manager = new SharedPreferencesManager(CaddieBankDetailsActivity.this);
         apiKey = manager.retrieveString("apiKey","");
+        name = manager.retrieveString("name","");
+        type = manager.retrieveString("type","");
+        number = manager.retrieveString("number","");
+        routing_number = manager.retrieveString("routing","");
+        ssn = manager.retrieveString("ssn","");
+
+        if (!name.equals("") && !type.equals("") && !number.equals("") && !ssn.equals("")){
+            b.infoLayout.setVisibility(View.GONE);
+            b.detailsLayout.setVisibility(View.VISIBLE);
+            b.nametxt.setText(name);
+            b.type.setText(type);
+            b.accountNumber.setText(number);
+            b.ssnNo.setText("SSN # " + ssn);
+        }else {
+            b.infoLayout.setVisibility(View.VISIBLE);
+            b.detailsLayout.setVisibility(View.GONE);
+        }
+
+        b.backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+                Animatoo.animateSwipeLeft(CaddieBankDetailsActivity.this);
+            }
+        });
+
         b.spinnerType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -67,22 +96,85 @@ public class CaddieBankDetailsActivity extends AppCompatActivity {
         b.save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                name = b.name.getText().toString();
-                number = b.number.getText().toString();
-                routing_number = b.routingNumber.getText().toString();
-                ssn = b.ssn.getText().toString();
-                if (!name.isEmpty() &&
-                        !number.isEmpty() &&
-                        !routing_number.isEmpty() &&
-                        !type.equals("") &&
-                        !ssn.equals("")){
-                    createConnectedAccount();
+                if (validInfo()){
+                    createConnectedAccount(name,type,number,ssn);
                 }
+            }
+        });
+
+        b.edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                b.infoLayout.setVisibility(View.VISIBLE);
+                b.detailsLayout.setVisibility(View.GONE);
+                getDetails();
             }
         });
     }
 
-    private void createConnectedAccount() {
+
+    public boolean validInfo() {
+
+        name = b.name.getText().toString();
+        number = b.number.getText().toString();
+        routing_number = b.routingNumber.getText().toString();
+        ssn = b.ssn.getText().toString();
+
+        if(name.isEmpty()){
+            b.name.setError("Input Account Holder Name");
+            b.name.requestFocus();
+            return false;
+        }
+
+        if(number.isEmpty()){
+            b.number.setError("Input Account Number");
+            b.number.requestFocus();
+            return false;
+        }
+        if(routing_number.isEmpty()){
+            b.routingNumber.setError("Input Routing Number");
+            b.routingNumber.requestFocus();
+            return false;
+        }
+        if(ssn.isEmpty()){
+            b.ssn.setError("Input SSN Number");
+            b.ssn.requestFocus();
+            return false;
+        }
+
+        if (Integer.parseInt(number) < 12){
+            Toast.makeText(CaddieBankDetailsActivity.this,"Account Number must have 12 digits",Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if (Integer.parseInt(routing_number) < 9){
+            Toast.makeText(CaddieBankDetailsActivity.this,"Account Number must have 12 digits",Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if (Integer.parseInt(ssn) < 4){
+            Toast.makeText(CaddieBankDetailsActivity.this,"Account Number must have 12 digits",Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
+    }
+
+
+    private void getDetails() {
+
+        b.name.setText(name);
+        b.number.setText(number);
+        b.routingNumber.setText(routing_number);
+        b.ssn.setText(ssn);
+        for (int i = 0; i < typeList.length; i++){
+            if (typeList[i].equals(type)){
+                b.spinnerType.setSelection(i);
+            }
+        }
+
+//        String last4 = number.substring(number.length()-4);
+  //      Toast.makeText(CaddieBankDetailsActivity.this, last4, Toast.LENGTH_SHORT).show();
+    }
+
+    private void createConnectedAccount(String fname, String stype, String accountNo, String ssnNo) {
 
         Stripe.apiKey = apiKey;
 
@@ -120,6 +212,8 @@ public class CaddieBankDetailsActivity extends AppCompatActivity {
                             business_profile.put("support_phone",model.getPhone());
                             business_profile.put("url","https://www.instagram.com/lux_sesh_supply/");
 
+                            String last4 = accountNo.substring(accountNo.length()-4);
+
                             Map<String, Object> company = new HashMap<>();
                             company.put("address",support_address);
                             company.put("owners_provided",false);
@@ -131,15 +225,15 @@ public class CaddieBankDetailsActivity extends AppCompatActivity {
                             bankAccount.put("currency", "usd");
                             bankAccount.put(
                                     "account_holder_name",
-                                    name
+                                    fname
                             );
                             bankAccount.put(
                                     "account_holder_type",
-                                    type
+                                    stype
                             );
                             bankAccount.put("routing_number", routing_number);
-                            bankAccount.put("account_number", number);
-                            bankAccount.put("last4", number.substring(number.length()-4));
+                            bankAccount.put("account_number", accountNo);
+                            bankAccount.put("last4", last4);
 
                             db1.child(user.getUid()).child("dob").addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
@@ -160,7 +254,7 @@ public class CaddieBankDetailsActivity extends AppCompatActivity {
                                         individual.put("first_name",model.getName());
                                         individual.put("last_name","(Caddie)");
                                         individual.put("phone",model.getPhone());
-                                        individual.put("ssn_last_4",ssn);
+                                        individual.put("ssn_last_4", ssnNo);
 
                                         Map<String, Object> tos = new HashMap<>();
                                         Long date = System.currentTimeMillis();
@@ -179,7 +273,7 @@ public class CaddieBankDetailsActivity extends AppCompatActivity {
                                             hashMap.put("accountId",account.getId());
                                             db.child(user.getUid()).updateChildren(hashMap);
                                             Toast.makeText(CaddieBankDetailsActivity.this,"Account Created Successfully!",Toast.LENGTH_SHORT).show();
-                                            startActivity(new Intent(CaddieBankDetailsActivity.this,CaddieDashboardActivity.class));
+                                            savePreferenceData(fname,stype,accountNo,ssnNo);
                                             finish();
                                         } catch (StripeException e) {
                                             e.printStackTrace();
@@ -201,6 +295,16 @@ public class CaddieBankDetailsActivity extends AppCompatActivity {
 
                     }
                 });
+    }
+
+    private void savePreferenceData(String fname, String stype, String accountNo, String ssnNo) {
+        manager.storeString("name",fname);
+        manager.storeString("type",stype);
+        manager.storeString("routing",routing_number);
+        manager.storeString("number",accountNo);
+        manager.storeString("ssn",ssnNo);
+        b.infoLayout.setVisibility(View.GONE);
+        b.detailsLayout.setVisibility(View.VISIBLE);
     }
 
     private void saveData() {

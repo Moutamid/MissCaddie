@@ -149,28 +149,28 @@ public class SignUp_Caddie extends AppCompatActivity {
         cpassword = b.cnfrmPassword.getText().toString();
 
         if(fname.isEmpty()){
-            b.Fname.setText("Input First Name");
+            b.Fname.setError("Input First Name");
             b.Fname.requestFocus();
             return false;
         }
 
         if(lname.isEmpty()){
-            b.Lname.setText("Input Last Name");
+            b.Lname.setError("Input Last Name");
             b.Lname.requestFocus();
             return false;
         }
         if(email.isEmpty()){
-            b.email.setText("Input Email");
+            b.email.setError("Input Email");
             b.email.requestFocus();
             return false;
         }
         if(password.isEmpty()){
-            b.password.setText("Input Password");
+            b.password.setError("Input Password");
             b.password.requestFocus();
             return false;
         }
         if(cpassword.isEmpty()){
-            b.cnfrmPassword.setText("Input Confirm Password");
+            b.cnfrmPassword.setError("Input Confirm Password");
             b.cnfrmPassword.requestFocus();
             return false;
         }

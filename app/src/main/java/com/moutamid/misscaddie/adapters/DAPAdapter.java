@@ -50,7 +50,7 @@ public class DAPAdapter extends RecyclerView.Adapter<DAPAdapter.VH> {
     public void onBindViewHolder(@NonNull VH holder, int position) {
         RequestsModel model = itemList.get(position);
         String serviceList = "";
-        int price = 0;
+        double price = 0.0;
        // holder.name.setText(model.getName());
         holder.address.setText(model.getAddress());
         holder.time.setText(model.getTime());
@@ -67,7 +67,7 @@ public class DAPAdapter extends RecyclerView.Adapter<DAPAdapter.VH> {
         for (int i=0; i < model.getTableRows().size(); i++){
             String service = model.getTableRows().get(i).getTitle() +
                     " (USD$" + model.getTableRows().get(i).getPrice() + ")";
-            price = price + Integer.parseInt(model.getTableRows().get(i).getPrice());
+            price = price + Double.parseDouble(model.getTableRows().get(i).getPrice());
             if (i==2){
                 serviceList = serviceList + "\t\t" + "more";
                 break;

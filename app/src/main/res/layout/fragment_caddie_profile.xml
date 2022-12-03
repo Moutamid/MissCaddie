@@ -54,11 +54,17 @@
         android:textColor="@color/black"
         android:textSize="16sp" />
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/date">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
     <androidx.cardview.widget.CardView
         android:id="@+id/profilebtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/date"
         android:clickable="true"
         app:cardElevation="0dp"
         app:cardCornerRadius="0dp"
@@ -336,5 +342,49 @@
         </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/deleteBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/logoutbtn"
+        app:cardElevation="0dp"
+        app:cardCornerRadius="0dp"
+        app:cardBackgroundColor="@color/white"
+        android:layout_marginTop="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="15dp">
+
+            <ImageView
+                android:id="@+id/delete"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_delete"
+                android:tint="@color/redD"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                android:layout_marginLeft="15dp"
+                android:layout_toEndOf="@id/delete"
+                android:fontFamily="@font/roboto"
+                android:gravity="center_vertical"
+                android:text="Delete My Account"
+
+                android:textColor="@color/redD"
+                android:textSize="17sp" />
+
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+        </RelativeLayout>
+    </ScrollView>
+
 
 </RelativeLayout>

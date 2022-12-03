@@ -57,50 +57,51 @@ public class CaddieListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_caddie_list, container, false);
-
-        tabLayout = view.findViewById(R.id.tabsLayout);
-        mAuth = FirebaseAuth.getInstance();
-        user = mAuth.getCurrentUser();
-        viewPager = view.findViewById(R.id.ProfileViewpager);
-        todayHead = view.findViewById(R.id.head);
-        welcomeText = view.findViewById(R.id.text_heading);
-        datetext = view.findViewById(R.id.date);
-        cardView1 = view.findViewById(R.id.item_card1);
-        cardView2 = view.findViewById(R.id.item_card2);
-        cardView3 = view.findViewById(R.id.item_card3);
-        cardView4 = view.findViewById(R.id.item_card4);
-        cardView5 = view.findViewById(R.id.item_card5);
-        cardView6 = view.findViewById(R.id.item_card6);
-        cardView7 = view.findViewById(R.id.item_card7);
-        date1 = view.findViewById(R.id.calender_date1);
-        date2 = view.findViewById(R.id.calender_date2);
-        date3 = view.findViewById(R.id.calender_date3);
-        date4 = view.findViewById(R.id.calender_date4);
-        date5 = view.findViewById(R.id.calender_date5);
-        date6 = view.findViewById(R.id.calender_date6);
-        date7 = view.findViewById(R.id.calender_date7);
-        requestsDb = FirebaseDatabase.getInstance().getReference().child("Requests");
-        db = FirebaseDatabase.getInstance().getReference().child("Caddie")
-                .child(user.getUid()).child("availability");
-
-        if(savedInstanceState != null && savedState == null) {
-            savedState = savedInstanceState.getBundle("state");
-        }
-        if(savedState != null) {
-            refresh();
-        }
-        savedState = null;
         if (isAdded()) {
+            tabLayout = view.findViewById(R.id.tabsLayout);
+            mAuth = FirebaseAuth.getInstance();
+            user = mAuth.getCurrentUser();
+            viewPager = view.findViewById(R.id.ProfileViewpager);
+            todayHead = view.findViewById(R.id.head);
+            welcomeText = view.findViewById(R.id.text_heading);
+            datetext = view.findViewById(R.id.date);
+            cardView1 = view.findViewById(R.id.item_card1);
+            cardView2 = view.findViewById(R.id.item_card2);
+            cardView3 = view.findViewById(R.id.item_card3);
+            cardView4 = view.findViewById(R.id.item_card4);
+            cardView5 = view.findViewById(R.id.item_card5);
+            cardView6 = view.findViewById(R.id.item_card6);
+            cardView7 = view.findViewById(R.id.item_card7);
+            date1 = view.findViewById(R.id.calender_date1);
+            date2 = view.findViewById(R.id.calender_date2);
+            date3 = view.findViewById(R.id.calender_date3);
+            date4 = view.findViewById(R.id.calender_date4);
+            date5 = view.findViewById(R.id.calender_date5);
+            date6 = view.findViewById(R.id.calender_date6);
+            date7 = view.findViewById(R.id.calender_date7);
+            requestsDb = FirebaseDatabase.getInstance().getReference().child("Requests");
+            db = FirebaseDatabase.getInstance().getReference().child("Caddie")
+                    .child(user.getUid()).child("availability");
+
+            if (savedInstanceState != null && savedState == null) {
+                savedState = savedInstanceState.getBundle("state");
+            }
+            if (savedState != null) {
+                refresh();
+            }
+            savedState = null;
+            //if (isAdded()) {
             greetingMessage();
             getWeeksDate();
             checkWeekUpdates();
+
         }
         return view;
     }
 
     private void refresh() {
-        if (isAdded()) {
-            CaddieProfileVPadapter caddieProfileVPadapter = new CaddieProfileVPadapter(getActivity().getSupportFragmentManager());
+//        if (isAdded()) {
+            CaddieProfileVPadapter caddieProfileVPadapter = new CaddieProfileVPadapter(getChildFragmentManager());
             caddieProfileVPadapter.addFragment(new PendingFragment(), "Pending");
             caddieProfileVPadapter.addFragment(new AcceptedFragment(), "Accepted");
             caddieProfileVPadapter.addFragment(new DeclinedFragment(), "Declined");
@@ -108,7 +109,7 @@ public class CaddieListFragment extends Fragment {
 
             viewPager.setAdapter(caddieProfileVPadapter);
             tabLayout.setupWithViewPager(viewPager);
-        }
+  //      }
     }
 
     private void checkWeekUpdates() {

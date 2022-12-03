@@ -49,7 +49,7 @@ public class CaddieBookingDetailsActivity extends AppCompatActivity {
     private APIService apiService;
     private FirebaseUser user;
     private String serviceList = "";
-    private int price = 0;
+    private double price = 0.0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,7 +115,7 @@ public class CaddieBookingDetailsActivity extends AppCompatActivity {
                         ServiceListModel serviceListModel  = ds.getValue(ServiceListModel.class);
                         String service = serviceListModel.getTitle() +
                                 " (USD$" + serviceListModel.getPrice() + ")";
-                        price = price + Integer.parseInt(serviceListModel.getPrice());
+                        price = price + Double.parseDouble(serviceListModel.getPrice());
                         serviceList = serviceList + "\t\t" + service +  "\n";
                     }
 

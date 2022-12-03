@@ -172,7 +172,8 @@ public class CaddieEditProfileActivity extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(CaddieEditProfileActivity.this, CaddieDashboardActivity.class));
+                //startActivity(new Intent(CaddieEditProfileActivity.this, CaddieDashboardActivity.class));
+                finish();
             }
         });
         arrayAdapter = new ArrayAdapter<String>
@@ -206,10 +207,10 @@ public class CaddieEditProfileActivity extends AppCompatActivity {
                 hashMap.put("image",image);
                 hashMap.put("about",description);
                 db.child(currrentUser.getUid()).updateChildren(hashMap);
-                getCaddieData();
+                //getCaddieData();
                 Toast.makeText(CaddieEditProfileActivity.this, "Updated!", Toast.LENGTH_SHORT).show();
                 //startActivity(new Intent(CaddieEditProfileActivity.this, CaddieDashboardActivity.class));
-                //finish();
+                finish();
             }
         });
         getCaddieData();

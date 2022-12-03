@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
 import android.text.format.DateFormat;
@@ -29,6 +30,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
+@SuppressLint("UseCompatLoadingForDrawables")
 public class CaddieCalenderFragment extends Fragment {
     TextView welcomeText, datetext;
     View view;
@@ -64,17 +66,19 @@ public class CaddieCalenderFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_caddie_calender, container, false);
-        welcomeText = view.findViewById(R.id.text_heading);
-        datetext = view.findViewById(R.id.date);
-        greetingMessage();
-        mAuth = FirebaseAuth.getInstance();
-        currrentUser = mAuth.getCurrentUser();
-        db = FirebaseDatabase.getInstance().getReference().child("Caddie");
-        checkAvailability();
+        if (isAdded()) {
+            welcomeText = view.findViewById(R.id.text_heading);
+            datetext = view.findViewById(R.id.date);
+            greetingMessage();
+            mAuth = FirebaseAuth.getInstance();
+            currrentUser = mAuth.getCurrentUser();
+            db = FirebaseDatabase.getInstance().getReference().child("Caddie");
+            checkAvailability();
 
-        initOctTextViews();
-        initNovTextViews();
-        initDecTextViews();
+            initOctTextViews();
+            initNovTextViews();
+            initDecTextViews();
+        }
         
         return view;
     }
@@ -129,474 +133,477 @@ public class CaddieCalenderFragment extends Fragment {
     }
 
     private void setDecDatesRound(String day) {
-        if (decTv1.getText().equals(day)){
-            decTv1.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            decTv1.setTextColor(getResources().getColor(R.color.white));
-            decClick = true;
+        if (isAdded()) {
+            if (decTv1.getText().equals(day)) {
+                decTv1.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                decTv1.setTextColor(getResources().getColor(R.color.white));
+                decClick = true;
+            }
+            if (decTv2.getText().equals(day)) {
+                decTv2.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                decTv2.setTextColor(getResources().getColor(R.color.white));
+                decClick = true;
+            }
+            if (decTv3.getText().equals(day)) {
+                decTv3.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                decTv3.setTextColor(getResources().getColor(R.color.white));
+                decClick = true;
+            }
+            if (decTv4.getText().equals(day)) {
+                decTv4.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                decTv4.setTextColor(getResources().getColor(R.color.white));
+                decClick = true;
+            }
+            if (decTv5.getText().equals(day)) {
+                decTv5.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                decTv5.setTextColor(getResources().getColor(R.color.white));
+                decClick = true;
+            }
+            if (decTv6.getText().equals(day)) {
+                decTv6.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                decTv6.setTextColor(getResources().getColor(R.color.white));
+                decClick = true;
+            }
+            if (decTv7.getText().equals(day)) {
+                decTv7.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                decTv7.setTextColor(getResources().getColor(R.color.white));
+                decClick = true;
+            }
+            if (decTv8.getText().equals(day)) {
+                decTv8.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                decTv8.setTextColor(getResources().getColor(R.color.white));
+                decClick = true;
+            }
+            if (decTv9.getText().equals(day)) {
+                decTv9.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                decTv9.setTextColor(getResources().getColor(R.color.white));
+                decClick = true;
+            }
+            if (decTv10.getText().equals(day)) {
+                decTv10.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                decTv10.setTextColor(getResources().getColor(R.color.white));
+                decClick = true;
+            }
+            if (decTv11.getText().equals(day)) {
+                decTv11.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                decTv11.setTextColor(getResources().getColor(R.color.white));
+                decClick = true;
+            }
+            if (decTv12.getText().equals(day)) {
+                decTv12.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                decTv12.setTextColor(getResources().getColor(R.color.white));
+                decClick = true;
+            }
+            if (decTv13.getText().equals(day)) {
+                decTv13.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                decTv13.setTextColor(getResources().getColor(R.color.white));
+                decClick = true;
+            }
+            if (decTv14.getText().equals(day)) {
+                decTv14.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                decTv14.setTextColor(getResources().getColor(R.color.white));
+                decClick = true;
+            }
+            if (decTv15.getText().equals(day)) {
+                decTv15.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                decTv15.setTextColor(getResources().getColor(R.color.white));
+                decClick = true;
+            }
+            if (decTv16.getText().equals(day)) {
+                decTv16.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                decTv16.setTextColor(getResources().getColor(R.color.white));
+                decClick = true;
+            }
+            if (decTv17.getText().equals(day)) {
+                decTv17.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                decTv17.setTextColor(getResources().getColor(R.color.white));
+                decClick = true;
+            }
+            if (decTv18.getText().equals(day)) {
+                decTv18.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                decTv18.setTextColor(getResources().getColor(R.color.white));
+                decClick = true;
+            }
+            if (decTv19.getText().equals(day)) {
+                decTv19.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                decTv19.setTextColor(getResources().getColor(R.color.white));
+                decClick = true;
+            }
+            if (decTv20.getText().equals(day)) {
+                decTv20.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                decTv20.setTextColor(getResources().getColor(R.color.white));
+                decClick = true;
+            }
+            if (decTv21.getText().equals(day)) {
+                decTv21.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                decTv21.setTextColor(getResources().getColor(R.color.white));
+                decClick = true;
+            }
+            if (decTv22.getText().equals(day)) {
+                decTv22.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                decTv22.setTextColor(getResources().getColor(R.color.white));
+                decClick = true;
+            }
+            if (decTv23.getText().equals(day)) {
+                decTv23.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                decTv23.setTextColor(getResources().getColor(R.color.white));
+                decClick = true;
+            }
+            if (decTv24.getText().equals(day)) {
+                decTv24.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                decTv24.setTextColor(getResources().getColor(R.color.white));
+                decClick = true;
+            }
+            if (decTv25.getText().equals(day)) {
+                decTv25.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                decTv25.setTextColor(getResources().getColor(R.color.white));
+                decClick = true;
+            }
+            if (decTv26.getText().equals(day)) {
+                decTv26.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                decTv26.setTextColor(getResources().getColor(R.color.white));
+                decClick = true;
+            }
+            if (decTv27.getText().equals(day)) {
+                decTv27.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                decTv27.setTextColor(getResources().getColor(R.color.white));
+                decClick = true;
+            }
+            if (decTv28.getText().equals(day)) {
+                decTv28.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                decTv28.setTextColor(getResources().getColor(R.color.white));
+            }
+            if (decTv29.getText().equals(day)) {
+                decTv29.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                decTv29.setTextColor(getResources().getColor(R.color.white));
+                decClick = true;
+            }
+            if (decTv30.getText().equals(day)) {
+                decTv30.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                decTv30.setTextColor(getResources().getColor(R.color.white));
+                decClick = true;
+            }
+            if (decTv31.getText().equals(day)) {
+                decTv31.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                decTv31.setTextColor(getResources().getColor(R.color.white));
+                decClick = true;
+            }
         }
-        if (decTv2.getText().equals(day)){
-            decTv2.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            decTv2.setTextColor(getResources().getColor(R.color.white));
-            decClick = true;
-        }
-        if (decTv3.getText().equals(day)){
-            decTv3.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            decTv3.setTextColor(getResources().getColor(R.color.white));
-            decClick = true;
-        }
-        if (decTv4.getText().equals(day)){
-            decTv4.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            decTv4.setTextColor(getResources().getColor(R.color.white));
-            decClick = true;
-        }
-        if (decTv5.getText().equals(day)){
-            decTv5.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            decTv5.setTextColor(getResources().getColor(R.color.white));
-            decClick = true;
-        }
-        if (decTv6.getText().equals(day)){
-            decTv6.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            decTv6.setTextColor(getResources().getColor(R.color.white));
-            decClick = true;
-        }
-        if (decTv7.getText().equals(day)){
-            decTv7.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            decTv7.setTextColor(getResources().getColor(R.color.white));
-            decClick = true;
-        }
-        if (decTv8.getText().equals(day)){
-            decTv8.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            decTv8.setTextColor(getResources().getColor(R.color.white));
-            decClick = true;
-        }
-        if (decTv9.getText().equals(day)){
-            decTv9.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            decTv9.setTextColor(getResources().getColor(R.color.white));
-            decClick = true;
-        }
-        if (decTv10.getText().equals(day)){
-            decTv10.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            decTv10.setTextColor(getResources().getColor(R.color.white));
-            decClick = true;
-        }
-        if (decTv11.getText().equals(day)){
-            decTv11.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            decTv11.setTextColor(getResources().getColor(R.color.white));
-            decClick = true;
-        }
-        if (decTv12.getText().equals(day)){
-            decTv12.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            decTv12.setTextColor(getResources().getColor(R.color.white));
-            decClick = true;
-        }
-        if (decTv13.getText().equals(day)){
-            decTv13.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            decTv13.setTextColor(getResources().getColor(R.color.white));
-            decClick = true;
-        }
-        if (decTv14.getText().equals(day)){
-            decTv14.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            decTv14.setTextColor(getResources().getColor(R.color.white));
-            decClick = true;
-        }
-        if (decTv15.getText().equals(day)){
-            decTv15.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            decTv15.setTextColor(getResources().getColor(R.color.white));
-            decClick = true;
-        }
-        if (decTv16.getText().equals(day)){
-            decTv16.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            decTv16.setTextColor(getResources().getColor(R.color.white));
-            decClick = true;
-        }
-        if (decTv17.getText().equals(day)){
-            decTv17.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            decTv17.setTextColor(getResources().getColor(R.color.white));
-            decClick = true;
-        }
-        if (decTv18.getText().equals(day)){
-            decTv18.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            decTv18.setTextColor(getResources().getColor(R.color.white));
-            decClick = true;
-        }
-        if (decTv19.getText().equals(day)){
-            decTv19.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            decTv19.setTextColor(getResources().getColor(R.color.white));
-            decClick = true;
-        }
-        if (decTv20.getText().equals(day)){
-            decTv20.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            decTv20.setTextColor(getResources().getColor(R.color.white));
-            decClick = true;
-        }
-        if (decTv21.getText().equals(day)){
-            decTv21.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            decTv21.setTextColor(getResources().getColor(R.color.white));
-            decClick = true;
-        }
-        if (decTv22.getText().equals(day)){
-            decTv22.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            decTv22.setTextColor(getResources().getColor(R.color.white));
-            decClick = true;
-        }
-        if (decTv23.getText().equals(day)){
-            decTv23.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            decTv23.setTextColor(getResources().getColor(R.color.white));
-            decClick = true;
-        }
-        if (decTv24.getText().equals(day)){
-            decTv24.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            decTv24.setTextColor(getResources().getColor(R.color.white));
-            decClick = true;
-        }
-        if (decTv25.getText().equals(day)){
-            decTv25.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            decTv25.setTextColor(getResources().getColor(R.color.white));
-            decClick = true;
-        }
-        if (decTv26.getText().equals(day)){
-            decTv26.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            decTv26.setTextColor(getResources().getColor(R.color.white));
-            decClick = true;
-        }
-        if (decTv27.getText().equals(day)){
-            decTv27.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            decTv27.setTextColor(getResources().getColor(R.color.white));
-            decClick = true;
-        }
-        if (decTv28.getText().equals(day)){
-            decTv28.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            decTv28.setTextColor(getResources().getColor(R.color.white));
-        }
-        if (decTv29.getText().equals(day)){
-            decTv29.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            decTv29.setTextColor(getResources().getColor(R.color.white));
-            decClick = true;
-        }
-        if (decTv30.getText().equals(day)){
-            decTv30.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            decTv30.setTextColor(getResources().getColor(R.color.white));
-            decClick = true;
-        }
-        if (decTv31.getText().equals(day)){
-            decTv31.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            decTv31.setTextColor(getResources().getColor(R.color.white));
-            decClick = true;
-        }
-
     }
 
     private void setNovDatesRound(String day) {
-        if (novTv1.getText().equals(day)){
-            novTv1.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            novTv1.setTextColor(getResources().getColor(R.color.white));
-            novClick = true;
+        if (isAdded()) {
+            if (novTv1.getText().equals(day)) {
+                novTv1.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                novTv1.setTextColor(getResources().getColor(R.color.white));
+                novClick = true;
+            }
+            if (novTv2.getText().equals(day)) {
+                novTv2.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                novTv2.setTextColor(getResources().getColor(R.color.white));
+                novClick = true;
+            }
+            if (novTv3.getText().equals(day)) {
+                novTv3.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                novTv3.setTextColor(getResources().getColor(R.color.white));
+                novClick = true;
+            }
+            if (novTv4.getText().equals(day)) {
+                novTv4.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                novTv4.setTextColor(getResources().getColor(R.color.white));
+                novClick = true;
+            }
+            if (novTv5.getText().equals(day)) {
+                novTv5.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                novTv5.setTextColor(getResources().getColor(R.color.white));
+                novClick = true;
+            }
+            if (novTv6.getText().equals(day)) {
+                novTv6.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                novTv6.setTextColor(getResources().getColor(R.color.white));
+                novClick = true;
+            }
+            if (novTv7.getText().equals(day)) {
+                novTv7.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                novTv7.setTextColor(getResources().getColor(R.color.white));
+                novClick = true;
+            }
+            if (novTv8.getText().equals(day)) {
+                novTv8.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                novTv8.setTextColor(getResources().getColor(R.color.white));
+                novClick = true;
+            }
+            if (novTv9.getText().equals(day)) {
+                novTv9.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                novTv9.setTextColor(getResources().getColor(R.color.white));
+                novClick = true;
+            }
+            if (novTv10.getText().equals(day)) {
+                novTv10.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                novTv10.setTextColor(getResources().getColor(R.color.white));
+                novClick = true;
+            }
+            if (novTv11.getText().equals(day)) {
+                novTv11.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                novTv11.setTextColor(getResources().getColor(R.color.white));
+                novClick = true;
+            }
+            if (novTv12.getText().equals(day)) {
+                novTv12.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                novTv12.setTextColor(getResources().getColor(R.color.white));
+                novClick = true;
+            }
+            if (novTv13.getText().equals(day)) {
+                novTv13.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                novTv13.setTextColor(getResources().getColor(R.color.white));
+                novClick = true;
+            }
+            if (novTv14.getText().equals(day)) {
+                novTv14.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                novTv14.setTextColor(getResources().getColor(R.color.white));
+                novClick = true;
+            }
+            if (novTv15.getText().equals(day)) {
+                novTv15.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                novTv15.setTextColor(getResources().getColor(R.color.white));
+                novClick = true;
+            }
+            if (novTv16.getText().equals(day)) {
+                novTv16.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                novTv16.setTextColor(getResources().getColor(R.color.white));
+                novClick = true;
+            }
+            if (novTv17.getText().equals(day)) {
+                novTv17.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                novTv17.setTextColor(getResources().getColor(R.color.white));
+                novClick = true;
+            }
+            if (novTv18.getText().equals(day)) {
+                novTv18.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                novTv18.setTextColor(getResources().getColor(R.color.white));
+                novClick = true;
+            }
+            if (novTv19.getText().equals(day)) {
+                novTv19.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                novTv19.setTextColor(getResources().getColor(R.color.white));
+                novClick = true;
+            }
+            if (novTv20.getText().equals(day)) {
+                novTv20.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                novTv20.setTextColor(getResources().getColor(R.color.white));
+                novClick = true;
+            }
+            if (novTv21.getText().equals(day)) {
+                novTv21.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                novTv21.setTextColor(getResources().getColor(R.color.white));
+                novClick = true;
+            }
+            if (novTv22.getText().equals(day)) {
+                novTv22.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                novTv22.setTextColor(getResources().getColor(R.color.white));
+                novClick = true;
+            }
+            if (novTv23.getText().equals(day)) {
+                novTv23.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                novTv23.setTextColor(getResources().getColor(R.color.white));
+                novClick = true;
+            }
+            if (novTv24.getText().equals(day)) {
+                novTv24.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                novTv24.setTextColor(getResources().getColor(R.color.white));
+                novClick = true;
+            }
+            if (novTv25.getText().equals(day)) {
+                novTv25.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                novTv25.setTextColor(getResources().getColor(R.color.white));
+                novClick = true;
+            }
+            if (novTv26.getText().equals(day)) {
+                novTv26.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                novTv26.setTextColor(getResources().getColor(R.color.white));
+                novClick = true;
+            }
+            if (novTv27.getText().equals(day)) {
+                novTv27.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                novTv27.setTextColor(getResources().getColor(R.color.white));
+                novClick = true;
+            }
+            if (novTv28.getText().equals(day)) {
+                novTv28.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                novTv28.setTextColor(getResources().getColor(R.color.white));
+                novClick = true;
+            }
+            if (novTv29.getText().equals(day)) {
+                novTv29.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                novTv29.setTextColor(getResources().getColor(R.color.white));
+                novClick = true;
+            }
+            if (novTv30.getText().equals(day)) {
+                novTv30.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                novTv30.setTextColor(getResources().getColor(R.color.white));
+                novClick = true;
+            }
         }
-        if (novTv2.getText().equals(day)){
-            novTv2.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            novTv2.setTextColor(getResources().getColor(R.color.white));
-            novClick = true;
-        }
-        if (novTv3.getText().equals(day)){
-            novTv3.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            novTv3.setTextColor(getResources().getColor(R.color.white));
-            novClick = true;
-        }
-        if (novTv4.getText().equals(day)){
-            novTv4.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            novTv4.setTextColor(getResources().getColor(R.color.white));
-            novClick = true;
-        }
-        if (novTv5.getText().equals(day)){
-            novTv5.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            novTv5.setTextColor(getResources().getColor(R.color.white));
-            novClick = true;
-        }
-        if (novTv6.getText().equals(day)){
-            novTv6.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            novTv6.setTextColor(getResources().getColor(R.color.white));
-            novClick = true;
-        }
-        if (novTv7.getText().equals(day)){
-            novTv7.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            novTv7.setTextColor(getResources().getColor(R.color.white));
-            novClick = true;
-        }
-        if (novTv8.getText().equals(day)){
-            novTv8.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            novTv8.setTextColor(getResources().getColor(R.color.white));
-            novClick = true;
-        }
-        if (novTv9.getText().equals(day)){
-            novTv9.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            novTv9.setTextColor(getResources().getColor(R.color.white));
-            novClick = true;
-        }
-        if (novTv10.getText().equals(day)){
-            novTv10.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            novTv10.setTextColor(getResources().getColor(R.color.white));
-            novClick = true;
-        }
-        if (novTv11.getText().equals(day)){
-            novTv11.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            novTv11.setTextColor(getResources().getColor(R.color.white));
-            novClick = true;
-        }
-        if (novTv12.getText().equals(day)){
-            novTv12.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            novTv12.setTextColor(getResources().getColor(R.color.white));
-            novClick = true;
-        }
-        if (novTv13.getText().equals(day)){
-            novTv13.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            novTv13.setTextColor(getResources().getColor(R.color.white));
-            novClick = true;
-        }
-        if (novTv14.getText().equals(day)){
-            novTv14.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            novTv14.setTextColor(getResources().getColor(R.color.white));
-            novClick = true;
-        }
-        if (novTv15.getText().equals(day)){
-            novTv15.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            novTv15.setTextColor(getResources().getColor(R.color.white));
-            novClick = true;
-        }
-        if (novTv16.getText().equals(day)){
-            novTv16.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            novTv16.setTextColor(getResources().getColor(R.color.white));
-            novClick = true;
-        }
-        if (novTv17.getText().equals(day)){
-            novTv17.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            novTv17.setTextColor(getResources().getColor(R.color.white));
-            novClick = true;
-        }
-        if (novTv18.getText().equals(day)){
-            novTv18.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            novTv18.setTextColor(getResources().getColor(R.color.white));
-            novClick = true;
-        }
-        if (novTv19.getText().equals(day)){
-            novTv19.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            novTv19.setTextColor(getResources().getColor(R.color.white));
-            novClick = true;
-        }
-        if (novTv20.getText().equals(day)){
-            novTv20.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            novTv20.setTextColor(getResources().getColor(R.color.white));
-            novClick = true;
-        }
-        if (novTv21.getText().equals(day)){
-            novTv21.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            novTv21.setTextColor(getResources().getColor(R.color.white));
-            novClick = true;
-        }
-        if (novTv22.getText().equals(day)){
-            novTv22.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            novTv22.setTextColor(getResources().getColor(R.color.white));
-            novClick = true;
-        }
-        if (novTv23.getText().equals(day)){
-            novTv23.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            novTv23.setTextColor(getResources().getColor(R.color.white));
-            novClick = true;
-        }
-        if (novTv24.getText().equals(day)){
-            novTv24.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            novTv24.setTextColor(getResources().getColor(R.color.white));
-            novClick = true;
-        }
-        if (novTv25.getText().equals(day)){
-            novTv25.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            novTv25.setTextColor(getResources().getColor(R.color.white));
-            novClick = true;
-        }
-        if (novTv26.getText().equals(day)){
-            novTv26.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            novTv26.setTextColor(getResources().getColor(R.color.white));
-            novClick = true;
-        }
-        if (novTv27.getText().equals(day)){
-            novTv27.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            novTv27.setTextColor(getResources().getColor(R.color.white));
-            novClick = true;
-        }
-        if (novTv28.getText().equals(day)){
-            novTv28.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            novTv28.setTextColor(getResources().getColor(R.color.white));
-            novClick = true;
-        }
-        if (novTv29.getText().equals(day)){
-            novTv29.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            novTv29.setTextColor(getResources().getColor(R.color.white));
-            novClick = true;
-        }
-        if (novTv30.getText().equals(day)) {
-            novTv30.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            novTv30.setTextColor(getResources().getColor(R.color.white));
-            novClick = true;
-        }
-
     }
 
     private void setOctDatesRound(String day) {
-        if (octTv1.getText().equals(day)){
-            octTv1.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            octTv1.setTextColor(getResources().getColor(R.color.white));
-            octClick = true;
+        if(isAdded()) {
+            if (octTv1.getText().equals(day)) {
+                octTv1.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                octTv1.setTextColor(getResources().getColor(R.color.white));
+                octClick = true;
+            }
+            if (octTv2.getText().equals(day)) {
+                octTv2.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                octTv2.setTextColor(getResources().getColor(R.color.white));
+                octClick = true;
+            }
+            if (octTv3.getText().equals(day)) {
+                octTv3.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                octTv3.setTextColor(getResources().getColor(R.color.white));
+                octClick = true;
+            }
+            if (octTv4.getText().equals(day)) {
+                octTv4.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                octTv4.setTextColor(getResources().getColor(R.color.white));
+                octClick = true;
+            }
+            if (octTv5.getText().equals(day)) {
+                octTv5.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                octTv5.setTextColor(getResources().getColor(R.color.white));
+                octClick = true;
+            }
+            if (octTv6.getText().equals(day)) {
+                octTv6.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                octTv6.setTextColor(getResources().getColor(R.color.white));
+                octClick = true;
+            }
+            if (octTv7.getText().equals(day)) {
+                octTv7.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                octTv7.setTextColor(getResources().getColor(R.color.white));
+                octClick = true;
+            }
+            if (octTv8.getText().equals(day)) {
+                octTv8.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                octTv8.setTextColor(getResources().getColor(R.color.white));
+                octClick = true;
+            }
+            if (octTv9.getText().equals(day)) {
+                octTv9.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                octTv9.setTextColor(getResources().getColor(R.color.white));
+                octClick = true;
+            }
+            if (octTv10.getText().equals(day)) {
+                octTv10.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                octTv10.setTextColor(getResources().getColor(R.color.white));
+                octClick = true;
+            }
+            if (octTv11.getText().equals(day)) {
+                octTv11.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                octTv11.setTextColor(getResources().getColor(R.color.white));
+                octClick = true;
+            }
+            if (octTv12.getText().equals(day)) {
+                octTv12.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                octTv12.setTextColor(getResources().getColor(R.color.white));
+                octClick = true;
+            }
+            if (octTv13.getText().equals(day)) {
+                octTv13.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                octTv13.setTextColor(getResources().getColor(R.color.white));
+                octClick = true;
+            }
+            if (octTv14.getText().equals(day)) {
+                octTv14.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                octTv14.setTextColor(getResources().getColor(R.color.white));
+                octClick = true;
+            }
+            if (octTv15.getText().equals(day)) {
+                octTv15.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                octTv15.setTextColor(getResources().getColor(R.color.white));
+                octClick = true;
+            }
+            if (octTv16.getText().equals(day)) {
+                octTv16.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                octTv16.setTextColor(getResources().getColor(R.color.white));
+                octClick = true;
+            }
+            if (octTv17.getText().equals(day)) {
+                octTv17.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                octTv17.setTextColor(getResources().getColor(R.color.white));
+                octClick = true;
+            }
+            if (octTv18.getText().equals(day)) {
+                octTv18.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                octTv18.setTextColor(getResources().getColor(R.color.white));
+                octClick = true;
+            }
+            if (octTv19.getText().equals(day)) {
+                octTv19.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                octTv19.setTextColor(getResources().getColor(R.color.white));
+                octClick = true;
+            }
+            if (octTv20.getText().equals(day)) {
+                octTv20.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                octTv20.setTextColor(getResources().getColor(R.color.white));
+                octClick = true;
+            }
+            if (octTv21.getText().equals(day)) {
+                octTv21.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                octTv21.setTextColor(getResources().getColor(R.color.white));
+                octClick = true;
+            }
+            if (octTv22.getText().equals(day)) {
+                octTv22.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                octTv22.setTextColor(getResources().getColor(R.color.white));
+                octClick = true;
+            }
+            if (octTv23.getText().equals(day)) {
+                octTv23.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                octTv23.setTextColor(getResources().getColor(R.color.white));
+                octClick = true;
+            }
+            if (octTv24.getText().equals(day)) {
+                octTv24.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                octTv24.setTextColor(getResources().getColor(R.color.white));
+                octClick = true;
+            }
+            if (octTv25.getText().equals(day)) {
+                octTv25.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                octTv25.setTextColor(getResources().getColor(R.color.white));
+                octClick = true;
+            }
+            if (octTv26.getText().equals(day)) {
+                octTv26.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                octTv26.setTextColor(getResources().getColor(R.color.white));
+                octClick = true;
+            }
+            if (octTv27.getText().equals(day)) {
+                octTv27.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                octTv27.setTextColor(getResources().getColor(R.color.white));
+                octClick = true;
+            }
+            if (octTv28.getText().equals(day)) {
+                octTv28.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                octTv28.setTextColor(getResources().getColor(R.color.white));
+                octClick = true;
+            }
+            if (octTv29.getText().equals(day)) {
+                octTv29.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                octTv29.setTextColor(getResources().getColor(R.color.white));
+                octClick = true;
+            }
+            if (octTv30.getText().equals(day)) {
+                octTv30.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                octTv30.setTextColor(getResources().getColor(R.color.white));
+                octClick = true;
+            }
+            if (octTv31.getText().equals(day)) {
+                octTv31.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(), R.drawable.circle_yellow, null));
+                octTv31.setTextColor(getResources().getColor(R.color.white));
+                octClick = true;
+            }
         }
-        if (octTv2.getText().equals(day)){
-            octTv2.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            octTv2.setTextColor(getResources().getColor(R.color.white));
-            octClick = true;
-        }
-        if (octTv3.getText().equals(day)){
-            octTv3.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            octTv3.setTextColor(getResources().getColor(R.color.white));
-            octClick = true;
-        }
-        if (octTv4.getText().equals(day)){
-            octTv4.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            octTv4.setTextColor(getResources().getColor(R.color.white));
-            octClick = true;
-        }
-        if (octTv5.getText().equals(day)){
-            octTv5.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            octTv5.setTextColor(getResources().getColor(R.color.white));
-            octClick = true;
-        }
-        if (octTv6.getText().equals(day)){
-            octTv6.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            octTv6.setTextColor(getResources().getColor(R.color.white));
-            octClick = true;
-        }
-        if (octTv7.getText().equals(day)){
-            octTv7.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            octTv7.setTextColor(getResources().getColor(R.color.white));
-            octClick = true;
-        }
-        if (octTv8.getText().equals(day)){
-            octTv8.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            octTv8.setTextColor(getResources().getColor(R.color.white));
-            octClick = true;
-        }
-        if (octTv9.getText().equals(day)){
-            octTv9.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            octTv9.setTextColor(getResources().getColor(R.color.white));
-            octClick = true;
-        }
-        if (octTv10.getText().equals(day)){
-            octTv10.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            octTv10.setTextColor(getResources().getColor(R.color.white));
-            octClick = true;
-        }
-        if (octTv11.getText().equals(day)){
-            octTv11.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            octTv11.setTextColor(getResources().getColor(R.color.white));
-            octClick = true;
-        }
-        if (octTv12.getText().equals(day)){
-            octTv12.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            octTv12.setTextColor(getResources().getColor(R.color.white));
-            octClick = true;
-        }
-        if (octTv13.getText().equals(day)){
-            octTv13.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            octTv13.setTextColor(getResources().getColor(R.color.white));
-            octClick = true;
-        }
-        if (octTv14.getText().equals(day)){
-            octTv14.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            octTv14.setTextColor(getResources().getColor(R.color.white));
-            octClick = true;
-        }
-        if (octTv15.getText().equals(day)){
-            octTv15.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            octTv15.setTextColor(getResources().getColor(R.color.white));
-            octClick = true;
-        }
-        if (octTv16.getText().equals(day)){
-            octTv16.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            octTv16.setTextColor(getResources().getColor(R.color.white));
-            octClick = true;
-        }
-        if (octTv17.getText().equals(day)){
-            octTv17.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            octTv17.setTextColor(getResources().getColor(R.color.white));
-            octClick = true;
-        }
-        if (octTv18.getText().equals(day)){
-            octTv18.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            octTv18.setTextColor(getResources().getColor(R.color.white));
-            octClick = true;
-        }
-        if (octTv19.getText().equals(day)){
-            octTv19.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            octTv19.setTextColor(getResources().getColor(R.color.white));
-            octClick = true;
-        }
-        if (octTv20.getText().equals(day)){
-            octTv20.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            octTv20.setTextColor(getResources().getColor(R.color.white));
-            octClick = true;
-        }
-        if (octTv21.getText().equals(day)){
-            octTv21.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            octTv21.setTextColor(getResources().getColor(R.color.white));
-            octClick = true;
-        }
-        if (octTv22.getText().equals(day)){
-            octTv22.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            octTv22.setTextColor(getResources().getColor(R.color.white));
-            octClick = true;
-        }
-        if (octTv23.getText().equals(day)){
-            octTv23.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            octTv23.setTextColor(getResources().getColor(R.color.white));
-            octClick = true;
-        }
-        if (octTv24.getText().equals(day)){
-            octTv24.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            octTv24.setTextColor(getResources().getColor(R.color.white));
-            octClick = true;
-        }
-        if (octTv25.getText().equals(day)){
-            octTv25.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            octTv25.setTextColor(getResources().getColor(R.color.white));
-            octClick = true;
-        }
-        if (octTv26.getText().equals(day)){
-            octTv26.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            octTv26.setTextColor(getResources().getColor(R.color.white));
-            octClick = true;
-        }
-        if (octTv27.getText().equals(day)){
-            octTv27.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            octTv27.setTextColor(getResources().getColor(R.color.white));
-            octClick = true;
-        }
-        if (octTv28.getText().equals(day)){
-            octTv28.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            octTv28.setTextColor(getResources().getColor(R.color.white));
-            octClick = true;
-        }
-        if (octTv29.getText().equals(day)){
-            octTv29.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            octTv29.setTextColor(getResources().getColor(R.color.white));
-            octClick = true;
-        }
-        if (octTv30.getText().equals(day)){
-            octTv30.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            octTv30.setTextColor(getResources().getColor(R.color.white));
-            octClick = true;
-        }
-        if (octTv31.getText().equals(day)){
-            octTv31.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
-            octTv31.setTextColor(getResources().getColor(R.color.white));
-            octClick = true;
-        }
-
     }
 
 
@@ -611,13 +618,13 @@ public class CaddieCalenderFragment extends Fragment {
                 hashMap.put("date", availabilty);
                 db.child(currrentUser.getUid()).child("availability").child(availabilty).updateChildren(hashMap);
 
-                t.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
+                t.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(),R.drawable.circle_yellow,null));
                 t.setTextColor(getResources().getColor(R.color.white));
                 /*if (t.getBackground() != null) {
                     t.setBackgroundResource(0);
                     t.setTextColor(getResources().getColor(R.color.black));
                 } else {
-                    t.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
+                    t.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(),R.drawable.circle_yellow,null));
                     t.setTextColor(getResources().getColor(R.color.white));
                 }*/
                 octClick = true;
@@ -643,12 +650,12 @@ public class CaddieCalenderFragment extends Fragment {
                     t.setBackgroundResource(0);
                     t.setTextColor(getResources().getColor(R.color.black));
                 } else {
-                    t.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
+                    t.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(),R.drawable.circle_yellow,null));
                     t.setTextColor(getResources().getColor(R.color.white));
                     //    }
                 }*/
 
-                t.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
+                t.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(),R.drawable.circle_yellow,null));
                 t.setTextColor(getResources().getColor(R.color.white));
                 novClick = true;
             }else {
@@ -672,12 +679,12 @@ public class CaddieCalenderFragment extends Fragment {
                     t.setBackgroundResource(0);
                     t.setTextColor(getResources().getColor(R.color.black));
                 } else {
-                    t.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
+                    t.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(),R.drawable.circle_yellow,null));
                     t.setTextColor(getResources().getColor(R.color.white));
                     //    }
                 }*/
 
-                t.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
+                t.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(),R.drawable.circle_yellow,null));
                 t.setTextColor(getResources().getColor(R.color.white));
                 decClick = true;
             }else {

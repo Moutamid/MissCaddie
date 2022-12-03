@@ -2,8 +2,10 @@ package com.moutamid.misscaddie;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
 import android.app.ProgressDialog;
@@ -62,13 +64,13 @@ public class GolferProfileEditActivity extends Fragment {
     private StorageReference mStorage;
     private String name,email,password;
     private String image = "";
-    CardView privacybtn, termsbtn;
+    CardView privacybtn, termsbtn,logoutBtn,deleteBtn;
     private ProgressDialog dialog;
     FirebaseAuth mAuth;
     FirebaseUser currrentUser;
     private DatabaseReference db;
     private EditText nameTxt,passwordTxt;
-    private TextView saveBtn,emailTxt,logout;
+    private TextView saveBtn,emailTxt;
     private GoogleApiClient mGoogleSignInClient;
     private SharedPreferencesManager manager;
 
@@ -85,7 +87,8 @@ public class GolferProfileEditActivity extends Fragment {
             saveBtn = view.findViewById(R.id.save_btn);
             termsbtn = view.findViewById(R.id.termsbtn);
             privacybtn = view.findViewById(R.id.privacybtn);
-            logout = view.findViewById(R.id.logout);
+            logoutBtn = view.findViewById(R.id.logoutbtn);
+            deleteBtn = view.findViewById(R.id.deleteBtn);
             mAuth = FirebaseAuth.getInstance();
             currrentUser = mAuth.getCurrentUser();
             db = FirebaseDatabase.getInstance().getReference().child("Golfer");
@@ -122,7 +125,7 @@ public class GolferProfileEditActivity extends Fragment {
                     updateUser();
                 }
             });
-            logout.setOnClickListener(new View.OnClickListener() {
+            logoutBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     manager.storeString("module", "");
@@ -158,8 +161,43 @@ public class GolferProfileEditActivity extends Fragment {
                 }
             });
         }
+        deleteBtn.setOnClickListener(v -> {
+            showDeleteDialog();
+        });
+
         return view;
     }
+
+    private void showDeleteDialog() {
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(requireActivity());
+        LayoutInflater inflater = requireActivity().getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.delete_account_layout, null);
+        dialogBuilder.setView(dialogView);
+
+        TextView yesBtn = (TextView) dialogView.findViewById(R.id.yes);
+        yesBtn.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(),R.drawable.shape_green,null));
+        TextView noBtn = (TextView) dialogView.findViewById(R.id.no);
+        noBtn.setBackground(ResourcesCompat.getDrawable(requireContext().getResources(),R.drawable.shape_red,null));
+        AlertDialog alertDialog = dialogBuilder.create();
+        yesBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                db.child(currrentUser.getUid()).removeValue();
+                startActivity(new Intent(getActivity(), MainActivity.class));
+                alertDialog.dismiss();
+            }
+        });
+        noBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
+        alertDialog.show();
+    }
+
 
 
     private void updateUser() {

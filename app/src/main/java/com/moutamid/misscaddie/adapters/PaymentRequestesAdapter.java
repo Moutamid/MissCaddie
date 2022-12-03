@@ -54,7 +54,7 @@ public class PaymentRequestesAdapter extends RecyclerView.Adapter<PaymentRequest
     public void onBindViewHolder(@NonNull VH holder, int position) {
         RequestsModel model = itemList.get(position);
         String serviceList = "";
-        int price = 0;
+        double price = 0.0;
 
       //  holder.name.setText(model.getName());
         holder.address.setText(model.getAddress());
@@ -62,7 +62,7 @@ public class PaymentRequestesAdapter extends RecyclerView.Adapter<PaymentRequest
         holder.time.setText(model.getTime());
         for (int i=0; i < model.getTableRows().size(); i++){
             String service = model.getTableRows().get(i).getTitle() + " (USD$" + model.getTableRows().get(i).getPrice() + ")";
-            price = price + Integer.parseInt(model.getTableRows().get(i).getPrice());
+            price = price + Double.parseDouble(model.getTableRows().get(i).getPrice());
             if (i==2){
                 serviceList = serviceList + "\t\t" + "more";
                 break;
@@ -80,7 +80,6 @@ public class PaymentRequestesAdapter extends RecyclerView.Adapter<PaymentRequest
             holder.status_title.setText("(Pending)");
             holder.status_title.setTextColor(context.getResources().getColor(R.color.black_light));
             holder.butn.setBackgroundResource(R.drawable.arrow_right_green);
-            int finalPrice = price;
           /*  holder.butn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

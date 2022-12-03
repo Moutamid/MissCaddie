@@ -64,10 +64,11 @@ public class Adapter_Golfer extends RecyclerView.Adapter<Adapter_Golfer.HolderAn
         holder.catagory.setText(cat_tv);
         //holder.price.setText(price_tv);
         holder.reviews.setText(reviews_tv);
+
         if (status_tv.equals("willing")){
             holder.status.setText("Willing to Travel");
             holder.status_icon.setImageResource(R.drawable.ic_charm_tick1);
-        }else {
+        }else if (status_tv.equals("not willing")){
             holder.status.setText("Not Willing to Travel");
             holder.status_icon.setImageResource(R.drawable.ic_charm_cross);
         }

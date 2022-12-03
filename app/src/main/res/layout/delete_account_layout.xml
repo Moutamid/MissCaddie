@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Delete My Account"
+            android:textColor="#ff0000"
+            android:gravity="center"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Are you sure you want to permanently \ndelete your account?"
+            android:textColor="#000000"
+            android:gravity="center"
+            android:layout_marginTop="10dp"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            android:gravity="center">
+
+
+            <TextView
+                android:id="@+id/no"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_red"
+                android:elevation="10dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="No"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/yes"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_yellow"
+                android:elevation="10dp"
+                android:layout_marginLeft="20dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="Yes"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

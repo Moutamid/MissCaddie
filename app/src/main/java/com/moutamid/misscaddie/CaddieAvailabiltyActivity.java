@@ -676,24 +676,26 @@ public class CaddieAvailabiltyActivity extends AppCompatActivity{
 
     }
 
-
     @SuppressLint("NewApi")
     public void OctoberDatesClick(View view) {
       //  if (isAdded()) {
             TextView t = (TextView) view;
             availabilty = t.getText() + " Oct";
-            if (!octClick) {
+            if (t.getBackground() == null) {
                 // String key = t.getText().toString();
                 HashMap<String, Object> hashMap = new HashMap<>();
                 hashMap.put("date", availabilty);
                 db.child(currrentUser.getUid()).child("availability").child(availabilty).updateChildren(hashMap);
-                if (t.getBackground() != null) {
+
+                t.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
+                t.setTextColor(getResources().getColor(R.color.white));
+                /*if (t.getBackground() != null) {
                     t.setBackgroundResource(0);
                     t.setTextColor(getResources().getColor(R.color.black));
                 } else {
                     t.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
                     t.setTextColor(getResources().getColor(R.color.white));
-                }
+                }*/
                 octClick = true;
             } else {
                 //String key = t.getText().toString();
@@ -709,53 +711,60 @@ public class CaddieAvailabiltyActivity extends AppCompatActivity{
         //if (isAdded()) {
             TextView t = (TextView) view;
             availabilty = t.getText() + " Nov";
-            if (!novClick) {
+            if (t.getBackground() == null) {
                 HashMap<String, Object> hashMap = new HashMap<>();
                 hashMap.put("date", availabilty);
                 db.child(currrentUser.getUid()).child("availability").child(availabilty).updateChildren(hashMap);
-                if (t.getBackground() != null) {
+                /*if (t.getBackground() != null) {
                     t.setBackgroundResource(0);
                     t.setTextColor(getResources().getColor(R.color.black));
                 } else {
                     t.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
                     t.setTextColor(getResources().getColor(R.color.white));
                     //    }
-                }
+                }*/
+
+                t.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
+                t.setTextColor(getResources().getColor(R.color.white));
                 novClick = true;
             }else {
                 db.child(currrentUser.getUid()).child("availability").child(availabilty).removeValue();
                 t.setBackgroundResource(0);
                 t.setTextColor(getResources().getColor(R.color.black));
                 novClick = false;
-            }
-     //   }
+          //  }
+        }
     }
     public void DecemberDatesClick(View view) {
-       // if (isAdded()) {
+        //if (isAdded()) {
             TextView t = (TextView) view;
             availabilty = t.getText() + " Dec";
 
-            if (!decClick) {
+            if (t.getBackground() == null) {
                 HashMap<String, Object> hashMap = new HashMap<>();
                 hashMap.put("date", availabilty);
                 db.child(currrentUser.getUid()).child("availability").child(availabilty).updateChildren(hashMap);
-                if (t.getBackground() != null) {
+                /*if (t.getBackground() != null) {
                     t.setBackgroundResource(0);
                     t.setTextColor(getResources().getColor(R.color.black));
                 } else {
                     t.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
                     t.setTextColor(getResources().getColor(R.color.white));
                     //    }
-                }
+                }*/
+
+                t.setBackground(getResources().getDrawable(R.drawable.circle_yellow));
+                t.setTextColor(getResources().getColor(R.color.white));
                 decClick = true;
             }else {
                 db.child(currrentUser.getUid()).child("availability").child(availabilty).removeValue();
                 t.setBackgroundResource(0);
                 t.setTextColor(getResources().getColor(R.color.black));
                 decClick = false;
-            }
-        //}
+          //  }
+        }
     }
+
 
 
     private void initOctTextViews() {
