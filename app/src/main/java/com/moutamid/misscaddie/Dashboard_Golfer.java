@@ -33,7 +33,7 @@ public class Dashboard_Golfer extends AppCompatActivity {
 
     BottomNavigationView navigationView;
     FrameLayout fragmentLayouts;
-    private String state,status,date;
+  //  private String state,status,date;
     private boolean filter = false;
     private DatabaseReference db;
     private SharedPreferencesManager manager;
@@ -45,18 +45,18 @@ public class Dashboard_Golfer extends AppCompatActivity {
         navigationView = findViewById(R.id.bottomNavigation);
         fragmentLayouts = findViewById(R.id.fragment_container);
         navigationView.setItemIconTintList(null);
-        state = getIntent().getStringExtra("state");
-        status = getIntent().getStringExtra("status");
-        date = getIntent().getStringExtra("date");
+    //    state = getIntent().getStringExtra("state");
+      //  status = getIntent().getStringExtra("status");
+        //date = getIntent().getStringExtra("date");
         filter = getIntent().getBooleanExtra("filter",false);
         manager = new SharedPreferencesManager(Dashboard_Golfer.this);
-        db = FirebaseDatabase.getInstance().getReference().child("Stripe");
+        db = FirebaseDatabase.getInstance().getReference().child("PayPal");
         if (filter){
             GolferHomeFragment fragment = new GolferHomeFragment();
             Bundle b = new Bundle();
-            b.putString("state",state);
-            b.putString("status",status);
-            b.putString("date",date);
+            //b.putString("state",state);
+            //b.putString("status",status);
+           // b.putString("date",date);
             b.putBoolean("filter",filter);
             fragment.setArguments(b);
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
@@ -117,10 +117,10 @@ public class Dashboard_Golfer extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()){
-                    String apiKey = snapshot.child("api_key").getValue().toString();
-                    String pubKey = snapshot.child("publisher_key").getValue().toString();
+                    String apiKey = snapshot.child("appId").getValue().toString();
+                  //  String pubKey = snapshot.child("publisher_key").getValue().toString();
                     manager.storeString("apiKey",apiKey);
-                    manager.storeString("publisherKey",pubKey);
+                    //manager.storeString("publisherKey",pubKey);
                 }
             }
 

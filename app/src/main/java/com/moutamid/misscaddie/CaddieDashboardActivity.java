@@ -103,7 +103,7 @@ public class CaddieDashboardActivity extends AppCompatActivity {
         });
 
         checkIfExists();
-        getStripeDetails();
+        //getStripeDetails();
 
     }
 
@@ -178,6 +178,40 @@ public class CaddieDashboardActivity extends AppCompatActivity {
      * Errors TODO
      * */
 
+    public void JanuaryDatesClick(View v) {
+        calenderFragment.JanuaryDatesClick(v);
+    }
+
+    public void FebruaryDatesClick(View v) {
+        calenderFragment.FebruaryDatesClick(v);
+    }
+
+    public void MarchDatesClick(View v) {
+        calenderFragment.MarchDatesClick(v);
+    }
+
+    public void AprilDatesClick(View v) {
+        calenderFragment.AprilDatesClick(v);
+    }
+
+    public void MayDatesClick(View v) {
+        calenderFragment.MayDatesClick(v);
+    }
+
+    public void JuneDatesClick(View v) {
+        calenderFragment.JuneDatesClick(v);
+    }
+    public void JulyDatesClick(View v) {
+        calenderFragment.JulyDatesClick(v);
+    }
+
+    public void AugustDatesClick(View v) {
+        calenderFragment.AugustDatesClick(v);
+    }
+
+    public void SeptemberDatesClick(View v) {
+        calenderFragment.SeptemberDatesClick(v);
+    }
     public void OctoberDatesClick(View v) {
         calenderFragment.OctoberDatesClick(v);
     }

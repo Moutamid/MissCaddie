@@ -5,6 +5,13 @@ pluginManagement {
         mavenCentral()
         maven { url 'https://jitpack.io' }
         jcenter()
+        /*maven {
+            url "https://cardinalcommerceprod.jfrog.io/artifactory/android"
+            credentials {
+                username 'braintree_team_sdk'
+                password 'AKCp8jQcoDy2hxSWhDAUQKXLDPDx6NYRkqrgFLRc3qDrayg6rrCbJpsKKyMwaykVL8FWusJpp'
+            }
+        }*/
     }
 }
 dependencyResolutionManagement {
@@ -13,6 +20,13 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         maven { url 'https://jitpack.io' }
+      /*  maven {
+            url "https://cardinalcommerceprod.jfrog.io/artifactory/android"
+            credentials {
+                username 'digiconnect.tyler_api1.gmail.com'
+                password 'WQ96JEDLJ23BBNM4'
+            }
+        }*/
         jcenter()
     }
 }

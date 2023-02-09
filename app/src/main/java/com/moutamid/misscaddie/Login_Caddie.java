@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,32 +26,31 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.moutamid.misscaddie.databinding.ActivityLoginCaddieBinding;
-import com.moutamid.misscaddie.databinding.ActivityLoginGolferBinding;
 import com.moutamid.misscaddie.models.Model_Caddie;
 
 public class Login_Caddie extends AppCompatActivity {
     TextView signInBtn;
-    private ActivityLoginCaddieBinding b;
     FirebaseAuth mAuth;
     FirebaseUser currrentUser;
     ProgressDialog dialog;
     private DatabaseReference db;
     private String email,password;
+    private EditText emailTxt,passTxt;
     private SharedPreferencesManager manager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        b = ActivityLoginCaddieBinding.inflate(getLayoutInflater());
-        setContentView(b.getRoot());
+        setContentView(R.layout.activity_login_caddie);
         manager = new SharedPreferencesManager(Login_Caddie.this);
         mAuth = FirebaseAuth.getInstance();
         currrentUser = mAuth.getCurrentUser();
         db = FirebaseDatabase.getInstance().getReference().child("Caddie");
         signInBtn = findViewById(R.id.signInBtn2);
         email = getIntent().getStringExtra("email");
-        b.email.setText(email);
+        emailTxt = findViewById(R.id.email);
+        passTxt = findViewById(R.id.password);
+        emailTxt.setText(email);
         changeStatusBarColor(this,R.color.yellow);
         signInBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,18 +126,19 @@ public class Login_Caddie extends AppCompatActivity {
                 });
     }
 
+
     public boolean validInfo() {
-        email = b.email.getText().toString();
-        password = b.password.getText().toString();
+        email = emailTxt.getText().toString();
+        password = passTxt.getText().toString();
 
         if(email.isEmpty()){
-            b.email.setText("Input Email");
-            b.email.requestFocus();
+            emailTxt.setText("Input Email");
+            emailTxt.requestFocus();
             return false;
         }
         if(password.isEmpty()){
-            b.password.setText("Input Password");
-            b.password.requestFocus();
+            passTxt.setText("Input Password");
+            passTxt.requestFocus();
             return false;
         }
         return true;

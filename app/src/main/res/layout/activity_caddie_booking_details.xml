@@ -69,7 +69,6 @@
         android:layout_marginTop="15dp"
         android:layout_toEndOf="@id/profile_img"
         android:gravity="center_vertical"
-        android:text="M. Moutamid"
         android:id="@+id/name"
         android:textColor="@color/black"
         android:textSize="18sp"

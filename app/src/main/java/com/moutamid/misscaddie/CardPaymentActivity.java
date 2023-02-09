@@ -2,17 +2,31 @@ package com.moutamid.misscaddie;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.os.StrictMode;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,313 +38,431 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.moutamid.misscaddie.models.CreditCard;
-import com.stripe.Stripe;
-import com.stripe.exception.StripeException;
-import com.stripe.model.PaymentIntent;
-import com.stripe.model.Token;
-import com.stripe.model.Transfer;
-import com.stripe.param.PaymentIntentCreateParams;
-import com.stripe.param.TransferCreateParams;
+import com.moutamid.misscaddie.models.Model_Caddie;
+import com.moutamid.misscaddie.models.PayPalSeller;
+import com.paypal.android.MEP.CheckoutButton;
+import com.paypal.android.MEP.PayPal;
+import com.paypal.android.MEP.PayPalActivity;
+import com.paypal.android.MEP.PayPalAdvancedPayment;
+import com.paypal.android.MEP.PayPalPayment;
+import com.paypal.android.MEP.PayPalReceiverDetails;
 
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
-public class CardPaymentActivity extends AppCompatActivity {
+public class CardPaymentActivity extends AppCompatActivity implements View.OnClickListener {
 
-    TextView submit;
-
-    private TextView card_number;
-    private TextView card_expire;
-    private TextView card_cvv;
-    private TextView card_name;
-    private ProgressDialog dialog;
-
-    private ImageView card_logo;
-
-    private TextInputEditText et_card_number;
-    private TextInputEditText et_expire;
-    private TextInputEditText et_cvv;
-    private TextInputEditText et_name;
-    private boolean findFlag = false;
-    int amount = 0;
+    double amount = 0.0;
     private String id;
+    private List<PayPalSeller> payPalSellerList;
+    private RelativeLayout mainLayout;
+    private static final int RC_READ_HONE_STATE = 1;
+    public static String IPN_URL = "http://example.com/paypalpaymenttest/index.php";
+    // The PayPal environment to be used - can also be ENV_NONE and ENV_LIVE.
+    private static final int environment = PayPal.ENV_LIVE;
+    // The ID of your application that you received from PayPal. This is the default sandbox ID right now.
+    //private static final String appID = "APP-80W284485P519543T APP-0UT88657EL135842B";
+    private static final int request = 1;
+    // The amount that will be paid.
+    private static BigDecimal PAYMENT_AMOUNT = null;
+    // An ID used to update a database should you so choose to use it.
+    private static String PAYMENT_ID = null;
+    // The recipient of the payment.
+    private static String RECIPIENT_EMAIL = null;
+
+    protected static final int INITIALIZE_SUCCESS = 0;
+    protected static final int INITIALIZE_FAILURE = 1;
+
+    // Rather than call findViewByID all the time just store commonly used views.
+    TextView labelSimplePayment;
+    LinearLayout layoutSimplePayment;
+    CheckoutButton launchSimplePayment;
+    LinearLayout paypalButtonWrapper;
+    Button exitApp;
+    TextView title;
+    TextView info;
+    TextView extra;
+
+    public static String resultTitle;
+    public static String resultInfo;
+    public static String resultExtra;
+    private String appID = "";
+    private SharedPreferencesManager manager;
 
 
+    @SuppressLint({"WrongViewCast", "MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        // Initialization cannot be done on the main thread.
+        Thread libraryInitializationThread = new Thread() {
+            @Override
+            public void run() {
+                makePaypalPaymentButton();
+                // The library is initialized so let's create our CheckoutButton and update the UI.
+            }
+        };
+        libraryInitializationThread.start();
         setContentView(R.layout.activity_card_payment);
-        card_number = findViewById(R.id.card_number);
-        card_expire = findViewById(R.id.card_expire);
-        card_cvv = findViewById(R.id.card_cvv);
-        card_name = findViewById(R.id.card_name);
-        amount = getIntent().getIntExtra("price",0);
+        manager = new SharedPreferencesManager(CardPaymentActivity.this);
+        appID = manager.retrieveString("apiKey","");
+//        mainLayout = findViewById(R.id.paypalButton);
+        info = (TextView)findViewById(R.id.info);
+
+        layoutSimplePayment = (LinearLayout)findViewById(R.id.layoutSimplePayment);
+        labelSimplePayment = (TextView)findViewById(R.id.labelSimplePayment);
+        title = (TextView)findViewById(R.id.title);
+        info = (TextView)findViewById(R.id.info);
+        extra = (TextView)findViewById(R.id.extra);
+        exitApp = (Button)findViewById(R.id.exitApp);
+        paypalButtonWrapper = (LinearLayout)findViewById(R.id.paypalButtonWrapper);
+        amount = getIntent().getDoubleExtra("price",0.0);
         id = getIntent().getStringExtra("id");
-
-        card_logo = findViewById(R.id.card_logo);
-        dialog = new ProgressDialog(CardPaymentActivity.this);
-        et_card_number = findViewById(R.id.et_card_number);
-        et_expire = findViewById(R.id.et_expire);
-        et_cvv = findViewById(R.id.et_cvv);
-        et_name = findViewById(R.id.et_name);
-        submit = findViewById(R.id.submit);
-        et_name.setFilters(new InputFilter[] {new InputFilter.AllCaps()});
-
-        et_expire.addTextChangedListener(MaskEditUtil.mask(et_expire, MaskEditUtil.FORMAT_DATE_CARD));
-
-        et_card_number.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int count) {
-                if (charSequence.toString().trim().length() == 0) {
-                    card_number.setText("**** **** **** ****");
-                    findFlag = false;
-                    card_logo.setVisibility(View.INVISIBLE);
-                } else {
-                    String number = insertPeriodically(charSequence.toString().trim(), " ", 4);
-                    card_number.setText(number);
-                    if(!findFlag){
-                        setFlagCard(number);
-                    }
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if(et_card_number.getText().toString().equals("5")){
-                    findFlag = false;
-                    card_logo.setVisibility(View.INVISIBLE);
-                }
-            }
-        });
-
-        et_expire.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int count) {
-                if (charSequence.toString().trim().length() == 0) {
-                    card_expire.setText("MM/AA");
-                } else {
-                    String exp = insertPeriodically(charSequence.toString().trim(), "", 2);
-                    card_expire.setText(exp);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-
-
-        et_cvv.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int count) {
-                if (charSequence.toString().trim().length() == 0) {
-                    card_cvv.setText("***");
-                } else {
-                    card_cvv.setText(charSequence.toString().trim());
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-        et_name.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int count) {
-                if (charSequence.toString().trim().length() == 0) {
-                    card_name.setText("Enter owner name");
-                } else {
-                    card_name.setText(charSequence.toString().trim());
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-        submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-                if(validate()){
-                    String cardMonth = et_expire.getText().toString().substring(0,2);
-                    String cardYear = et_expire.getText().toString().substring(3,5);
-                    CreditCard card = new CreditCard(et_card_number.getText().toString(),
-                            cardMonth,
-                            cardYear,
-                            et_cvv.getText().toString());
-
-                    addCard(card);
-                }
-
-            }
-        });
+        payPalSellerList = new ArrayList<>();
     }
 
-    private void startCheckout() {
-
-    }
-
-    public boolean validate(){
-
-        if(et_card_number.getText().toString().equals("") ||
-                et_expire.getText().toString().equals("") ||
-                et_cvv.getText().toString().equals("") ||
-                et_name.getText().toString().equals("")){
-
-            Toast.makeText(this, "Enter Card number!", Toast.LENGTH_SHORT).show();
-            return false;
-        } else if(et_card_number.getText().toString().length() != 16){
-            Toast.makeText(this, "Card number must have 16 characters", Toast.LENGTH_SHORT).show();
-            return false;
-        } else if(!ValidateCardNumber.isValid(et_card_number.getText().toString())){
-            Toast.makeText(this, "Invalid Card number!", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-        return true;
-    }
-
-    public void setFlagCard(String number){
-
-        for(int i=0; i<number.length(); i++){
-            char c = number.charAt(i);
-            if(i == 0){
-                if(c == '4'){
-                    card_logo.setVisibility(View.VISIBLE);
-                    card_logo.setImageResource(R.drawable.ic_visa_new);
-                    findFlag = true;
-                }
-            } else if(i == 1){
-                if(Integer.parseInt(et_card_number.getText().toString().substring(0,2)) > 50 && Integer.parseInt(et_card_number.getText().toString().substring(0,2)) < 56){
-                    card_logo.setVisibility(View.VISIBLE);
-                    card_logo.setImageResource(R.drawable.mastercard);
-                    findFlag = true;
-                }
+    private Handler hRefresh = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case INITIALIZE_SUCCESS:
+                    setupButtons();
+                    break;
+                case INITIALIZE_FAILURE:
+                    showFailure();
+                    break;
             }
         }
+    };
 
-    }
-
-    public static String insertPeriodically(String text, String insert, int period) {
-        StringBuilder builder = new StringBuilder(text.length() + insert.length() * (text.length() / period) + 1);
-        int index = 0;
-        String prefix = "";
-        while (index < text.length()) {
-            builder.append(prefix);
-            prefix = insert;
-            builder.append(text.substring(index, Math.min(index + period, text.length())));
-            index += period;
+    public void makePaypalPaymentButton() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) ==
+                PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_WIFI_STATE) ==
+                PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_NETWORK_STATE) ==
+                PackageManager.PERMISSION_GRANTED
+        )  {
+            initLibrary();
+        } else {
+            ActivityCompat.requestPermissions(this, new String[]{
+                    Manifest.permission.READ_PHONE_STATE,
+                    Manifest.permission.ACCESS_WIFI_STATE,
+                    Manifest.permission.ACCESS_NETWORK_STATE}, RC_READ_HONE_STATE);
         }
-        return builder.toString();
     }
 
-
-    private void addCard(CreditCard creditCard) {
-
-        dialog.setTitle("Adding Card Information");
-        dialog.setMessage("Please wait, while adding your card info.....");
-        dialog.setCanceledOnTouchOutside(true);
-        dialog.show();
-        long total = amount * 100;
-        String clientId = "cus_MhKFyY6eUDXTYd";
-
-        Stripe.apiKey = "";
-
-        Map<String, Object> card = new HashMap<>();
-        card.put("number", creditCard.getNumber());
-        card.put("exp_month", creditCard.getExpiryMonth());
-        card.put("exp_year", creditCard.getExpiryYear());
-        card.put("cvc", creditCard.getCcv());
-        Map<String, Object> params = new HashMap<>();
-        params.put("card", card);
+    /*private void getAppId() {
+        HttpClient httpclient = new DefaultHttpClient();
+        HttpPost httppost = new HttpPost("https://api.sandbox.paypal.com/v1/oauth2/token");
 
         try {
-            Token token = Token.create(params);
-            Log.d("Token",token.getId());
-            PaymentIntentCreateParams params1 =
-                    PaymentIntentCreateParams.builder()
-                            .addPaymentMethodType("card")
-                            .setAmount(total)
-                            .setCurrency("usd")
-                            .setTransferGroup("{ORDER10}")
-                            .build();
-            PaymentIntent paymentIntent = PaymentIntent.create(params1);
-            Log.d("payment","" + paymentIntent.getAmount());
-            DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("BankAccounts");
-            db.child(id).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.exists()){
-                        String key = snapshot.child("token").getValue().toString();
-                        TransferCreateParams transferParams =
-                                TransferCreateParams.builder()
-                                        .setAmount(7000L)
-                                        .setCurrency("usd")
-                                        .setDestination(key)
-                                        .setTransferGroup("{ORDER10}")
-                                        .build();
+            String text="CLIENT ID"+":"+"SECRET ID";
+            byte[] data = text.getBytes("UTF-8");
+            String base64 = Base64.encodeToString(data, Base64.NO_WRAP);
 
-                        try {
-                            Transfer transfer = Transfer.create(transferParams);
-                            Log.d("Transfer1",transfer.getId());
-                        } catch (StripeException e) {
-                            e.printStackTrace();
-                        }
+            httppost.addHeader("content-type", "application/x-www-form-urlencoded");
+            httppost.addHeader("Authorization", "Basic " + base64);
 
-                    }
-                }
+            StringEntity se=new StringEntity("grant_type=client_credentials");
+            httppost.setEntity(se);
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
+// Execute HTTP Post Request
+            HttpResponse response = httpclient.execute(httppost);
+            String responseContent = EntityUtils.toString(response.getEntity());
+            Log.d("Response", responseContent );
 
-                }
-            });
-            TransferCreateParams secondTransferParams =
-                    TransferCreateParams.builder()
-                            .setAmount(2000L)
-                            .setCurrency("usd")
-                            .setDestination(clientId)
-                            .setTransferGroup("{ORDER10}")
-                            .build();
-            Transfer secondTransfer = Transfer.create(secondTransferParams);
-            Log.d("Transfer2",secondTransfer.getId());
+        } catch (ClientProtocolException e) {
+// TODO Auto-generated catch block
+        } catch (IOException e) {
+// TODO Auto-generated catch block
+        }
+    }*/
 
-            dialog.dismiss();
-        } catch (StripeException e) {
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == RC_READ_HONE_STATE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                initLibrary();
+            }
+        }
+    }
+    public void setupButtons() {
+        PayPal pp = PayPal.getInstance();
+
+        // Get the CheckoutButton. There are five different sizes.
+        // The text on the button can either be of type TEXT_PAY or TEXT_DONATE.
+        launchSimplePayment = pp.getCheckoutButton(this, PayPal.BUTTON_194x37, CheckoutButton.TEXT_PAY);
+        // You'll need to have an OnClickListener for the CheckoutButton.
+        // For this application, PayActivity implements OnClickListener and we
+        // have the onClick() method below.
+        launchSimplePayment.setOnClickListener(this);
+        // The CheckoutButton is an android LinearLayout so we can add it to our display like any other View.
+        paypalButtonWrapper.addView(launchSimplePayment);
+        // Show our labels
+        labelSimplePayment.setVisibility(View.VISIBLE);
+        info.setText("");
+        info.setVisibility(View.GONE);
+    }
+
+    public void showFailure() {
+        title.setText("FAILURE");
+        info.setText(R.string.pp_initialization_failure);
+        title.setVisibility(View.VISIBLE);
+        info.setVisibility(View.VISIBLE);
+    }
+
+    private void initLibrary() {
+        // Only need to initialize the library once.
+        try {
+            PayPal pp = PayPal.getInstance();
+            if (pp == null) {
+                // Initialize PayPal
+
+                pp = PayPal.initWithAppID(this, appID, environment);
+//                pp = PayPal.initWithAppID(getApplicationContext(), appID, environment);
+                // Sender will pay fees. By default this is the receiver.
+                // It's free within the U.S. to send money to family and friends when you use only your PayPal
+                // balance or bank account, or a combination of their PayPal balance and bank account.
+                // So this really shouldn't come into play in our app.
+                pp.setLanguage("en_US");
+                pp.setFeesPayer(PayPal.FEEPAYER_EACHRECEIVER);
+                // Shipping for Peer to Peer payments is pointless.
+                pp.setShippingEnabled(false);
+                //   Toast.makeText(this, "Abc", Toast.LENGTH_SHORT).show();
+            }
+
+            if (pp.isLibraryInitialized()) {
+                hRefresh.sendEmptyMessage(INITIALIZE_SUCCESS);
+            } else {
+                hRefresh.sendEmptyMessage(INITIALIZE_FAILURE);
+            }
+        }catch (Exception e){
             e.printStackTrace();
-            Log.d("Error",e.getMessage());
+        //    Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private PayPalAdvancedPayment extractPayPalinformation(List<PayPalSeller> sellerList) {
+        PayPalAdvancedPayment payPalAdvancedPayment = new PayPalAdvancedPayment();
+        for (PayPalSeller seller : sellerList) {
+            PayPalReceiverDetails payPalReceiverDetails = new PayPalReceiverDetails();
+            BigDecimal st = new BigDecimal(seller.getAmount());
+            //     st = st.setScale(2, RoundingMode.HALF_UP);
+            payPalReceiverDetails.setSubtotal(st);
+            payPalReceiverDetails.setRecipient(seller.getEmail());
+            payPalReceiverDetails.setPaymentType(PayPal.PAY_TYPE_PARALLEL);
+            payPalAdvancedPayment.getReceivers().add(payPalReceiverDetails);
+        }
+        payPalAdvancedPayment.setCurrencyType("USD");
+        //payPalAdvancedPayment.setMemo("123");
+        payPalAdvancedPayment.setIpnUrl(IPN_URL);
+        return payPalAdvancedPayment;
+    }
+
+
+    /*public static class PaypalAdaptiveConfiguration {
+        public static final int ENVIRONMENT = PayPal.ENV_NONE;
+        public static String APP_ID = "APP-80W284485P519543T";
+        public static String IPN_URL = "http://example.com/paypalpaymenttest/index.php";
+    }
+    public void initLibrary() {
+        PayPal pp = PayPal.getInstance();
+        if (pp == null) {
+            // This is the main initialization call that takes in your Context,
+            // the Application ID, and the server you would like to connect to.
+            pp = PayPal.initWithAppID(getApplicationContext(), PaypalAdaptiveConfiguration.APP_ID,
+                    PaypalAdaptiveConfiguration.ENVIRONMENT);
+
+            pp.setLanguage("en_US"); // Sets the language for the library.
+            pp.setFeesPayer(PayPal.FEEPAYER_EACHRECEIVER);
+            pp.setShippingEnabled(false);
+            pp.setDynamicAmountCalculationEnabled(false);
+            mPaypalLibraryInit = true;
+        }
+        if (mPaypalLibraryInit) {
+            showPayPalButton();
+        } else {
+            mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            mProgressDialog.setMessage("Loading PayPal Payment Library");
+            mProgressDialog.setCancelable(false);
+            mProgressDialog.show();
+            Thread newThread = new Thread(this::checkForPayPalLibraryInit);
+            newThread.start();
+        }
+    }
+
+    private void showPayPalButton() {
+        PayPal pp = PayPal.getInstance();
+        CheckoutButton launchPayPalButton = pp.getCheckoutButton(this, PayPal.BUTTON_278x43,
+                CheckoutButton.TEXT_PAY);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.
+                LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT);
+       // params.topMargin = 30;
+        params.addRule(RelativeLayout.CENTER_IN_PARENT);
+        launchPayPalButton.setLayoutParams(params);
+        launchPayPalButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mProgressDialog = ProgressDialog.show( CardPaymentActivity.this, null, "Loading...", true);
+                mProgressDialog.setCanceledOnTouchOutside(false);
+                try {
+                    getCaddieDetails();
+                    mProgressDialog.dismiss();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        //mPaypalCheckoutButtonView.setVisibility(View.GONE);
+        mainLayout.addView(launchPayPalButton);
+        //mPaypalCheckoutButtonView.performClick();
+        if (mProgressDialog != null) {
+            mProgressDialog.dismiss();
+        }
+        mProgressDialog.dismiss();
+    }*/
+
+    private void getCaddieDetails() {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Caddie")
+                .child(id);
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    Model_Caddie model_caddie = snapshot.getValue(Model_Caddie.class);
+
+                    double caddieHalf = amount*0.9;
+                    double clientHalf = amount*0.1;
+                    payPalSellerList.add(new PayPalSeller("digiconnect.tyler@gmail.com",
+                            clientHalf));
+                    payPalSellerList.add(new PayPalSeller(model_caddie.getEmail(),caddieHalf));
+
+                    PayPalAdvancedPayment payPalAdvancedPayment = extractPayPalinformation(payPalSellerList);
+
+                    Intent checkoutIntent = PayPal.getInstance().checkout(payPalAdvancedPayment, CardPaymentActivity.this,
+                            new ResultDelegate(PAYMENT_ID));
+                    // Use the android's startActivityForResult() and pass in our Intent. This will start the library.
+                    startActivityForResult(checkoutIntent, request);
+                    /*Intent checkoutIntent = PayPal.getInstance().checkout(payPalAdvancedPayment,
+                            CardPaymentActivity.this);
+                    startActivityForResult(checkoutIntent, RC_PAYPAL_ADAPTIVE);*/
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    /*private void checkForPayPalLibraryInit() {
+        while (!mPaypalLibraryInit) {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                DialogInterface.OnClickListener positiveButtonOnClickListener = new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                };
+            }
+        }
+        runOnUiThread(this::showPayPalButton);
+    }
+
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        try {
+            if (requestCode == RC_PAYPAL_ADAPTIVE) {
+                Log.d("TAG", "onActivityResult:requestCode " + requestCode);
+                Log.d("TAG", "onActivityResult:resultCode " + resultCode);
+                switch (resultCode) {
+                    case Activity.RESULT_OK:
+                        String payKey = intent.getStringExtra(PayPalActivity.EXTRA_PAY_KEY);
+                        String data = intent.getStringExtra(PayPalActivity.EXTRA_PAYMENT_STATUS);
+                        String payInfo = intent.getStringExtra(PayPalActivity.EXTRA_PAYMENT_INFO);
+                        Log.d("info",payInfo);
+                        Toast.makeText(this, "Payment Successful", Toast.LENGTH_SHORT).show();
+                  //      redirectToOrderActivity(true);
+                        break;
+                    case Activity.RESULT_CANCELED:
+                        this.finish();
+                        Toast.makeText(getApplicationContext(), "Payment Cancelled", Toast.LENGTH_SHORT).show();
+                        break;
+                    case PayPalActivity.RESULT_FAILURE:
+                        String errorMessage = intent.getStringExtra(PayPalActivity.EXTRA_ERROR_MESSAGE);
+                        String id = intent.getStringExtra(PayPalActivity.EXTRA_ERROR_ID);
+                        Log.d("paypal error", errorMessage + " " + id);
+                        Log.d("intent", intent.getExtras().toString());
+                        Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
+                        this.finish();
+                }
+            } else {
+                super.onActivityResult(requestCode, resultCode, intent);
+            }
+        } catch (Exception e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
+    }*/
+    @Override
+    public void onClick(View v) {
+        // Click handler handles both the PayPal button and the exitApp button
+        if (v == launchSimplePayment) {
+            getCaddieDetails();
+        } else if (v == exitApp) {
+            Intent in = new Intent();
+            in.putExtra("payment", "unpaid");
+            // Setting the Requestcode 1.
+            setResult(1, in);
+            finish();
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode != request) {
+            return;
+        }
+        if (resultTitle == "SUCCESS") {
+            Intent in = new Intent();
+            in.putExtra("payment", "paid");
+            setResult(22, in);
+
+        } else if (resultTitle == "FAILURE") {
+            Intent in = new Intent();
+            in.putExtra("payment", "unpaid");
+            setResult(22, in);
+        } else if (resultTitle == "CANCELED") {
+            Intent in = new Intent();
+            in.putExtra("payment", "unpaid");
+            setResult(22, in);
         }
 
+        launchSimplePayment.updateButton();
+
+        title.setText(resultTitle);
+        title.setVisibility(View.VISIBLE);
+        info.setText(resultInfo);
+        info.setVisibility(View.VISIBLE);
+        extra.setText(resultExtra);
+        extra.setVisibility(View.VISIBLE);
     }
 
 

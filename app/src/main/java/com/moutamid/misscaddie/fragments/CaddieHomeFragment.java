@@ -1,6 +1,7 @@
 package com.moutamid.misscaddie.fragments;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -18,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,8 +30,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.moutamid.misscaddie.CaddieAvailabiltyActivity;
+import com.moutamid.misscaddie.Dashboard_Golfer;
 import com.moutamid.misscaddie.MessagesActivity;
 import com.moutamid.misscaddie.R;
+import com.moutamid.misscaddie.Register_Golfer;
 import com.moutamid.misscaddie.adapters.CaddieChatListAdapter;
 import com.moutamid.misscaddie.adapters.DAPAdapter;
 import com.moutamid.misscaddie.adapters.GoflerChatListAdapter;
@@ -98,6 +103,10 @@ public class CaddieHomeFragment extends Fragment {
         db = FirebaseDatabase.getInstance().getReference().child("Caddie")
                 .child(user.getUid()).child("availability");
         viewCalender.setOnClickListener(v -> {
+
+/*            Intent intent = new Intent(getActivity(), CaddieAvailabiltyActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);*/
             navigationView.setSelectedItemId(R.id.calender_menu);
           //  FragmentManager.findFragment(view).getParentFragmentManager().beginTransaction().replace(R.id.fragment_container, new CaddieCalenderFragment()).commit();
         });

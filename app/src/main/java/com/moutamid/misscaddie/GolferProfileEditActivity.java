@@ -108,7 +108,7 @@ public class GolferProfileEditActivity extends Fragment {
                     .requestEmail()
                     .build();
             mGoogleSignInClient = new GoogleApiClient.Builder(requireActivity())
-                    .enableAutoManage(requireActivity(), new GoogleApiClient.OnConnectionFailedListener() {
+                    .enableAutoManage(requireActivity(), 1, new GoogleApiClient.OnConnectionFailedListener() {
                         @Override
                         public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
                             Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_LONG).show();
@@ -160,11 +160,10 @@ public class GolferProfileEditActivity extends Fragment {
                     e.printStackTrace();
                 }
             });
+            deleteBtn.setOnClickListener(v -> {
+                showDeleteDialog();
+            });
         }
-        deleteBtn.setOnClickListener(v -> {
-            showDeleteDialog();
-        });
-
         return view;
     }
 
@@ -225,7 +224,7 @@ public class GolferProfileEditActivity extends Fragment {
                     nameTxt.setText(name);
                     emailTxt.setText(email);
                     passwordTxt.setText(password);
-                    Glide.with(GolferProfileEditActivity.this)
+                    Glide.with(getActivity())
                             .load(image)
                             .placeholder(R.drawable.bi_person_fill)
                             .into(logo);
@@ -318,20 +317,25 @@ public class GolferProfileEditActivity extends Fragment {
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        mGoogleSignInClient.stopAutoManage(requireActivity());
+        mGoogleSignInClient.disconnect();
+
+    }
+
+    @Override
     public void onStop() {
         super.onStop();
-        if (mGoogleSignInClient != null && mGoogleSignInClient.isConnected()) {
-            mGoogleSignInClient.stopAutoManage(requireActivity());
-            mGoogleSignInClient.disconnect();
-        }
+        mGoogleSignInClient.stopAutoManage(requireActivity());
+        mGoogleSignInClient.disconnect();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (mGoogleSignInClient != null && mGoogleSignInClient.isConnected()) {
-            mGoogleSignInClient.stopAutoManage(requireActivity());
-            mGoogleSignInClient.disconnect();
-        }
+        mGoogleSignInClient.stopAutoManage(requireActivity());
+        mGoogleSignInClient.disconnect();
+
     }
 }

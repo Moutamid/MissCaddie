@@ -2,6 +2,7 @@ package com.moutamid.misscaddie;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
@@ -28,20 +30,19 @@ import com.moutamid.misscaddie.Notifications.Data;
 import com.moutamid.misscaddie.Notifications.MyResponse;
 import com.moutamid.misscaddie.Notifications.Sender;
 import com.moutamid.misscaddie.Notifications.Token;
-import com.moutamid.misscaddie.databinding.ActivityCaddieBookingDetailsBinding;
 import com.moutamid.misscaddie.listners.APIService;
 import com.moutamid.misscaddie.models.RequestsModel;
 import com.moutamid.misscaddie.models.ServiceListModel;
 
 import java.util.HashMap;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class CaddieBookingDetailsActivity extends AppCompatActivity {
 
-    private ActivityCaddieBookingDetailsBinding b;
     private RequestsModel model;
     private String name,image;
     private DatabaseReference requestsDb;
@@ -49,18 +50,31 @@ public class CaddieBookingDetailsActivity extends AppCompatActivity {
     private APIService apiService;
     private FirebaseUser user;
     private String serviceList = "";
+    private TextView nameTxt,locationtxt,totalPrice,dateTxt,timeTxt,messageTxt,acceptBtn,declineBtn,services;
+    private ImageView backBtn;
+    private CircleImageView profileImg;
     private double price = 0.0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-         b = ActivityCaddieBookingDetailsBinding.inflate(getLayoutInflater());
-        setContentView(b.getRoot());
+        setContentView(R.layout.activity_caddie_booking_details);
+        nameTxt = findViewById(R.id.name);
+        locationtxt = findViewById(R.id.place);
+        totalPrice = findViewById(R.id.totalPrice);
+        dateTxt = findViewById(R.id.date);
+        timeTxt = findViewById(R.id.time);
+        messageTxt = findViewById(R.id.message);
+        acceptBtn = findViewById(R.id.acceptBtn);
+        declineBtn = findViewById(R.id.declineBtn);
+        services = findViewById(R.id.service_list);
+        backBtn = findViewById(R.id.back_btn);
+        profileImg = findViewById(R.id.profile_img);
         model = getIntent().getParcelableExtra("requestModel");
         name = getIntent().getStringExtra("personName");
         image = getIntent().getStringExtra("personImage");
         apiService = Client.getRetrofit("https://fcm.googleapis.com/").create(APIService.class);
-        b.backBtn.setOnClickListener(v -> {
+        backBtn.setOnClickListener(v -> {
             startActivity(new Intent(CaddieBookingDetailsActivity.this,CaddieDashboardActivity.class));
             finish();
             Animatoo.animateSwipeLeft(CaddieBookingDetailsActivity.this);
@@ -68,14 +82,14 @@ public class CaddieBookingDetailsActivity extends AppCompatActivity {
         requestsDb = FirebaseDatabase.getInstance().getReference().child("Requests");
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
-        b.name.setText(name);
+        nameTxt.setText(name);
         Glide.with(CaddieBookingDetailsActivity.this)
                 .load(image)
                 .placeholder(R.drawable.bi_person_fill)
-                .into(b.profileImg);
+                .into(profileImg);
         
-        b.date.setText(model.getDate());
-        b.time.setText(model.getTime());
+        dateTxt.setText(model.getDate());
+        timeTxt.setText(model.getTime());
         getServices();
 
         /*for (int i=0; i < model.getTableRows().size(); i++){
@@ -88,15 +102,15 @@ public class CaddieBookingDetailsActivity extends AppCompatActivity {
             }
             serviceList = serviceList + "\t\t" + service +  "\n";
         }*/
-        b.place.setText(model.getAddress());
-        b.message.setText(model.getMessage());
-        b.acceptBtn.setOnClickListener(new View.OnClickListener() {
+        locationtxt.setText(model.getAddress());
+        messageTxt.setText(model.getMessage());
+        acceptBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 acceptBooking();
             }
         });
-        b.declineBtn.setOnClickListener(new View.OnClickListener() {
+        declineBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 declineBooking();
@@ -119,8 +133,8 @@ public class CaddieBookingDetailsActivity extends AppCompatActivity {
                         serviceList = serviceList + "\t\t" + service +  "\n";
                     }
 
-                    b.serviceList.setText(serviceList);
-                    b.totalPrice.setText("Total : US$ " + price);
+                    services.setText(serviceList);
+                    totalPrice.setText("Total : US$ " + price);
                  //   Toast.makeText(CaddieBookingDetailsActivity.this, "Exists", Toast.LENGTH_SHORT).show();
                 }
             }

@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,8 +28,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.moutamid.misscaddie.databinding.ActivitySignUpCaddieBinding;
-import com.moutamid.misscaddie.databinding.ActivitySignUpGolferBinding;
 import com.moutamid.misscaddie.models.Model_Caddie;
 import com.moutamid.misscaddie.models.Model_Golfer;
 
@@ -36,25 +35,28 @@ public class SignUp_Caddie extends AppCompatActivity {
 
     TextView signUpBtn, privacybtn, termsbtn;
 
-    private ActivitySignUpCaddieBinding b;
     FirebaseAuth mAuth;
     FirebaseUser currrentUser;
     ProgressDialog dialog;
     private DatabaseReference db,db1;
     private String fname,lname,email,password,cpassword;
     boolean caddieEmail,golferEmail;
+    private EditText emailTxt,fnameTxt,lnameTxt,passTxt,cpassTxt;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        b = ActivitySignUpCaddieBinding.inflate(getLayoutInflater());
-        setContentView(b.getRoot());
+        setContentView(R.layout.activity_sign_up_caddie);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(getResources().getColor(R.color.statusbarYellow));
         }
-
+        emailTxt = findViewById(R.id.email);
+        fnameTxt = findViewById(R.id.Fname);
+        lnameTxt = findViewById(R.id.Lname);
+        passTxt = findViewById(R.id.password);
+        cpassTxt = findViewById(R.id.cnfrm_password);
         signUpBtn = findViewById(R.id.signUpBtn2);
         privacybtn = findViewById(R.id.privacyBtn);
         termsbtn = findViewById(R.id.termsbtn);
@@ -64,7 +66,7 @@ public class SignUp_Caddie extends AppCompatActivity {
         db = FirebaseDatabase.getInstance().getReference().child("Caddie");
         db1 = FirebaseDatabase.getInstance().getReference().child("Golfer");
         email = getIntent().getStringExtra("email");
-        b.email.setText(email);
+        emailTxt.setText(email);
         signUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -141,37 +143,38 @@ public class SignUp_Caddie extends AppCompatActivity {
         //window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
     }
 
+
     public boolean validInfo() {
-        fname = b.Fname.getText().toString();
-        lname = b.Lname.getText().toString();
-        email = b.email.getText().toString();
-        password = b.password.getText().toString();
-        cpassword = b.cnfrmPassword.getText().toString();
+        fname = fnameTxt.getText().toString();
+        lname = lnameTxt.getText().toString();
+        email = emailTxt.getText().toString();
+        password = passTxt.getText().toString();
+        cpassword = cpassTxt.getText().toString();
 
         if(fname.isEmpty()){
-            b.Fname.setError("Input First Name");
-            b.Fname.requestFocus();
+            fnameTxt.setText("Input First Name");
+            fnameTxt.requestFocus();
             return false;
         }
 
         if(lname.isEmpty()){
-            b.Lname.setError("Input Last Name");
-            b.Lname.requestFocus();
+            lnameTxt.setText("Input Last Name");
+            lnameTxt.requestFocus();
             return false;
         }
         if(email.isEmpty()){
-            b.email.setError("Input Email");
-            b.email.requestFocus();
+            emailTxt.setText("Input Email");
+            emailTxt.requestFocus();
             return false;
         }
         if(password.isEmpty()){
-            b.password.setError("Input Password");
-            b.password.requestFocus();
+            passTxt.setText("Input Password");
+            passTxt.requestFocus();
             return false;
         }
         if(cpassword.isEmpty()){
-            b.cnfrmPassword.setError("Input Confirm Password");
-            b.cnfrmPassword.requestFocus();
+            cpassTxt.setText("Input Confirm Password");
+            cpassTxt.requestFocus();
             return false;
         }
 
@@ -181,5 +184,6 @@ public class SignUp_Caddie extends AppCompatActivity {
         }
         return true;
     }
+
 
 }

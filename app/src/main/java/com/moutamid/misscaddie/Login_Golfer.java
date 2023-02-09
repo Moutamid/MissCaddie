@@ -7,6 +7,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,16 +19,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.moutamid.misscaddie.databinding.ActivityLoginGolferBinding;
-import com.moutamid.misscaddie.databinding.ActivitySignUpCaddieBinding;
 
 public class Login_Golfer extends AppCompatActivity {
 
     TextView signInBtn;
-    private ActivityLoginGolferBinding b;
     FirebaseAuth mAuth;
     FirebaseUser currrentUser;
     ProgressDialog dialog;
+    private EditText emailTxt,passTxt;
     private DatabaseReference db;
     private String email,password;
     private SharedPreferencesManager manager;
@@ -35,15 +34,16 @@ public class Login_Golfer extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        b = ActivityLoginGolferBinding.inflate(getLayoutInflater());
-        setContentView(b.getRoot());
+        setContentView(R.layout.activity_login_golfer);
         manager = new SharedPreferencesManager(Login_Golfer.this);
         mAuth = FirebaseAuth.getInstance();
         currrentUser = mAuth.getCurrentUser();
         db = FirebaseDatabase.getInstance().getReference().child("Golfer");
         signInBtn = findViewById(R.id.signInBtn);
+        emailTxt = findViewById(R.id.email);
+        passTxt = findViewById(R.id.password);
         email = getIntent().getStringExtra("email");
-        b.email.setText(email);
+        emailTxt.setText(email);
         signInBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,17 +79,17 @@ public class Login_Golfer extends AppCompatActivity {
     }
 
     public boolean validInfo() {
-        email = b.email.getText().toString();
-        password = b.password.getText().toString();
+        email = emailTxt.getText().toString();
+        password = passTxt.getText().toString();
 
         if(email.isEmpty()){
-            b.email.setText("Input Email");
-            b.email.requestFocus();
+            emailTxt.setText("Input Email");
+            emailTxt.requestFocus();
             return false;
         }
         if(password.isEmpty()){
-            b.password.setText("Input Password");
-            b.password.requestFocus();
+            passTxt.setText("Input Password");
+            passTxt.requestFocus();
             return false;
         }
         return true;

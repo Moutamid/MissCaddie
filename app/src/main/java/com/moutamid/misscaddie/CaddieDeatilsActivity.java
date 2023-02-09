@@ -2,6 +2,7 @@ package com.moutamid.misscaddie;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,8 +17,10 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
@@ -30,7 +33,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.moutamid.misscaddie.adapters.AddOnsListAdapter;
 import com.moutamid.misscaddie.adapters.AddServiceAdapter;
-import com.moutamid.misscaddie.databinding.ActivityCaddieDeatilsBinding;
 import com.moutamid.misscaddie.models.Bonus;
 import com.moutamid.misscaddie.models.Model_Caddie;
 import com.moutamid.misscaddie.models.ServiceListModel;
@@ -42,20 +44,24 @@ import java.util.HashMap;
 public class CaddieDeatilsActivity extends AppCompatActivity {
 
     TextView almostFinished;
-    RecyclerView addRecyclerRC;
+    RecyclerView addRecyclerRC,addonsRV;
     TextView addService;
     AddServiceAdapter adapter;
     ArrayList<ServiceListModel> list;
     ArrayList<Bonus> bonusArrayList = new ArrayList<>();
-    private ActivityCaddieDeatilsBinding b;
     FirebaseAuth mAuth;
     FirebaseUser currrentUser;
+    private CardView willingLayoutCard,notwillingLayoutCard;
     private String state ="";
     private String dob;
     private String day,month,year = "";
     private String status = "willing";
     private String category = "";
     private DatabaseReference db;
+    private EditText addOnTxtView,locationTxt,priceTxt,serviceTxt,phoneTxt,feetText,inchesTxt;
+    private TextView addOnBtn,dobTxtView;
+
+    private Spinner spinnerStates,spinnerStatus;
     boolean willingState = true, notWillingState = false;
     LinearLayout notWillingLayout, WillingLayout;
     TextView willingTv, notWillingTv;
@@ -111,8 +117,7 @@ public class CaddieDeatilsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        b = ActivityCaddieDeatilsBinding.inflate(getLayoutInflater());
-        setContentView(b.getRoot());
+        setContentView(R.layout.activity_caddie_deatils);
         notWillingLayout = findViewById(R.id.notWilling);
         WillingLayout = findViewById(R.id.willing);
         iconsNot = findViewById(R.id.notWilling_icon);
@@ -123,6 +128,23 @@ public class CaddieDeatilsActivity extends AppCompatActivity {
         willingTv = findViewById(R.id.willing_tv);
         notWillingTv = findViewById(R.id.notwilling_tv);
 
+
+        addOnBtn = findViewById(R.id.addOnBtn);
+        addOnTxtView = findViewById(R.id.add_ons_txt);
+        locationTxt = findViewById(R.id.et_location);
+        priceTxt = findViewById(R.id.et_price);
+        serviceTxt = findViewById(R.id.et_service);
+        phoneTxt = findViewById(R.id.phone);
+        feetText = findViewById(R.id.feet);
+        inchesTxt = findViewById(R.id.inches);
+        willingLayoutCard = findViewById(R.id.willing_layoutCard);
+        notwillingLayoutCard = findViewById(R.id.notWilling_layoutCard);
+        spinnerStates = findViewById(R.id.spinner_states);
+        spinnerStatus = findViewById(R.id.spinner_status);
+
+        addonsRV = findViewById(R.id.addonsRV);
+        dobTxtView = findViewById(R.id.dob);
+
         list = new ArrayList<>();
 
         mAuth = FirebaseAuth.getInstance();
@@ -131,8 +153,7 @@ public class CaddieDeatilsActivity extends AppCompatActivity {
         //serviceDb = FirebaseDatabase.getInstance().getReference().child("Services");
         addRecyclerRC.setLayoutManager(new LinearLayoutManager(this));
         addRecyclerRC.setHasFixedSize(false);
-
-        b.spinnerStates.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinnerStates.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 state = adapterView.getItemAtPosition(i).toString();
@@ -143,7 +164,7 @@ public class CaddieDeatilsActivity extends AppCompatActivity {
 
             }
         });
-        b.spinnerStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinnerStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 category = adapterView.getItemAtPosition(i).toString();
@@ -154,7 +175,7 @@ public class CaddieDeatilsActivity extends AppCompatActivity {
 
             }
         });
-        b.willingLayoutCard.setOnClickListener(new View.OnClickListener() {
+        willingLayoutCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (willingState){
@@ -179,7 +200,7 @@ public class CaddieDeatilsActivity extends AppCompatActivity {
                 status = "willing";
             }
         });
-        b.notWillingLayoutCard.setOnClickListener(new View.OnClickListener() {
+        notwillingLayoutCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (notWillingState) {
@@ -204,10 +225,10 @@ public class CaddieDeatilsActivity extends AppCompatActivity {
                 status = "not willing";
             }
         });
-        b.addOnBtn.setOnClickListener(new View.OnClickListener() {
+        addOnBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String bonus = b.addOnsTxt.getText().toString();
+                String bonus = addOnTxtView.getText().toString();
                 if(!TextUtils.isEmpty(bonus)){
                     String key = db.child(currrentUser.getUid()).child("bonus").push().getKey();
                     HashMap<String,Object> hashMap1 = new HashMap<>();
@@ -216,11 +237,11 @@ public class CaddieDeatilsActivity extends AppCompatActivity {
                     db.child(currrentUser.getUid()).child("bonus").child(key).updateChildren(hashMap1);
                     getAddOns();
                 }
-                b.addOnsTxt.setText("");
+                addOnTxtView.setText("");
             }
         });
 
-        b.dob.setOnClickListener(new View.OnClickListener() {
+        dobTxtView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final Calendar calendar = Calendar.getInstance();
@@ -234,7 +255,7 @@ public class CaddieDeatilsActivity extends AppCompatActivity {
                         day = String.valueOf(dayOfMonth);
                         month = String.valueOf(monthOfYear+1);
                         year = String.valueOf(thisyear);
-                        b.dob.setText(dob);
+                        dobTxtView.setText(dob);
                     }
                 }, yy, mm, dd);
                 datePicker.show();
@@ -246,11 +267,10 @@ public class CaddieDeatilsActivity extends AppCompatActivity {
         almostFinished.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String location = b.etLocation.getText().toString();
-                String price = b.etPrice.getText().toString();
-                String feet = b.feet.getText().toString();
-                String inches = b.inches.getText().toString();
-                String phone = b.phone.getText().toString();
+                String location = locationTxt.getText().toString();
+                String feet = feetText.getText().toString();
+                String inches = inchesTxt.getText().toString();
+                String phone = phoneTxt.getText().toString();
                 if (!TextUtils.isEmpty(location) && !TextUtils.isEmpty(phone)
                         && !TextUtils.isEmpty(feet) && !TextUtils.isEmpty(inches)) {
                     saveData(location,feet,inches,phone);
@@ -264,16 +284,16 @@ public class CaddieDeatilsActivity extends AppCompatActivity {
         });
 
         addService.setOnClickListener(v -> {
-            String serviceName = b.etService.getText().toString();
-            String servicePrice = b.etPrice.getText().toString();
+            String serviceName = serviceTxt.getText().toString();
+            String servicePrice = priceTxt.getText().toString();
             if (!TextUtils.isEmpty(serviceName) && !TextUtils.isEmpty(servicePrice)) {
                 String key = db.child(currrentUser.getUid()).child("services").push().getKey();
                 ServiceListModel model = new ServiceListModel(key,serviceName, servicePrice);
                 db.child(currrentUser.getUid()).child("services").child(key).setValue(model);
                 getServices();
             }
-            b.etService.setText("");
-            b.etPrice.setText("");
+            serviceTxt.setText("");
+            priceTxt.setText("");
          /*   String title = b.etService.getText().toString();
             String price = b.etPrice.getText().toString();
             if (!TextUtils.isEmpty(title) && !TextUtils.isEmpty(price)) {
@@ -302,21 +322,21 @@ public class CaddieDeatilsActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (snapshot.exists()){
                             Model_Caddie caddie = snapshot.getValue(Model_Caddie.class);
-                            b.feet.setText(String.valueOf(caddie.getFeet()));
-                            b.inches.setText(String.valueOf(caddie.getInches()));
-                            b.etLocation.setText(caddie.getPlace());
-                            b.phone.setText(caddie.getPhone());
+                            feetText.setText(String.valueOf(caddie.getFeet()));
+                            inchesTxt.setText(String.valueOf(caddie.getInches()));
+                            locationTxt.setText(caddie.getPlace());
+                            phoneTxt.setText(caddie.getPhone());
 
                             for (int i = 0; i < states.length; i++){
                                 if(states[i].equals(caddie.getState())){
-                                    b.spinnerStates.setSelection(i);
+                                    spinnerStates.setSelection(i);
                                 }
                             }
 
                             for (int i = 0; i < categoryString.length; i++){
 
                                 if(categoryString[i].equals(caddie.getCatagory())){
-                                    b.spinnerStatus.setSelection(i);
+                                    spinnerStatus.setSelection(i);
                                 }
                             }
 
@@ -422,7 +442,7 @@ public class CaddieDeatilsActivity extends AppCompatActivity {
                             AddOnsListAdapter addOnsListAdapter = new AddOnsListAdapter(
                                     CaddieDeatilsActivity.this, bonusArrayList);
                            // addOnsListAdapter.notifyItemInserted(bonusArrayList.size() - 1);
-                            b.addonsRV.setAdapter(addOnsListAdapter);
+                            addonsRV.setAdapter(addOnsListAdapter);
                             addOnsListAdapter.notifyDataSetChanged();
                         }
                     }

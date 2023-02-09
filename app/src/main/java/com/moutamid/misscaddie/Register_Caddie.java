@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -14,6 +15,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +26,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -37,13 +41,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.moutamid.misscaddie.databinding.ActivityRegisterCaddieBinding;
 import com.moutamid.misscaddie.models.Model_Caddie;
 
 public class Register_Caddie extends AppCompatActivity {
 
-    //TextView cont_btn;
-    private ActivityRegisterCaddieBinding b;
+    TextView cont_btn;
     private static final int RC_SIGN_IN = 234;
     GoogleApiClient mGoogleSignInClient;
     FirebaseAuth mAuth;
@@ -52,12 +54,14 @@ public class Register_Caddie extends AppCompatActivity {
     private SharedPreferencesManager manager;
     private DatabaseReference db,db1;
     boolean caddieEmail,golferEmail;
+    private EditText emailTxt;
+    private Button googleSignUp;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        b = ActivityRegisterCaddieBinding.inflate(getLayoutInflater());
-        setContentView(b.getRoot());
+        setContentView(R.layout.activity_register_caddie);
 
         mAuth = FirebaseAuth.getInstance();
         currrentUser = mAuth.getCurrentUser();
@@ -65,19 +69,21 @@ public class Register_Caddie extends AppCompatActivity {
         db = FirebaseDatabase.getInstance().getReference().child("Caddie");
         db1 = FirebaseDatabase.getInstance().getReference().child("Golfer");
         dialog = new ProgressDialog(Register_Caddie.this);
-        //cont_btn = findViewById(R.id.cont_btn2);
-        b.contBtn2.setOnClickListener(new View.OnClickListener() {
+        emailTxt = findViewById(R.id.email);
+        cont_btn = findViewById(R.id.cont_btn2);
+        googleSignUp = findViewById(R.id.googleSignUp);
+        cont_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String email = b.email.getText().toString();
+                String email = emailTxt.getText().toString();
                 dialog.setTitle("Creating your account");
                 dialog.setCanceledOnTouchOutside(true);
                 dialog.show();
                 if (!TextUtils.isEmpty(email)) {
                     checkingExistance(email);
                 }else {
-                    b.email.setError("Please Enter your email....");
-                    b.email.requestFocus();
+                    emailTxt.setError("Please Enter your email....");
+                    emailTxt.requestFocus();
                 }
             }
         });
@@ -97,7 +103,7 @@ public class Register_Caddie extends AppCompatActivity {
                 .build();
 
 
-        b.googleSignUp.setOnClickListener(new View.OnClickListener() {
+        googleSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 signIn();
@@ -266,6 +272,41 @@ public class Register_Caddie extends AppCompatActivity {
         startActivity(intent);
         finish();
         Animatoo.animateZoom(Register_Caddie.this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (!mGoogleSignInClient.isConnected()) {
+            mGoogleSignInClient.connect();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (mGoogleSignInClient != null && mGoogleSignInClient.isConnected()) {
+            mGoogleSignInClient.stopAutoManage(this);
+            mGoogleSignInClient.disconnect();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mGoogleSignInClient != null && mGoogleSignInClient.isConnected()) {
+            mGoogleSignInClient.stopAutoManage(this);
+            mGoogleSignInClient.disconnect();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mGoogleSignInClient != null && mGoogleSignInClient.isConnected()) {
+            mGoogleSignInClient.stopAutoManage(this);
+            mGoogleSignInClient.disconnect();
+        }
     }
 
 }

@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.google.firebase.database.DataSnapshot;
@@ -21,7 +23,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.moutamid.misscaddie.CaddieContactActivity;
 import com.moutamid.misscaddie.R;
-import com.moutamid.misscaddie.databinding.FragmentCaddieServicesBinding;
 import com.moutamid.misscaddie.models.Bonus;
 import com.moutamid.misscaddie.models.ServiceListModel;
 import com.moutamid.misscaddie.adapters.ServiceListAdapter;
@@ -30,11 +31,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CaddieServicesFragment extends Fragment {
-   // RecyclerView service_listRC;
+    RecyclerView service_listRC;
     ServiceListAdapter adapter;
     ArrayList<ServiceListModel> list;
-    private FragmentCaddieServicesBinding b;
     private String userId;
+    private ListView listView;
+    private TextView contactCaddie;
     private DatabaseReference db;
     private List<String> bonusList = new ArrayList<>();
 
@@ -46,11 +48,13 @@ public class CaddieServicesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-     //   View view = inflater.inflate(R.layout.fragment_caddie_services, container, false);
-        b = FragmentCaddieServicesBinding.inflate(getLayoutInflater());
+        View view = inflater.inflate(R.layout.fragment_caddie_services, container, false);
         list = new ArrayList<>();
         userId = getArguments().getString("uId");
         db = FirebaseDatabase.getInstance().getReference().child("Caddie");
+        service_listRC = view.findViewById(R.id.service_listRC);
+        contactCaddie = view.findViewById(R.id.contact_caddie);
+        listView = view.findViewById(R.id.listView);
         /*ServiceListModel model = new ServiceListModel("Service Num 1", "$80");
         ServiceListModel model2 = new ServiceListModel("Service Num 2", "$180");
         ServiceListModel model3 = new ServiceListModel("Service Num 3", "$20");
@@ -61,7 +65,7 @@ public class CaddieServicesFragment extends Fragment {
         list.add(model3);
         list.add(model4);*/
         getServices();
-        b.contactCaddie.setOnClickListener(new View.OnClickListener() {
+        contactCaddie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), CaddieContactActivity.class);
@@ -70,8 +74,8 @@ public class CaddieServicesFragment extends Fragment {
                 Animatoo.animateSwipeLeft(getActivity());
             }
         });
-        b.serviceListRC.setHasFixedSize(false);
-        b.serviceListRC.setLayoutManager(new LinearLayoutManager(getActivity()));
+        service_listRC.setHasFixedSize(false);
+        service_listRC.setLayoutManager(new LinearLayoutManager(getActivity()));
         db.child(userId).child("bonus").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -81,8 +85,9 @@ public class CaddieServicesFragment extends Fragment {
                         Bonus model = ds.getValue(Bonus.class);
                         bonusList.add(model.getBonus());
                     }
-                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getActivity(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,bonusList);
-                    b.listView.setAdapter(arrayAdapter);
+                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(requireActivity(),
+                            androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,bonusList);
+                    listView.setAdapter(arrayAdapter);
                 }
             }
 
@@ -91,7 +96,7 @@ public class CaddieServicesFragment extends Fragment {
 
             }
         });
-        return b.getRoot();
+        return view;
     }
 
     private void getServices() {
@@ -105,7 +110,7 @@ public class CaddieServicesFragment extends Fragment {
                                 list.add(model);
                             }
                             adapter = new ServiceListAdapter(getActivity(), list,false);
-                            b.serviceListRC.setAdapter(adapter);
+                            service_listRC.setAdapter(adapter);
                             adapter.notifyDataSetChanged();
                         }
                     }

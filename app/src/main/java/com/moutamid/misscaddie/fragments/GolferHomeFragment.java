@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,6 +30,7 @@ import com.moutamid.misscaddie.CardPaymentActivity;
 import com.moutamid.misscaddie.Dashboard_Golfer;
 import com.moutamid.misscaddie.GolferFilterActivity;
 import com.moutamid.misscaddie.R;
+import com.moutamid.misscaddie.SharedPreferencesManager;
 import com.moutamid.misscaddie.adapters.Adapter_Golfer;
 import com.moutamid.misscaddie.models.Model_Caddie;
 import com.moutamid.misscaddie.models.RequestsModel;
@@ -42,10 +44,11 @@ public class GolferHomeFragment extends Fragment {
     private Adapter_Golfer adapterGolfer;
     private DatabaseReference db;
     FirebaseAuth mAuth;
-    private String state,status,date;
+    private String state,status,start_date,last_date;
     FirebaseUser currrentUser;
     private boolean filter = false;
     private TextView filterBtn;
+    private SharedPreferencesManager manager;
 
     @Nullable
     @Override
@@ -58,11 +61,17 @@ public class GolferHomeFragment extends Fragment {
         golfer_recycler = view.findViewById(R.id.recyclerView_golfer);
         filterBtn = view.findViewById(R.id.filter);
         if (getArguments() != null) {
-            state = getArguments().getString("state", "");
-            status = getArguments().getString("status", "");
-            date = getArguments().getString("date", "");
+          //  state = getArguments().getString("state", "");
+            //status = getArguments().getString("status", "");
+            //date = getArguments().getString("date", "");
             filter = getArguments().getBoolean("filter", false);
         }
+
+        manager = new SharedPreferencesManager(getActivity());
+        state = manager.retrieveString("state","");
+        start_date = manager.retrieveString("sdate","");
+        last_date = manager.retrieveString("ldate","");
+        status = manager.retrieveString("status","");
         if (filter) {
             filterDate();
             filterBtn.setText("Reset Filter");
@@ -91,13 +100,21 @@ public class GolferHomeFragment extends Fragment {
 
     private void filterDate() {
         DatabaseReference mRequestReference = FirebaseDatabase.getInstance().getReference().child("Requests");
+        //    Query query = mRequestReference.orderByChild("status_title").equalTo("Accepted");
         mRequestReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()){
                     for (DataSnapshot ds : snapshot.getChildren()){
                         RequestsModel requestsModel = ds.getValue(RequestsModel.class);
-                        if (requestsModel.getDate().equals(date)){
+                        String date = requestsModel.getDate();
+                        int modeldate = Integer.parseInt(date.substring(date.length() - 2).trim());
+                        int stdate = Integer.parseInt(start_date.substring(0,2).trim());
+                        int ladate = Integer.parseInt(last_date.substring(0,2).trim());
+
+                         //Toast.makeText(getActivity(),""+stdate + " , " +  ladate + " , " + modeldate, Toast.LENGTH_SHORT).show();
+
+                        if (modeldate > stdate || modeldate < ladate){
                             Query query = db.orderByChild("id").equalTo(requestsModel.getCaddieId());
                             query.addValueEventListener(new ValueEventListener() {
                                 @Override
@@ -106,7 +123,10 @@ public class GolferHomeFragment extends Fragment {
                                         modelGolferArrayList.clear();
                                         for (DataSnapshot dataSnapshot : snapshot1.getChildren()){
                                             Model_Caddie caddie = dataSnapshot.getValue(Model_Caddie.class);
-                                            if (caddie.getState().equals(state) && caddie.getStatus().equals(status)){
+                                            if (caddie.getState().equals(state) ||
+                                                    caddie.getStatus().equals(status)){
+                                                modelGolferArrayList.add(caddie);
+                                            }else {
                                                 modelGolferArrayList.add(caddie);
                                             }
                                         }

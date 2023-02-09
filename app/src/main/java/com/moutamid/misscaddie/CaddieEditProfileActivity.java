@@ -24,7 +24,9 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,7 +52,6 @@ import com.moutamid.misscaddie.adapters.AddOnsListAdapter;
 import com.moutamid.misscaddie.adapters.ImageSliderCaddieAdapter;
 import com.moutamid.misscaddie.adapters.ImageSliderGolferAdapter;
 import com.moutamid.misscaddie.adapters.ManageImageAdapter;
-import com.moutamid.misscaddie.databinding.ActivityCaddieEditProfileBinding;
 import com.moutamid.misscaddie.models.Bonus;
 import com.moutamid.misscaddie.models.ManageImageModel;
 import com.moutamid.misscaddie.models.Model_Caddie;
@@ -72,8 +73,6 @@ public class CaddieEditProfileActivity extends AppCompatActivity {
     ImageView backBtn, addImg;
     SliderView sliderView;
     View overlay;
-    CircleImageView profile;
-    private ActivityCaddieEditProfileBinding b;
     FirebaseAuth mAuth;
     FirebaseUser currrentUser;
     private DatabaseReference db;
@@ -84,6 +83,12 @@ public class CaddieEditProfileActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
     private Bitmap bitmap = null;
     private StorageReference mStorage;
+
+    private EditText locationTxt,priceTxt,nameTxt,aboutTxt;
+
+    private TextView caddieName,placeCaddie,priceGolfer,updateBtn;
+    private CircleImageView profileImg;
+    private Spinner spinnerStates;
     private ArrayAdapter<String> arrayAdapter;
     private static final int STORAGE_PERMISSION_CODE = 101;
     private String description = "";
@@ -133,24 +138,32 @@ public class CaddieEditProfileActivity extends AppCompatActivity {
         "Wyoming",
 };
 
-    @SuppressLint("ResourceType")
+    @SuppressLint({"ResourceType", "MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        b = ActivityCaddieEditProfileBinding.inflate(getLayoutInflater());
-        setContentView(b.getRoot());
+        setContentView(R.layout.activity_caddie_edit_profile);
 
         manage = findViewById(R.id.manage);
         backBtn = findViewById(R.id.back_btn);
         sliderView = findViewById(R.id.image_slider);
         overlay = findViewById(R.id.overlayProfile);
-        profile = findViewById(R.id.profile_img);
+        profileImg = findViewById(R.id.profile_img);
         addImg = findViewById(R.id.addImg);
+        nameTxt = findViewById(R.id.et_name);
+        caddieName = findViewById(R.id.caddie_name);
+        placeCaddie = findViewById(R.id.place_caddie);
+        locationTxt = findViewById(R.id.et_location);
+        priceTxt = findViewById(R.id.et_price);
+        priceGolfer = findViewById(R.id.price_golfer);
+        aboutTxt = findViewById(R.id.et_about);
+        spinnerStates = findViewById(R.id.spinner_states);
+        updateBtn = findViewById(R.id.update);
         mAuth = FirebaseAuth.getInstance();
         currrentUser = mAuth.getCurrentUser();
         db = FirebaseDatabase.getInstance().getReference().child("Caddie");
         mStorage = FirebaseStorage.getInstance().getReference();
-        profile.setOnClickListener(v -> checkPermission());
+        profileImg.setOnClickListener(v -> checkPermission());
         addImg.setOnClickListener(v -> uploadImage());
 
 
@@ -179,8 +192,8 @@ public class CaddieEditProfileActivity extends AppCompatActivity {
         arrayAdapter = new ArrayAdapter<String>
                 (CaddieEditProfileActivity.this,
                         androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,states);
-        b.spinnerStates.setAdapter(arrayAdapter);
-        b.spinnerStates.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinnerStates.setAdapter(arrayAdapter);
+        spinnerStates.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 state = adapterView.getItemAtPosition(i).toString();
@@ -193,13 +206,13 @@ public class CaddieEditProfileActivity extends AppCompatActivity {
         });
 
 
-        b.update.setOnClickListener(new View.OnClickListener() {
+        updateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                name = b.etName.getText().toString();
-                price = b.etPrice.getText().toString();
-                place = b.etLocation.getText().toString();
-                description = b.etAbout.getText().toString();
+                name = nameTxt.getText().toString();
+                price = priceTxt.getText().toString();
+                place = locationTxt.getText().toString();
+                description = aboutTxt.getText().toString();
                 HashMap<String,Object> hashMap = new HashMap<>();
                 hashMap.put("name",name);
                 hashMap.put("place",place);
@@ -308,20 +321,20 @@ public class CaddieEditProfileActivity extends AppCompatActivity {
                             place = model.getPlace();
                             state = model.getState();
                             description = model.getAbout();
-                            b.caddieName.setText(name);
-                            b.placeCaddie.setText(place);
-                            b.etName.setText(name);
-                            b.etAbout.setText(description);
-                            b.etLocation.setText(model.getPlace());
+                            caddieName.setText(name);
+                            placeCaddie.setText(place);
+                            nameTxt.setText(name);
+                            aboutTxt.setText(description);
+                            locationTxt.setText(model.getPlace());
                             image = model.getImage();
                             Glide.with(CaddieEditProfileActivity.this)
                                     .load(image)
                                     .placeholder(R.drawable.bi_person_fill)
-                                    .into(b.profileImg);
+                                    .into(profileImg);
                             for (int i = 0; i < states.length; i++){
 
                                 if(states[i].equals(state)){
-                                    b.spinnerStates.setSelection(i);
+                                    spinnerStates.setSelection(i);
                                 }
                             }
 
@@ -335,8 +348,8 @@ public class CaddieEditProfileActivity extends AppCompatActivity {
                                     if (snapshot.exists()){
                                         for (DataSnapshot ds : snapshot.getChildren()){
                                             ServiceListModel model = ds.getValue(ServiceListModel.class);
-                                            b.priceGolfer.setText("USD$ "+ model.getPrice());
-                                            b.etPrice.setText("USD$ "+ model.getPrice());
+                                            priceGolfer.setText("USD$ "+ model.getPrice());
+                                            priceTxt.setText("USD$ "+ model.getPrice());
                                         }
                                     }
                                 }
@@ -400,7 +413,7 @@ public class CaddieEditProfileActivity extends AppCompatActivity {
                 try{
                     if (resultCode == RESULT_OK && data != null) {
                         uri = data.getData();
-                        profile.setImageURI(uri);
+                        profileImg.setImageURI(uri);
                         overlay.setVisibility(View.VISIBLE);
                         addImg.setVisibility(View.VISIBLE);
 
@@ -435,8 +448,8 @@ public class CaddieEditProfileActivity extends AppCompatActivity {
         dialog.setMessage("Uploading your profile....");
         dialog.show();
         if (uri != null) {
-            profile.setDrawingCacheEnabled(true);
-            profile.buildDrawingCache();
+            profileImg.setDrawingCacheEnabled(true);
+            profileImg.buildDrawingCache();
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.JPEG, 10, byteArrayOutputStream);
             byte[] thumb_byte_data = byteArrayOutputStream.toByteArray();

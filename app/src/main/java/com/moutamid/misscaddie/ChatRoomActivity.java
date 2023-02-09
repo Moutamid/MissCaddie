@@ -2,6 +2,7 @@ package com.moutamid.misscaddie;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,7 +12,10 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,7 +26,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.moutamid.misscaddie.adapters.ChatRoomAdapter;
-import com.moutamid.misscaddie.databinding.ActivityChatRoomBinding;
 import com.moutamid.misscaddie.models.Chat;
 import com.moutamid.misscaddie.models.Conversation;
 
@@ -32,42 +35,54 @@ import java.util.concurrent.TimeUnit;
 
 public class ChatRoomActivity extends AppCompatActivity {
 
-    private ActivityChatRoomBinding b;
     private DatabaseReference mChatReference,mConversationReference;
     private ChatRoomAdapter adapters;
     public String userUid,mode,id,name;
     FirebaseAuth mAuth;
     FirebaseUser user;
     private int unreadCount = 0;
+    private View top1,top2;
+    private LinearLayout bottom;
+    private RecyclerView messgesGolfer;
+    private EditText messageTxt;
+    private ImageView sendBtn,backBtn;
+    private TextView nameTxt;
     private List<Chat> chatList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        b = ActivityChatRoomBinding.inflate(getLayoutInflater());
-        setContentView(b.getRoot());
+        setContentView(R.layout.activity_chat_room);
         id = getIntent().getStringExtra("uId");
         mode = getIntent().getStringExtra("mode");
         name = getIntent().getStringExtra("name");
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
         userUid = user.getUid();
+        top1 = findViewById(R.id.top1);
+        top2 = findViewById(R.id.top2);
+        bottom = findViewById(R.id.bottom);
+        messageTxt = findViewById(R.id.message);
+        messgesGolfer = findViewById(R.id.messges_golfer);
+        sendBtn = findViewById(R.id.send);
+        backBtn = findViewById(R.id.back_btn);
+        nameTxt = findViewById(R.id.nameTxt);
         mChatReference = FirebaseDatabase.getInstance().getReference().child("chats");
         mConversationReference = FirebaseDatabase.getInstance().getReference().child("conversation");
-        b.nameTxt.setText(name);
+        nameTxt.setText(name);
         if (mode.equals("caddie")){
             changeStatusBarColor(this,R.color.yellow);
-            b.top1.setBackground(getDrawable(R.drawable.circle_yellow1));
-            b.top2.setBackground(getDrawable(R.drawable.circle_yellow1));
-            b.bottom.setBackground(getDrawable(R.drawable.message_back_yellow));
+            top1.setBackground(getDrawable(R.drawable.circle_yellow1));
+            top2.setBackground(getDrawable(R.drawable.circle_yellow1));
+            bottom.setBackground(getDrawable(R.drawable.message_back_yellow));
         }else {
             changeStatusBarColor(this,R.color.green);
 
-            b.top1.setBackground(getDrawable(R.drawable.circle_green1));
-            b.top2.setBackground(getDrawable(R.drawable.circle_green1));
-            b.bottom.setBackground(getDrawable(R.drawable.message_back_green));
+            top1.setBackground(getDrawable(R.drawable.circle_green1));
+            top2.setBackground(getDrawable(R.drawable.circle_green1));
+            bottom.setBackground(getDrawable(R.drawable.message_back_green));
         }
-        b.backBtn.setOnClickListener(new View.OnClickListener() {
+        backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mode.equals("caddie")){
@@ -81,10 +96,10 @@ public class ChatRoomActivity extends AppCompatActivity {
                 }
             }
         });
-        b.send.setOnClickListener(new View.OnClickListener() {
+        sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String contoh = b.message.getText().toString();
+                String contoh = messageTxt.getText().toString();
                 if (!TextUtils.isEmpty(contoh)) {
                     long timestamp = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis());
                     sentChat("text",contoh,timestamp);
@@ -114,7 +129,7 @@ public class ChatRoomActivity extends AppCompatActivity {
         DatabaseReference receiverReference1 = mChatReference.child(id).child(user.getUid());
         receiverReference1.child(String.valueOf(timestamp)).setValue(chatReciever);
 
-        b.message.setText("");
+        messageTxt.setText("");
     }
 
 
@@ -144,8 +159,8 @@ public class ChatRoomActivity extends AppCompatActivity {
                             }
 
                             adapters = new ChatRoomAdapter(ChatRoomActivity.this, chatList,mode);
-                            b.messgesGolfer.smoothScrollToPosition(chatList.size() - 1);
-                            b.messgesGolfer.setAdapter(adapters);
+                            messgesGolfer.smoothScrollToPosition(chatList.size() - 1);
+                            messgesGolfer.setAdapter(adapters);
                             adapters.notifyDataSetChanged();
                         }
                     }

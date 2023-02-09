@@ -1,7 +1,6 @@
 package com.moutamid.misscaddie.fragments;
 
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -28,13 +27,11 @@ import com.google.android.gms.common.api.Status;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.moutamid.misscaddie.CaddieBankDetailsActivity;
 import com.moutamid.misscaddie.CaddieEditProfileActivity;
 import com.moutamid.misscaddie.CaddieProServicesActivity;
 import com.moutamid.misscaddie.MainActivity;
 import com.moutamid.misscaddie.R;
 import com.moutamid.misscaddie.SharedPreferencesManager;
-import com.moutamid.misscaddie.Splash;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -83,7 +80,7 @@ public class CaddieProfileFragment extends Fragment {
             });
 
             paymentBtn.setOnClickListener(v -> {
-              startActivity(new Intent(getActivity(), CaddieBankDetailsActivity.class));
+          //    startActivity(new Intent(getActivity(), CaddieBankDetailsActivity.class));
             });
 
             deleteBtn.setOnClickListener(v -> {
@@ -105,8 +102,8 @@ public class CaddieProfileFragment extends Fragment {
                     .requestIdToken(getString(R.string.default_web_client_id))
                     .requestEmail()
                     .build();
-            mGoogleSignInClient = new GoogleApiClient.Builder(getActivity())
-                    .enableAutoManage(getActivity(), new GoogleApiClient.OnConnectionFailedListener() {
+            mGoogleSignInClient = new GoogleApiClient.Builder(requireActivity())
+                    .enableAutoManage(requireActivity(),1, new GoogleApiClient.OnConnectionFailedListener() {
                         @Override
                         public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
                             Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_LONG).show();
@@ -115,10 +112,10 @@ public class CaddieProfileFragment extends Fragment {
                     .build();
 
             profileBtn.setOnClickListener(v -> {
-                startActivity(new Intent(getActivity().getApplicationContext(), CaddieEditProfileActivity.class));
+                startActivity(new Intent(requireActivity(), CaddieEditProfileActivity.class));
             });
             serviceBtn.setOnClickListener(v -> {
-                startActivity(new Intent(getActivity().getApplicationContext(), CaddieProServicesActivity.class));
+                startActivity(new Intent(requireActivity(), CaddieProServicesActivity.class));
             });
 
             logoutBtn.setOnClickListener(new View.OnClickListener() {
@@ -202,27 +199,21 @@ public class CaddieProfileFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        if (mGoogleSignInClient != null && mGoogleSignInClient.isConnected()) {
-            mGoogleSignInClient.stopAutoManage(requireActivity());
-            mGoogleSignInClient.disconnect();
-        }
+        mGoogleSignInClient.stopAutoManage(requireActivity());
+        mGoogleSignInClient.disconnect();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        if (mGoogleSignInClient != null && mGoogleSignInClient.isConnected()) {
-            mGoogleSignInClient.stopAutoManage(requireActivity());
-            mGoogleSignInClient.disconnect();
-        }
+        mGoogleSignInClient.stopAutoManage(requireActivity());
+        mGoogleSignInClient.disconnect();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (mGoogleSignInClient != null && mGoogleSignInClient.isConnected()) {
-            mGoogleSignInClient.stopAutoManage(requireActivity());
-            mGoogleSignInClient.disconnect();
-        }
+        mGoogleSignInClient.stopAutoManage(requireActivity());
+        mGoogleSignInClient.disconnect();
     }
 }

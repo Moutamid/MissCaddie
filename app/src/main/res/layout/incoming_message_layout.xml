@@ -8,13 +8,14 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:padding="15dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile_img"
             android:layout_width="64dp"
-            android:layout_height="64dp"/>
+            android:layout_height="64dp"
+            android:src="@drawable/bi_person_fill"/>
 
         <TextView
             android:id="@+id/personName"
@@ -24,32 +25,46 @@
             android:layout_marginTop="8dp"
             android:layout_toEndOf="@id/profile_img"
             android:fontFamily="@font/inter"
-            android:text="Moutmid"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/lastMessage"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:layout_below="@id/personName"
             android:layout_marginStart="12dp"
             android:layout_marginLeft="12dp"
             android:layout_marginTop="4dp"
-            android:layout_toEndOf="@id/profile_img"
-            android:fontFamily="@font/inter"
-            android:text="Last Message"
-            android:textColor="@color/black_light"
-            android:textSize="16sp" />
+            android:layout_toEndOf="@id/profile_img">
 
-        <TextView
-            android:id="@+id/date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:text="16/12/2022"/>
+
+            <TextView
+                android:id="@+id/lastMessage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter"
+                android:layout_weight="1"
+                android:text="Last Message"
+                android:maxLines="2"
+                android:textColor="@color/black_light"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginLeft="12dp"
+                android:layout_toRightOf="@+id/lastMessage"
+                android:layout_toEndOf="@+id/lastMessage"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="16/12/2022"/>
+
+        </LinearLayout>
+
 
 
     </RelativeLayout>

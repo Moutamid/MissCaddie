@@ -19,6 +19,10 @@ import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+
 public class GolferFilterActivity extends AppCompatActivity {
     View close_btn,save_btn;
     LinearLayout notWillingLayout, WillingLayout;
@@ -29,7 +33,9 @@ public class GolferFilterActivity extends AppCompatActivity {
     TextView booking_dates,saveBtn;
     private ImageView cancelBtn,filterBtn;
     private String status = "";
-    private String date = "";
+    private String start_date = "";
+    private String last_date = "";
+    private ArrayList<String> strings = new ArrayList<>();
     private String state = "";
     private Spinner spinner;
     private SharedPreferencesManager manager;
@@ -87,7 +93,8 @@ public class GolferFilterActivity extends AppCompatActivity {
         close_btn = findViewById(R.id.close);
         manager = new SharedPreferencesManager(this);
         state = manager.retrieveString("state","");
-        date = manager.retrieveString("date","Selected Date is(2 Dec)");
+        start_date = manager.retrieveString("sdate","");
+        last_date = manager.retrieveString("ldate","");
         status = manager.retrieveString("status","");
         notWillingLayout = findViewById(R.id.notWilling);
         WillingLayout = findViewById(R.id.willing);
@@ -123,7 +130,7 @@ public class GolferFilterActivity extends AppCompatActivity {
 
             }
         });
-        MaterialDatePicker.Builder<Long> materialDateBuilder = MaterialDatePicker.Builder.datePicker();
+        MaterialDatePicker.Builder<Pair<Long, Long>> materialDateBuilder = MaterialDatePicker.Builder.dateRangePicker();
         materialDateBuilder.setTitleText("SELECT A DATE");
 
         final MaterialDatePicker materialDatePicker = materialDateBuilder.build();
@@ -138,8 +145,23 @@ public class GolferFilterActivity extends AppCompatActivity {
                     @Override
                     public void onPositiveButtonClick(Object selection) {
                         String day = materialDatePicker.getHeaderText();
-                        date = day.substring(0, 6);
-                        booking_dates.setText("Selected Date is (" + date + ")");
+                        String sdate = day.substring(0, 6).trim();
+                        String ldate = day.substring(day.length() - 6).trim();
+
+                        if (sdate.length() == 5){
+                            start_date = day.substring(0, 5);
+                        }else {
+                            start_date = day.substring(0, 6);
+                        }
+
+                        if (ldate.length() == 5){
+                            last_date = day.substring(day.length() - 5);
+                        }else {
+                            last_date = day.substring(day.length() - 6);
+                        }
+
+                       // Toast.makeText(GolferFilterActivity.this,""+start_date, Toast.LENGTH_SHORT).show();
+                        booking_dates.setText("Selected Date is ( " + day + " )");
                     }
                 });
 
@@ -191,17 +213,18 @@ public class GolferFilterActivity extends AppCompatActivity {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!status.equals("") && !state.equals("") && !date.equals("")){
+                if (!status.equals("") || !state.equals("") || !start_date.equals("")){
                     Intent intent = new Intent(GolferFilterActivity.this , Dashboard_Golfer.class);
-                    intent.putExtra("state",state);
-                    intent.putExtra("status",status);
-                    intent.putExtra("date",date);
+                    //intent.putExtra("state",state);
+                    //intent.putExtra("status",status);
+                    //intent.putExtra("sdate",date);
                     intent.putExtra("filter",true);
                     startActivity(intent);
                     finish();
                     Animatoo.animateZoom(GolferFilterActivity.this);
                     manager.storeString("state",state);
-                    manager.storeString("date",date);
+                    manager.storeString("sdate",start_date);
+                    manager.storeString("ldate",last_date);
                     manager.storeString("status",status);
                 }else {
                     Toast.makeText(GolferFilterActivity.this, "Please Select all the given fields", Toast.LENGTH_SHORT).show();
@@ -224,7 +247,13 @@ public class GolferFilterActivity extends AppCompatActivity {
             }
         }
 
-        booking_dates.setText("Selected Date is (" + date + ")");
+        if (start_date.equals("")){
+            SimpleDateFormat format = new SimpleDateFormat("dd MMM");
+            Calendar calendar = Calendar.getInstance();
+            booking_dates.setText("Selected Date is (" + format.format(calendar.getTime()) + ")");
+        }else {
+            booking_dates.setText("Selected Date is (" + start_date + " - " + last_date + ")");
+        }
         if (status.equals("willing")) {
             WillingLayout.setBackground(getDrawable(R.drawable.selected_box));
             //iconWill.setBackground(getDrawable(R.drawable.ic_charm_tick1));

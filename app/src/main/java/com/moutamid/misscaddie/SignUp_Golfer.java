@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,17 +22,13 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
-import com.moutamid.misscaddie.databinding.ActivitySignUpGolferBinding;
-import com.moutamid.misscaddie.models.Model_Caddie;
 import com.moutamid.misscaddie.models.Model_Golfer;
 
 public class SignUp_Golfer extends AppCompatActivity {
 
     TextView signUpBtn, privacybtn, termsbtn;
-    private ActivitySignUpGolferBinding b;
     FirebaseAuth mAuth;
+    private EditText emailTxt,fnameTxt,lnameTxt,passTxt,cpassTxt;
     FirebaseUser currrentUser;
     ProgressDialog dialog;
     private DatabaseReference db,db1;
@@ -41,15 +38,18 @@ public class SignUp_Golfer extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        b = ActivitySignUpGolferBinding.inflate(getLayoutInflater());
-        setContentView(b.getRoot());
-
+        setContentView(R.layout.activity_sign_up_golfer);
+        emailTxt = findViewById(R.id.email);
+        fnameTxt = findViewById(R.id.Fname);
+        lnameTxt = findViewById(R.id.Lname);
+        passTxt = findViewById(R.id.password);
+        cpassTxt = findViewById(R.id.cnfrm_password);
         mAuth = FirebaseAuth.getInstance();
       //  currrentUser = mAuth.getCurrentUser();
         db = FirebaseDatabase.getInstance().getReference().child("Golfer");
         db1 = FirebaseDatabase.getInstance().getReference().child("Caddie");
         email = getIntent().getStringExtra("email");
-        b.email.setText(email);
+        emailTxt.setText(email);
         signUpBtn = findViewById(R.id.signUpBtn);
         privacybtn = findViewById(R.id.privacyBtn);
         termsbtn = findViewById(R.id.termsbtn);
@@ -118,36 +118,36 @@ public class SignUp_Golfer extends AppCompatActivity {
     }
 
     public boolean validInfo() {
-        fname = b.Fname.getText().toString();
-        lname = b.Lname.getText().toString();
-        email = b.email.getText().toString();
-        password = b.password.getText().toString();
-        cpassword = b.cnfrmPassword.getText().toString();
+        fname = fnameTxt.getText().toString();
+        lname = lnameTxt.getText().toString();
+        email = emailTxt.getText().toString();
+        password = passTxt.getText().toString();
+        cpassword = cpassTxt.getText().toString();
 
         if(fname.isEmpty()){
-            b.Fname.setText("Input First Name");
-            b.Fname.requestFocus();
+            fnameTxt.setText("Input First Name");
+            fnameTxt.requestFocus();
             return false;
         }
 
         if(lname.isEmpty()){
-            b.Lname.setText("Input Last Name");
-            b.Lname.requestFocus();
+            lnameTxt.setText("Input Last Name");
+            lnameTxt.requestFocus();
             return false;
         }
         if(email.isEmpty()){
-            b.email.setText("Input Email");
-            b.email.requestFocus();
+            emailTxt.setText("Input Email");
+            emailTxt.requestFocus();
             return false;
         }
         if(password.isEmpty()){
-            b.password.setText("Input Password");
-            b.password.requestFocus();
+            passTxt.setText("Input Password");
+            passTxt.requestFocus();
             return false;
         }
         if(cpassword.isEmpty()){
-            b.cnfrmPassword.setText("Input Confirm Password");
-            b.cnfrmPassword.requestFocus();
+            cpassTxt.setText("Input Confirm Password");
+            cpassTxt.requestFocus();
             return false;
         }
 
