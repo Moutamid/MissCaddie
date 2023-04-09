@@ -63,7 +63,6 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
             intent = new Intent(this, CaddieDashboardActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         }else {
-
             intent = new Intent(this, Dashboard_Golfer.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         }

@@ -11,10 +11,20 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" /> <!-- for most things, including card.io &paypal -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
+        android:name=".ExApplications"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -30,15 +40,19 @@
         tools:ignore="Instantiatable"
         tools:targetApi="31">
         <activity
-            android:name=".CaddieAvailabiltyActivity"
+            android:name=".PayActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".CardPaymentActivity"
-            android:exported="false" />
+            android:name=".CaddieAvailabiltyActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name=".ChatRoomActivity"
             android:exported="false" />
@@ -69,10 +83,7 @@
         <activity
             android:name=".GolferFilterActivity"
             android:exported="false" />
-        <activity
-            android:name="com.paypal.android.MEP.PayPalActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
         <activity
             android:name=".Dashboard_Golfer"
             android:exported="false" />

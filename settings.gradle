@@ -20,14 +20,17 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         maven { url 'https://jitpack.io' }
-      /*  maven {
-            url "https://cardinalcommerceprod.jfrog.io/artifactory/android"
+        maven {
+            url  "https://cardinalcommerceprod.jfrog.io/artifactory/android"
             credentials {
-                username 'digiconnect.tyler_api1.gmail.com'
-                password 'WQ96JEDLJ23BBNM4'
+                // Be sure to add these non-sensitive credentials in order to retrieve dependencies from
+                // the private repository.
+                username mavenUsername
+                password mavenPassword
             }
-        }*/
+        }
         jcenter()
+
     }
 }
 rootProject.name = "MissCaddie"

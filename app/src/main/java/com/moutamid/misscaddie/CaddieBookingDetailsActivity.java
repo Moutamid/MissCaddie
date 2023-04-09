@@ -102,6 +102,15 @@ public class CaddieBookingDetailsActivity extends AppCompatActivity {
             }
             serviceList = serviceList + "\t\t" + service +  "\n";
         }*/
+
+        if (model.getStatus_title().equals("Accepted")){
+            acceptBtn.setVisibility(View.GONE);
+            declineBtn.setVisibility(View.GONE);
+        }else {
+            acceptBtn.setVisibility(View.VISIBLE);
+            declineBtn.setVisibility(View.VISIBLE);
+        }
+
         locationtxt.setText(model.getAddress());
         messageTxt.setText(model.getMessage());
         acceptBtn.setOnClickListener(new View.OnClickListener() {

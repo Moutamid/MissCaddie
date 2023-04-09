@@ -107,7 +107,7 @@ public class Dashboard_Golfer extends AppCompatActivity {
                 // Toast.makeText(DashBoard.this,token,Toast.LENGTH_LONG).show();
             }
         });
-
+        Constants.checkApp(Dashboard_Golfer.this);
         getStripeDetails();
 
     }
@@ -117,10 +117,10 @@ public class Dashboard_Golfer extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()){
-                    String apiKey = snapshot.child("appId").getValue().toString();
-                  //  String pubKey = snapshot.child("publisher_key").getValue().toString();
-                    manager.storeString("apiKey",apiKey);
-                    //manager.storeString("publisherKey",pubKey);
+                    String clientId = snapshot.child("clientId").getValue().toString();
+                    String clientSecret = snapshot.child("clientSecret").getValue().toString();
+                    manager.storeString("clientId",clientId);
+                    manager.storeString("clientSecret",clientSecret);
                 }
             }
 

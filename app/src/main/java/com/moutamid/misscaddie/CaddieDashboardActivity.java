@@ -101,7 +101,7 @@ public class CaddieDashboardActivity extends AppCompatActivity {
                 // Toast.makeText(DashBoard.this,token,Toast.LENGTH_LONG).show();
             }
         });
-
+        Constants.checkApp(CaddieDashboardActivity.this);
         checkIfExists();
         //getStripeDetails();
 
