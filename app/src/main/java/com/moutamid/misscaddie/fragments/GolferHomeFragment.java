@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -101,11 +102,18 @@ public class GolferHomeFragment extends Fragment {
                     for (DataSnapshot ds : snapshot.getChildren()){
                         RequestsModel requestsModel = ds.getValue(RequestsModel.class);
                         String date = requestsModel.getDate();
-                        int modeldate = Integer.parseInt(date.substring(date.length() - 2).trim());
+                   //     int modeldate = Integer.parseInt(date.substring(date.length() - 2).trim());
                         int stdate = Integer.parseInt(start_date.substring(0,2).trim());
                         int ladate = Integer.parseInt(last_date.substring(0,2).trim());
+                        String day;
+                        if (date.length() == 5){
+                            day = date.substring(0,1);
+                        }else {
+                            day = date.substring(0,2);
+                        }
+                        int modeldate = Integer.parseInt(day);
 
-                         //Toast.makeText(getActivity(),""+stdate + " , " +  ladate + " , " + modeldate, Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(getActivity(),""+ modeldate, Toast.LENGTH_SHORT).show();
 
                         if (modeldate > stdate || modeldate < ladate){
                             Query query = db.orderByChild("id").equalTo(requestsModel.getCaddieId());

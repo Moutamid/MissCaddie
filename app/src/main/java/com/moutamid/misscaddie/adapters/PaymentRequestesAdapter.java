@@ -69,7 +69,7 @@ public class PaymentRequestesAdapter extends RecyclerView.Adapter<PaymentRequest
         holder.price.setText("(USD$" + price + ")");
         //serviceList = model.getService();
         holder.service_list.setText(serviceList);
-        if (model.isPayment()){
+        /*if (model.isPayment()){
             holder.status_title.setText("(Accepted)");
             holder.status_title.setTextColor(context.getResources().getColor(R.color.green));
             holder.butn.setBackgroundResource(R.drawable.ic_charm_tick1);
@@ -77,7 +77,7 @@ public class PaymentRequestesAdapter extends RecyclerView.Adapter<PaymentRequest
             holder.status_title.setText("(Pending)");
             holder.status_title.setTextColor(context.getResources().getColor(R.color.black_light));
             holder.butn.setBackgroundResource(R.drawable.arrow_right_green);
-          /*  holder.butn.setOnClickListener(new View.OnClickListener() {
+            holder.butn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, CardPaymentActivity.class);
@@ -86,8 +86,8 @@ public class PaymentRequestesAdapter extends RecyclerView.Adapter<PaymentRequest
                     context.startActivity(intent);
                     Animatoo.animateZoom(context);
                 }
-            });*/
-        }
+            });
+        }*/
 
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();

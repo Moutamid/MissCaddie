@@ -8,7 +8,7 @@ import java.util.List;
 
 public class RequestsModel implements Parcelable {
     String id, userId, status_title, date, address, message,time,caddieId;
-    boolean payment;
+    boolean review;
     List<ServiceListModel> tableRows;
 
     public RequestsModel() {
@@ -36,7 +36,7 @@ public class RequestsModel implements Parcelable {
         message = in.readString();
         time = in.readString();
         caddieId = in.readString();
-        payment = in.readByte() != 0;
+        review = in.readByte() != 0;
     }
 
     public static final Creator<RequestsModel> CREATOR = new Creator<RequestsModel>() {
@@ -51,12 +51,12 @@ public class RequestsModel implements Parcelable {
         }
     };
 
-    public boolean isPayment() {
-        return payment;
+    public boolean isReview() {
+        return review;
     }
 
-    public void setPayment(boolean payment) {
-        this.payment = payment;
+    public void setReview(boolean payment) {
+        this.review = payment;
     }
 
 
@@ -151,6 +151,6 @@ public class RequestsModel implements Parcelable {
         parcel.writeString(message);
         parcel.writeString(time);
         parcel.writeString(caddieId);
-        parcel.writeByte((byte) (payment ? 1 : 0));
+        parcel.writeByte((byte) (review ? 1 : 0));
     }
 }

@@ -20,8 +20,7 @@
             android:layout_height="32dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="5dp"
-            android:src="@drawable/img1" />
+            android:layout_marginTop="5dp" />
 
         <TextView
             android:id="@+id/name_reviewer"
@@ -32,7 +31,6 @@
             android:layout_alignParentTop="true"
             android:fontFamily="@font/roboto"
             android:letterSpacing="0.05"
-            android:text="Andrea Carl"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -45,7 +43,6 @@
             android:layout_toEndOf="@+id/reviewer_img"
             android:fontFamily="@font/roboto"
             android:letterSpacing="0.05"
-            android:text="September 25, 2022"
             android:layout_below="@id/name_reviewer"
             android:textColor="@color/black_light"
             android:textSize="14sp" />
@@ -54,7 +51,6 @@
             android:id="@+id/message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/long_lorem"
             android:lineHeight="25dp"
             android:layout_marginLeft="12dp"
             android:layout_marginTop="12dp"

@@ -52,7 +52,6 @@
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="25dp"
         android:layout_marginTop="-40dp"
-        android:src="@drawable/img1"
         app:civ_border_color="@color/white"
         app:civ_border_width="2dp" />
 
@@ -88,31 +87,17 @@
         android:layout_marginTop="5dp"
         android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/start1"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/ic_single_star"/>
-        <ImageView
-            android:id="@+id/start2"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/ic_single_star"/>
-        <ImageView
-            android:id="@+id/start3"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/ic_single_star"/>
-        <ImageView
-            android:id="@+id/start4"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/ic_single_star"/>
-        <ImageView
-            android:id="@+id/start5"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/ic_single_star"/>
+        <RatingBar
+            android:id="@+id/rating"
+            style="@android:attr/ratingBarStyleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:scaleX=".5"
+            android:scaleY=".5"
+            android:transformPivotX="0dp"
+            android:transformPivotY="0dp" />
 
     </LinearLayout>
 
@@ -121,10 +106,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/place_caddie"
-        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginTop="5dp"
         android:layout_toEndOf="@id/starsLayout"
-        android:textSize="18sp" />
+        android:textSize="14sp" />
 
 
     <TextView

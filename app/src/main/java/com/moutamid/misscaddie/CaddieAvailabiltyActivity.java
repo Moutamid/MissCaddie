@@ -164,12 +164,10 @@ public class CaddieAvailabiltyActivity extends AppCompatActivity {
                 if (snapshot.exists()) {
                     for (DataSnapshot ds : snapshot.getChildren()) {
                         String date = ds.child("date").getValue().toString();
-                        String month = date.substring(0, 3);
-                        //int last = date.lastIndexOf(" ");
-                        // String month = date.substring(last,date.length());
-                        // Toast.makeText(getActivity(), lastname, Toast.LENGTH_SHORT).show();
+                        String month = date.substring(date.length() - 3);
                         if (month.equals("Jan")) {
                             if (date.length() == 5){
+                                //String day = date.substring(date.length() - 1);
                                 String day = date.substring(0, 1);
                                 setJanDatesRound(day);
                             }else {
@@ -258,6 +256,7 @@ public class CaddieAvailabiltyActivity extends AppCompatActivity {
                             }
 
                         }
+
                         else if (month.equals("Oct")) {
                             if (date.length() == 5){
                                 String day = date.substring(0, 1);
@@ -284,7 +283,6 @@ public class CaddieAvailabiltyActivity extends AppCompatActivity {
                                 setDecDatesRound(day);
                             }
                         }
-
                     }
                 }else {
                     //    storeAvailabilty();
@@ -2225,7 +2223,7 @@ public class CaddieAvailabiltyActivity extends AppCompatActivity {
     public void JanuaryDatesClick(View view) {
         //  if (isAdded()) {
         TextView t = (TextView) view;
-        availabilty =  "Jan " + t.getText();
+        availabilty =  t.getText() + " Jan";
         if (t.getBackground() == null) {
             // String key = t.getText().toString();
             HashMap<String, Object> hashMap = new HashMap<>();
@@ -2254,7 +2252,7 @@ public class CaddieAvailabiltyActivity extends AppCompatActivity {
     public void FebruaryDatesClick(View view) {
         //  if (isAdded()) {
         TextView t = (TextView) view;
-        availabilty =  "Feb " + t.getText();
+        availabilty =  t.getText() + " Feb";
         if (t.getBackground() == null) {
             // String key = t.getText().toString();
             HashMap<String, Object> hashMap = new HashMap<>();
@@ -2282,7 +2280,7 @@ public class CaddieAvailabiltyActivity extends AppCompatActivity {
     public void MarchDatesClick(View view) {
         //  if (isAdded()) {
         TextView t = (TextView) view;
-        availabilty =  "Mar " + t.getText();
+        availabilty =  t.getText() + " Mar";
         if (t.getBackground() == null) {
             // String key = t.getText().toString();
             HashMap<String, Object> hashMap = new HashMap<>();
@@ -2310,7 +2308,7 @@ public class CaddieAvailabiltyActivity extends AppCompatActivity {
     public void AprilDatesClick(View view) {
         //  if (isAdded()) {
         TextView t = (TextView) view;
-        availabilty =  "Apr " + t.getText();
+        availabilty =  t.getText() + " Apr";
         if (t.getBackground() == null) {
             // String key = t.getText().toString();
             HashMap<String, Object> hashMap = new HashMap<>();
@@ -2338,7 +2336,7 @@ public class CaddieAvailabiltyActivity extends AppCompatActivity {
     public void MayDatesClick(View view) {
         //  if (isAdded()) {
         TextView t = (TextView) view;
-        availabilty =  "May " + t.getText();
+        availabilty =  t.getText() + " May";
         if (t.getBackground() == null) {
             // String key = t.getText().toString();
             HashMap<String, Object> hashMap = new HashMap<>();
@@ -2366,7 +2364,7 @@ public class CaddieAvailabiltyActivity extends AppCompatActivity {
     public void JuneDatesClick(View view) {
         //  if (isAdded()) {
         TextView t = (TextView) view;
-        availabilty =  "Jun " + t.getText();
+        availabilty =   t.getText() + " Jun";
         if (t.getBackground() == null) {
             // String key = t.getText().toString();
             HashMap<String, Object> hashMap = new HashMap<>();
@@ -2394,7 +2392,7 @@ public class CaddieAvailabiltyActivity extends AppCompatActivity {
     public void JulyDatesClick(View view) {
         //  if (isAdded()) {
         TextView t = (TextView) view;
-        availabilty =  "Jul " + t.getText();
+        availabilty =  t.getText() + " Jul";
         if (t.getBackground() == null) {
             // String key = t.getText().toString();
             HashMap<String, Object> hashMap = new HashMap<>();
@@ -2422,7 +2420,7 @@ public class CaddieAvailabiltyActivity extends AppCompatActivity {
     public void AugustDatesClick(View view) {
         //  if (isAdded()) {
         TextView t = (TextView) view;
-        availabilty =  "Aug " + t.getText();
+        availabilty =  t.getText() + " Aug";
         if (t.getBackground() == null) {
             // String key = t.getText().toString();
             HashMap<String, Object> hashMap = new HashMap<>();
@@ -2450,7 +2448,7 @@ public class CaddieAvailabiltyActivity extends AppCompatActivity {
     public void SeptemberDatesClick(View view) {
         //  if (isAdded()) {
         TextView t = (TextView) view;
-        availabilty =  "Sep " + t.getText();
+        availabilty =  t.getText() + " Sep" ;
         if (t.getBackground() == null) {
             // String key = t.getText().toString();
             HashMap<String, Object> hashMap = new HashMap<>();
@@ -2481,7 +2479,7 @@ public class CaddieAvailabiltyActivity extends AppCompatActivity {
     public void OctoberDatesClick(View view) {
         //  if (isAdded()) {
         TextView t = (TextView) view;
-        availabilty =  "Oct " + t.getText();
+        availabilty =  t.getText() + " Oct";
         if (t.getBackground() == null) {
             // String key = t.getText().toString();
             HashMap<String, Object> hashMap = new HashMap<>();
@@ -2509,7 +2507,7 @@ public class CaddieAvailabiltyActivity extends AppCompatActivity {
     public void NovemberDatesClick(View view) {
         //if (isAdded()) {
         TextView t = (TextView) view;
-        availabilty =  "Nov " + t.getText();
+        availabilty =  t.getText() + "Nov ";
         if (t.getBackground() == null) {
             HashMap<String, Object> hashMap = new HashMap<>();
             hashMap.put("date", availabilty);
@@ -2535,7 +2533,7 @@ public class CaddieAvailabiltyActivity extends AppCompatActivity {
     public void DecemberDatesClick(View view) {
         //if (isAdded()) {
         TextView t = (TextView) view;
-        availabilty =  "Dec " + t.getText();
+        availabilty =  t.getText() + " Dec";
 
         if (t.getBackground() == null) {
             HashMap<String, Object> hashMap = new HashMap<>();

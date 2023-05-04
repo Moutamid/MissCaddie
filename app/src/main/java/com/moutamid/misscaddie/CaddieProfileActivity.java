@@ -11,7 +11,9 @@ import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.bumptech.glide.Glide;
@@ -32,6 +34,7 @@ import com.moutamid.misscaddie.fragments.CaddieReviewsFragment;
 import com.moutamid.misscaddie.fragments.CaddieServicesFragment;
 import com.moutamid.misscaddie.models.ManageImageModel;
 import com.moutamid.misscaddie.models.Model_Caddie;
+import com.moutamid.misscaddie.models.Review;
 import com.moutamid.misscaddie.models.ServiceListModel;
 import com.moutamid.misscaddie.models.SliderItem;
 import com.smarteist.autoimageslider.SliderView;
@@ -54,8 +57,10 @@ public class CaddieProfileActivity extends AppCompatActivity {
     private String userId;
     FirebaseAuth mAuth;
     FirebaseUser currrentUser;
-    private DatabaseReference db;
+    private DatabaseReference db,db1;
+    private TextView reviewCount;
     private String name,place;
+    private RatingBar rating;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +78,9 @@ public class CaddieProfileActivity extends AppCompatActivity {
         placeCaddie = findViewById(R.id.place_caddie);
         price = findViewById(R.id.price_golfer);
         profileImg = findViewById(R.id.profile_img);
+
+        reviewCount = findViewById(R.id.reviews_num);
+        rating = findViewById(R.id.rating);
 ///        contactCaddie = findViewById(R.id.contact_caddie);
         backBtn = findViewById(R.id.back_btn);
         sliderView = findViewById(R.id.image_slider);
@@ -80,19 +88,8 @@ public class CaddieProfileActivity extends AppCompatActivity {
         currrentUser = mAuth.getCurrentUser();
         SlideimageList = new ArrayList<>();
         getCaddieData();
-      /*  String img1 = "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg";
-        String img2 = "https://media.istockphoto.com/photos/mountain-landscape-picture-id517188688?k=20&m=517188688&s=612x612&w=0&h=i38qBm2P-6V4vZVEaMy_TaTEaoCMkYhvLCysE7yJQ5Q=";
-        String img3 = "https://media.istockphoto.com/photos/wild-grass-in-the-mountains-at-sunset-picture-id1322277517?b=1&k=20&m=1322277517&s=170667a&w=0&h=BSN_5NMGYJY2qPwI3_vOcEXVSX_hmGBOmXebMBxTLX0=";
-
-        SlideimageList.add(new SliderItem(img1));
-        SlideimageList.add(new SliderItem(img2));
-        SlideimageList.add(new SliderItem(img3));
-
-        ImageSliderGolferAdapter adapter = new ImageSliderGolferAdapter(this, SlideimageList);
-
-        sliderView.setSliderAdapter(adapter);*/
-
         getManageImages();
+        getReviewsDetail();
 
         Bundle bundle = new Bundle();
         bundle.putString("uId", userId);
@@ -115,6 +112,34 @@ public class CaddieProfileActivity extends AppCompatActivity {
             Animatoo.animateSwipeLeft(CaddieProfileActivity.this);
         });
       //  changeStatusBarColor(this,R.color.yellow);
+    }
+
+    float count = 0;
+    int reviewChild = 0;
+    private void getReviewsDetail() {
+
+        db1 = FirebaseDatabase.getInstance().getReference().child("Review")
+                .child(currrentUser.getUid());
+        db1.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    reviewChild = (int) snapshot.getChildrenCount();
+                    for (DataSnapshot ds : snapshot.getChildren()){
+                        Review model = ds.getValue(Review.class);
+                        count += model.getRating();
+                    }
+                    float total = (float) (count/reviewChild);
+                    rating.setRating(total);
+                    reviewCount.setText(reviewChild + " Reviews");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     public void changeStatusBarColor(Activity activity, int id) {

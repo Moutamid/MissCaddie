@@ -134,94 +134,95 @@ public class CaddieCalenderFragment extends Fragment {
                             String date = ds.child("date").getValue().toString();
                             //int last = date.indexOf("3");
                             //String month = date.substring(last,date.length());
-                            String month = date.substring(0, 3);
-                          //  Toast.makeText(getActivity(), month, Toast.LENGTH_SHORT).show();
+                            //String month = date.substring(0, 3);
+                            String month = date.substring(date.length() - 3);
                             if (month.equals("Jan")) {
                                 if (date.length() == 5){
-                                    String day = date.substring(date.length() - 1);
+                                    //String day = date.substring(date.length() - 1);
+                                    String day = date.substring(0, 1);
                                     setJanDatesRound(day);
                                 }else {
-                                    String day = date.substring(date.length() - 2);
+                                    String day = date.substring(0, 2);
                                     setJanDatesRound(day);
                                 }
 
                             }
                             else if (month.equals("Feb")) {
                                 if (date.length() == 5){
-                                    String day = date.substring(date.length() - 1);
+                                    String day = date.substring(0, 1);
                                     setFebDatesRound(day);
                                 }else {
-                                    String day = date.substring(date.length() - 2);
+                                    String day = date.substring(0, 2);
                                     setFebDatesRound(day);
                                 }
 
                             }
                             else if (month.equals("Mar")) {
                                 if (date.length() == 5){
-                                    String day = date.substring(date.length() - 1);
+                                    String day = date.substring(0, 1);
                                     setMarDatesRound(day);
                                 }else {
-                                    String day = date.substring(date.length() - 2);
+                                    String day = date.substring(0, 2);
                                     setMarDatesRound(day);
                                 }
 
                             }
                             else if (month.equals("Apr")) {
                                 if (date.length() == 5){
-                                    String day = date.substring(date.length() - 1);
+                                    String day = date.substring(0, 1);
                                     setAprDatesRound(day);
                                 }else {
-                                    String day = date.substring(date.length() - 2);
+                                    String day = date.substring(0, 2);
                                     setAprDatesRound(day);
                                 }
 
                             }
                             else if (month.equals("May")) {
                                 if (date.length() == 5){
-                                    String day = date.substring(date.length() - 1);
+                                    String day = date.substring(0, 1);
                                     setMayDatesRound(day);
                                 }else {
-                                    String day = date.substring(date.length() - 2);
+                                    String day = date.substring(0, 2);
                                     setMayDatesRound(day);
                                 }
 
                             }
                             else if (month.equals("Jun")) {
                                 if (date.length() == 5){
-                                    String day = date.substring(date.length() - 1);
+                                    String day = date.substring(0, 1);
                                     setJunDatesRound(day);
                                 }else {
-                                    String day = date.substring(date.length() - 2);
+                                    String day = date.substring(0, 2);
                                     setJunDatesRound(day);
                                 }
 
                             }
                             else if (month.equals("Jul")) {
                                 if (date.length() == 5){
-                                    String day = date.substring(date.length() - 1);
+                                    String day = date.substring(0, 1);
                                     setJulDatesRound(day);
                                 }else {
-                                    String day = date.substring(date.length() - 2);
+                                    String day = date.substring(0, 2);
                                     setJulDatesRound(day);
                                 }
 
                             }
                             else if (month.equals("Aug")) {
                                 if (date.length() == 5){
-                                    String day = date.substring(date.length() - 1);
+                                    String day = date.substring(0, 1);
                                     setAugDatesRound(day);
                                 }else {
-                                    String day = date.substring(date.length() - 2);
+                                    String day = date.substring(0, 2);
                                     setAugDatesRound(day);
                                 }
 
                             }
                             else if (month.equals("Sep")) {
                                 if (date.length() == 5){
-                                    String day = date.substring(date.length() - 1);
+                                    String day = date.substring(0, 1);
                                     setSepDatesRound(day);
                                 }else {
-                                    String day = date.substring(date.length() - 2);
+                                    String day = date.substring(0, 2);
                                     setSepDatesRound(day);
                                 }
 
@@ -229,27 +230,27 @@ public class CaddieCalenderFragment extends Fragment {
 
                             else if (month.equals("Oct")) {
                                 if (date.length() == 5){
-                                    String day = date.substring(date.length() - 1);
+                                    String day = date.substring(0, 1);
                                     setOctDatesRound(day);
                                 }else {
-                                    String day = date.substring(date.length() - 2);
+                                    String day = date.substring(0, 2);
                                     setOctDatesRound(day);
                                 }
 
                             }else if (month.equals("Nov")) {
                                 if (date.length() == 5){
-                                    String day = date.substring(date.length() - 1);
+                                    String day = date.substring(0, 1);
                                     setNovDatesRound(day);
                                 }else {
-                                    String day = date.substring(date.length() - 2);
+                                    String day = date.substring(0, 2);
                                     setNovDatesRound(day);
                                 }
                             }else if (month.equals("Dec")) {
                                 if (date.length() == 5){
-                                    String day = date.substring(date.length() - 1);
+                                    String day = date.substring(0, 1);
                                     setDecDatesRound(day);
                                 }else {
-                                    String day = date.substring(date.length() - 2);
+                                    String day = date.substring(0, 2);
                                     setDecDatesRound(day);
                                 }
                             }
@@ -2216,7 +2217,7 @@ public class CaddieCalenderFragment extends Fragment {
     public void JanuaryDatesClick(View view1) {
         if (isAdded()) {
             TextView t = (TextView) view1;
-            availabilty =  "Jan " + t.getText();
+            availabilty =  t.getText() + " Jan";
             if (t.getBackground() == null) {
                 // String key = t.getText().toString();
                 HashMap<String, Object> hashMap = new HashMap<>();
@@ -2242,7 +2243,7 @@ public class CaddieCalenderFragment extends Fragment {
     public void FebruaryDatesClick(View view1) {
         if (isAdded()) {
             TextView t = (TextView) view1;
-            availabilty =  "Feb " + t.getText();
+            availabilty =  t.getText() + " Feb" ;
             if (t.getBackground() == null) {
                 // String key = t.getText().toString();
                 HashMap<String, Object> hashMap = new HashMap<>();
@@ -2274,7 +2275,7 @@ public class CaddieCalenderFragment extends Fragment {
     public void MarchDatesClick(View view1) {
         if (isAdded()) {
             TextView t = (TextView) view1;
-            availabilty =  "Mar " + t.getText();
+            availabilty =  t.getText() + " Mar";
             if (t.getBackground() == null) {
                 // String key = t.getText().toString();
                 HashMap<String, Object> hashMap = new HashMap<>();
@@ -2305,7 +2306,7 @@ public class CaddieCalenderFragment extends Fragment {
     public void AprilDatesClick(View view1) {
         if (isAdded()) {
             TextView t = (TextView) view1;
-            availabilty =  "Apr " + t.getText();
+            availabilty =  t.getText() + " Apr";
             if (t.getBackground() == null) {
                 // String key = t.getText().toString();
                 HashMap<String, Object> hashMap = new HashMap<>();
@@ -2335,7 +2336,7 @@ public class CaddieCalenderFragment extends Fragment {
     public void MayDatesClick(View view1) {
         if (isAdded()) {
             TextView t = (TextView) view1;
-            availabilty =  "May " + t.getText();
+            availabilty =  t.getText() + " May" ;
             if (t.getBackground() == null) {
                 // String key = t.getText().toString();
                 HashMap<String, Object> hashMap = new HashMap<>();
@@ -2365,7 +2366,7 @@ public class CaddieCalenderFragment extends Fragment {
     public void JuneDatesClick(View view1) {
         if (isAdded()) {
             TextView t = (TextView) view1;
-            availabilty =  "Jun " + t.getText();
+            availabilty =  t.getText() + " Jun";
             if (t.getBackground() == null) {
                 // String key = t.getText().toString();
                 HashMap<String, Object> hashMap = new HashMap<>();
@@ -2395,7 +2396,7 @@ public class CaddieCalenderFragment extends Fragment {
     public void JulyDatesClick(View view1) {
         if (isAdded()) {
             TextView t = (TextView) view1;
-            availabilty =  "Jul " + t.getText();
+            availabilty =  t.getText() + " Jul" ;
             if (t.getBackground() == null) {
                 // String key = t.getText().toString();
                 HashMap<String, Object> hashMap = new HashMap<>();
@@ -2425,7 +2426,7 @@ public class CaddieCalenderFragment extends Fragment {
     public void AugustDatesClick(View view1) {
         if (isAdded()) {
             TextView t = (TextView) view1;
-            availabilty =  "Aug " + t.getText();
+            availabilty =  t.getText() + " Aug";
             if (t.getBackground() == null) {
                 // String key = t.getText().toString();
                 HashMap<String, Object> hashMap = new HashMap<>();
@@ -2455,7 +2456,7 @@ public class CaddieCalenderFragment extends Fragment {
     public void SeptemberDatesClick(View view1) {
         if (isAdded()) {
             TextView t = (TextView) view1;
-            availabilty =  "Sep " + t.getText();
+            availabilty =  t.getText() + " Sep";
             if (t.getBackground() == null) {
                 // String key = t.getText().toString();
                 HashMap<String, Object> hashMap = new HashMap<>();
@@ -2486,7 +2487,7 @@ public class CaddieCalenderFragment extends Fragment {
     public void OctoberDatesClick(View view1) {
         if (isAdded()) {
             TextView t = (TextView) view1;
-            availabilty =  "Oct " + t.getText();
+            availabilty =  t.getText() + " Oct";
             if (t.getBackground() == null) {
                // String key = t.getText().toString();
                 HashMap<String, Object> hashMap = new HashMap<>();
@@ -2516,7 +2517,7 @@ public class CaddieCalenderFragment extends Fragment {
     public void NovemberDatesClick(View view1) {
         if (isAdded()) {
             TextView t = (TextView) view1;
-            availabilty =  "Nov " + t.getText();
+            availabilty =  t.getText() + " Nov";
             if (t.getBackground() == null) {
                 HashMap<String, Object> hashMap = new HashMap<>();
                 hashMap.put("date", availabilty);
@@ -2544,7 +2545,7 @@ public class CaddieCalenderFragment extends Fragment {
     public void DecemberDatesClick(View view1) {
         if (isAdded()) {
             TextView t = (TextView) view1;
-            availabilty =  "Dec " + t.getText();
+            availabilty =  t.getText() + " Dec";
 
             if (t.getBackground() == null) {
                 HashMap<String, Object> hashMap = new HashMap<>();

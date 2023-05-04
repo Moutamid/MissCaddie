@@ -57,7 +57,7 @@ public class CaddiePaymentRequestesAdapter extends RecyclerView.Adapter<CaddiePa
         holder.date.setText(model.getDate());
         holder.time.setText(model.getTime());
 
-        if (model.isPayment()){
+        /*if (model.isPayment()){
             holder.status_title.setText("(Accepted)");
             holder.status_title.setTextColor(context.getResources().getColor(R.color.green));
             holder.butn.setBackgroundResource(R.drawable.ic_charm_tick1);
@@ -65,7 +65,7 @@ public class CaddiePaymentRequestesAdapter extends RecyclerView.Adapter<CaddiePa
             holder.status_title.setText("(Pending)");
             holder.status_title.setTextColor(context.getResources().getColor(R.color.black_light));
             holder.butn.setBackgroundResource(0);
-        }
+        }*/
 
         for (int i=0; i < model.getTableRows().size(); i++){
             String service = model.getTableRows().get(i).getTitle() + " (USD$" + model.getTableRows().get(i).getPrice() + ")";

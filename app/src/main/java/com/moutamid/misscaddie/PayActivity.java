@@ -115,10 +115,6 @@ public class PayActivity extends AppCompatActivity {
         user = mAuth.getCurrentUser();
         getAccessToken();
         button = findViewById(R.id.paypalButton);
-        HashMap<String,Object> hashMap = new HashMap<>();
-        hashMap.put("status_title","Accepted");
-        requestsDb.child(id).updateChildren(hashMap);
-        sendNotification(uid,"Your request has been accepted!");
         button.setup(
                 new CreateOrder() {
                     @Override

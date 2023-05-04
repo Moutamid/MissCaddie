@@ -98,6 +98,17 @@ public class DAPAdapter extends RecyclerView.Adapter<DAPAdapter.VH> {
 
                         context.startActivity(i);
                     });
+
+                    holder.itemView.setOnClickListener(v -> {
+                        Intent i = new Intent(context, CaddieBookingDetailsActivity.class);
+                        i.putExtra("personName", model_golfer.getName());
+                        i.putExtra("personImage", model_golfer.getImage());
+                        i.putExtra("requestModel",model);
+                        //  i.putExtra("serviceList", (Serializable) model.getTableRows());
+
+                        context.startActivity(i);
+                    });
+
                 }
             }
 
